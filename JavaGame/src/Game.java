@@ -9,6 +9,7 @@ public class Game {
 		System.out.println("세번째");
 		System.out.println("세번째");
 		System.out.println("세번째");
+		System.out.println("세번째");
 =======
 		System.out.println("네");
 >>>>>>> branch 'master' of https://github.com/lhgwoo2/javaProject.git
