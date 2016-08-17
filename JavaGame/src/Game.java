@@ -7,6 +7,7 @@ public class Game {
 		System.out.println("세번째");
 		System.out.println("세번째");
 		System.out.println("세번째");
+		System.out.println("세번째");
 	}
 	
 }
