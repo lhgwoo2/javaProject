@@ -28,12 +28,24 @@ public class MainPanel extends JPanel{
 		InputStream is = getClass().getResourceAsStream("/imagePack/pangMain.jpg");
 		try {
 			bimg = ImageIO.read(is);
-			System.out.println("이미지 로드 성공");
+			System.out.println("메인화면 로드 성공");
 		} catch (IOException e) {
-			System.out.println("이미지 로드 실패");
+			System.out.println("메인화면 로드 실패");
 			e.printStackTrace();
 		}
 	}
+	public void drawingPlayImage(){
+		InputStream is = getClass().getResourceAsStream("/imagePack/pangpangback1.jpg");
+		try {
+			bimg = ImageIO.read(is);
+			System.out.println("게임화면 로드 성공");
+		} catch (IOException e) {
+			System.out.println("게임화면 로드 실패");
+			e.printStackTrace();
+		}
+		
+	}
+	
 
 	@Override
 	protected void paintComponent(Graphics g) {

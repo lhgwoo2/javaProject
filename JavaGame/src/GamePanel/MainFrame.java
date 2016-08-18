@@ -21,7 +21,7 @@ public class MainFrame extends JFrame {
 		mp.requestFocusInWindow();
 		
 		// Login page Screen
-		LoginPanel lp = new LoginPanel();
+		LoginPanel lp = new LoginPanel(mp);
 		this.add(lp);
 		lp.requestFocusInWindow();
 		
@@ -42,7 +42,6 @@ public class MainFrame extends JFrame {
 */	}
 
 	public static void main(String[] args) {
-
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				new MainFrame();
