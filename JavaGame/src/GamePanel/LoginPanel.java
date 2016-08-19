@@ -2,12 +2,17 @@ package GamePanel;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Enumeration;
 
+import javax.imageio.ImageIO;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -16,41 +21,46 @@ import javax.swing.JTextField;
 
 public class LoginPanel extends JPanel {
 	MainPanel mp;
+	LoadingPanel ldp;
+	
 	JTextField jt;
 	ButtonGroup teamBg; // team
 	JRadioButton bjb;
 	JRadioButton bjb2;
+	JButton entB;
 
-	public LoginPanel(MainPanel mp) {
+	public LoginPanel(MainPanel mp,LoadingPanel ldp) {
 		super();
 		this.setBounds(0, 0, 1800, 50);
 		this.setLayout(null);
 		this.setBackground(Color.GREEN);
 		this.mp = mp;
-
+		this.ldp = ldp;
+		
+		
 		// sever entrance - ID
 		JLabel ja = new JLabel("User ID : ");
-		ja.setBounds(200, 20, 50, 30);
+		ja.setBounds(200, 10, 50, 30);
 		this.add(ja);
 
 		JLabel ja2 = new JLabel("Team Selection : ");
-		ja2.setBounds(500, 20, 100, 30);
+		ja2.setBounds(500, 10, 100, 30);
 		this.add(ja2);
 
 		// login text field
 		jt = new JTextField("유저아이디 입력");
-		jt.setBounds(300, 20, 150, 30);
+		jt.setBounds(300, 10, 150, 30);
 		this.add(jt);
 
 		// Team selection button
 		// Blue team
 		bjb = new JRadioButton("Blue");
-		bjb.setBounds(600, 20, 100, 30);
+		bjb.setBounds(600, 10, 100, 30);
 		bjb.setBackground(Color.CYAN);
 		this.add(bjb);
 		// Red team
 		bjb2 = new JRadioButton("Red");
-		bjb2.setBounds(700, 20, 100, 30);
+		bjb2.setBounds(700, 10, 100, 30);
 		bjb2.setBackground(Color.red);
 		this.add(bjb2);
 
@@ -60,8 +70,16 @@ public class LoginPanel extends JPanel {
 		teamBg.add(bjb2);
 
 		// Entrance button
-		JButton entB = new JButton("Entrance");
-		entB.setBounds(900, 20, 100, 30);
+		// button image
+		InputStream is = getClass().getResourceAsStream("/ImagePack/game_start3.png");
+		Image img=null;
+		try {
+			img=ImageIO.read(is);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		entB = new JButton(new ImageIcon(img));
+		entB.setBounds(900, 5, 130, 43);
 		this.add(entB);
 
 		entB.addActionListener(new ActionListener() {
@@ -70,6 +88,8 @@ public class LoginPanel extends JPanel {
 
 				mp.drawingPlayImage();
 				mp.repaint();
+				//ldp.loadingPanel();
+				mp.add(ldp);
 				
 				// Login change
 					loginAfter();
@@ -82,7 +102,7 @@ public class LoginPanel extends JPanel {
 
 		// Connect ID
 		JLabel ja = new JLabel(this.jt.getText());
-		ja.setBounds(300, 20, 100, 30);
+		ja.setBounds(300, 10, 100, 30);
 		this.add(ja);
 
 		// Radiobutton value extraction
@@ -102,12 +122,14 @@ public class LoginPanel extends JPanel {
 
 		// Connect Team
 		JLabel team = new JLabel(teams);
-		team.setBounds(650, 20, 100, 30);
+		team.setBounds(650, 10, 100, 30);
 		this.add(team);
 
 		this.remove(bjb);
 		this.remove(bjb2);
 		this.remove(jt);
+		this.remove(entB);
+		
 
 	}
 

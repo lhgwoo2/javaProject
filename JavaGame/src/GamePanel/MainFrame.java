@@ -20,10 +20,15 @@ public class MainFrame extends JFrame {
 		this.add(mp);
 		mp.requestFocusInWindow();
 		
+
+		// Loading Panel
+		LoadingPanel ldp = new LoadingPanel();
+		
 		// Login page Screen
-		LoginPanel lp = new LoginPanel(mp);
+		LoginPanel lp = new LoginPanel(mp,ldp);
 		this.add(lp);
 		lp.requestFocusInWindow();
+		
 		
 		/*new Thread() {
 			@Override
