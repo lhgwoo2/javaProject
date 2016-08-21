@@ -24,7 +24,7 @@ public class LoginPanel extends JPanel {
 	LoadingPanel ldp;
 	
 	JTextField jt;
-	ButtonGroup teamBg; // team
+	ButtonGroup teamBg = null; // team
 	JRadioButton bjb;
 	JRadioButton bjb2;
 	JButton entB;
@@ -87,10 +87,16 @@ public class LoginPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 
 				mp.drawingPlayImage();
+				mp.chatPanel();
 				mp.repaint();
-				//ldp.loadingPanel();
-				mp.add(ldp);
 				
+				
+				//ldp.loadingPanel();
+				ldp.setBounds(500, 500, 200, 200);
+				//ldp.setBackground(new Color(255,0,0,0));
+				
+				//mp.add(ldp.loadingPanel());		// 로딩 이미지 
+				ldp.repaint();
 				// Login change
 					loginAfter();
 					repaint();

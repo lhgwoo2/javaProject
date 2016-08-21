@@ -16,7 +16,7 @@ public class MainFrame extends JFrame {
 		this.setResizable(false);
 		
 		// Main Page Screen
-		MainPanel mp = new MainPanel();
+		MainPanel mp = new MainPanel(this);
 		this.add(mp);
 		mp.requestFocusInWindow();
 		
