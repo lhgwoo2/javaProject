@@ -31,7 +31,7 @@ public class LoginPanel extends JPanel {
 
 	public LoginPanel(MainPanel mp,LoadingPanel ldp) {
 		super();
-		this.setBounds(0, 0, 1800, 50);
+		this.setBounds(0, 0, 1600, 50);
 		this.setLayout(null);
 		this.setBackground(Color.GREEN);
 		this.mp = mp;
@@ -86,20 +86,21 @@ public class LoginPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
+				ChatPanel cp = new ChatPanel();
 				mp.drawingPlayImage();
-				mp.chatPanel();
+				mp.add(cp);
 				mp.repaint();
-				
+				loginAfter();
+				repaint();
 				
 				//ldp.loadingPanel();
-				ldp.setBounds(500, 500, 200, 200);
+				//ldp.setBounds(500, 500, 200, 200);
 				//ldp.setBackground(new Color(255,0,0,0));
 				
 				//mp.add(ldp.loadingPanel());		// 로딩 이미지 
-				ldp.repaint();
+				//ldp.repaint();
 				// Login change
-					loginAfter();
-					repaint();
+					
 			}
 		});
 	}

@@ -8,10 +8,12 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 public class MainPanel extends JPanel{
 	
@@ -21,7 +23,7 @@ public class MainPanel extends JPanel{
 	
 	public MainPanel(JFrame f) {
 		super();
-		this.setBounds(0, 50, 1800, 900);
+		this.setBounds(0, 50, 1600, 900);
 		this.setLayout(null);
 		this.setBackground(Color.BLUE);
 		this.f = f;
@@ -55,16 +57,8 @@ public class MainPanel extends JPanel{
 		//g2d.drawImage(bimg,0,0,1800,900,null);
 		
 	}
-	public void chatPanel(){
-		JTextArea chatField = new JTextArea("채팅");
-
-		JScrollPane sp = new JScrollPane(chatField);
-		sp.setBounds(0, 600, 350, 300);
-		sp.setBackground(new Color(200,0,0,0));
-		this.add(sp);
-		
-	}
-	public void drawBlackPanel(){
+	
+	/*public void drawBlackPanel(){
 		BufferedImage chatBImg = new BufferedImage(350, 300, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2d = (Graphics2D) chatBImg.getGraphics();
 		g2d.setColor(Color.black);
@@ -72,13 +66,13 @@ public class MainPanel extends JPanel{
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		g2d.dispose();		// 붓 필요없다.
-	}
+	}*/
 
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g2d = (Graphics2D)g;
-		g2d.drawImage(bimg,0,0,1800,900,null);
+		g2d.drawImage(bimg,0,0,1600,900,null);
 	}
 
 }
