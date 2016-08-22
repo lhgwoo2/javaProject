@@ -15,9 +15,13 @@ import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+
+import Network.ClientData;
+import Network.GameClient;
 
 public class LoginPanel extends JPanel {
 	MainPanel mp;
@@ -28,6 +32,7 @@ public class LoginPanel extends JPanel {
 	JRadioButton bjb;
 	JRadioButton bjb2;
 	JButton entB;
+	GameClient gClient;
 
 	public LoginPanel(MainPanel mp,LoadingPanel ldp) {
 		super();
@@ -85,12 +90,8 @@ public class LoginPanel extends JPanel {
 		entB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				ChatPanel cp = new ChatPanel();
-				mp.drawingPlayImage();
-				mp.add(cp);
-				mp.repaint();
-				loginAfter();
+				gClient = new GameClient(mp);
+				loginAfter(mp);
 				repaint();
 				
 				//ldp.loadingPanel();
@@ -105,7 +106,7 @@ public class LoginPanel extends JPanel {
 		});
 	}
 
-	public void loginAfter() {
+	public void loginAfter(MainPanel mp) {
 
 		// Connect ID
 		JLabel ja = new JLabel(this.jt.getText());
@@ -126,7 +127,26 @@ public class LoginPanel extends JPanel {
 			if (jb.isSelected()) // 받아낸 라디오버튼의 체크 상태를 확인한다. 체크되었을경우 true 반환.
 				teams = jb.getText().trim(); // getText() 메소드로 문자열 받아낸다.
 		}
+		
+		// Connect Team - network
+		gClient.connect();
+		gClient.streamOpen();
+		ClientData cData = new ClientData();
+		cData.setTeamName(teams);
+		cData.setUserId(jt.getText());
+		if(gClient.loginSend(cData))
+		{
+			JOptionPane.showMessageDialog(mp, "접속성공");
+		}
+		else{
+			JOptionPane.showMessageDialog(mp, "접속실패");
 
+		}
+		ChatPanel cp = new ChatPanel();
+		mp.drawingPlayImage();
+		mp.add(cp);
+		mp.repaint();
+		
 		// Connect Team
 		JLabel team = new JLabel(teams);
 		team.setBounds(650, 10, 100, 30);

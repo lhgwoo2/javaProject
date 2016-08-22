@@ -6,8 +6,21 @@ public class ClientData implements DataFormat{
 	private String chatMsg;
 	private boolean loginOK;
 	private boolean teamOK;
+	private int clientBlueNum;
+	private int clientRedNum;
 	
-	
+	public int getClientBlueNum() {
+		return clientBlueNum;
+	}
+	public void setClientBlueNum(int clientBlueNum) {
+		this.clientBlueNum = clientBlueNum;
+	}
+	public int getClientRedNum() {
+		return clientRedNum;
+	}
+	public void setClientRedNum(int clientRedNum) {
+		this.clientRedNum = clientRedNum;
+	}
 	public boolean isTeamOK() {
 		return teamOK;
 	}

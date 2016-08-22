@@ -12,7 +12,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class ChatPanel extends JPanel {
-
+	JTextArea chatField;
+	
 	public ChatPanel() {
 		super();
 
@@ -24,7 +25,7 @@ public class ChatPanel extends JPanel {
 
 	// 채팅보여지는 창
 	public JScrollPane chatShowText() {
-		JTextArea chatField = new JTextArea("채팅");
+		chatField = new JTextArea("채팅");
 		JScrollPane sp = new JScrollPane(chatField);
 		sp.setBounds(0, 0, 600, 170);
 		sp.setOpaque(false);

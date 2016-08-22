@@ -5,8 +5,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import org.kdea.java.Swing.DrawingPanel;
-import org.kdea.java.Swing.WinMain;
+import javax.swing.JOptionPane;
+
+import GamePanel.MainPanel;
 
 public class GameClient {
 
@@ -14,8 +15,10 @@ public class GameClient {
 	ObjectInputStream fromServer;
 	Socket socket;
 	String clientId;
-
-	public GameClient() {
+	MainPanel mp;
+	
+	public GameClient(MainPanel mp) {
+		this.mp = mp;
 	}
 
 	// 한개에 프로그램에 접속하는 것으로 고정아이피, 고정포트넘버사용
@@ -42,6 +45,7 @@ public class GameClient {
 	public boolean loginSend(ClientData cData) {
 
 		boolean loginOk = false;
+		String str=null;
 		try {
 			toServer.writeObject(cData);
 			toServer.flush();
@@ -51,14 +55,22 @@ public class GameClient {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		// team 인원수  파악 및 로그인 성공
 		if (cData.isLoginOK()) {
 			loginOk = true;
 			clientId = cData.getUserId();
+			str = String.format("Red Team : %d/3\nBlue Team: %d/3", 
+					cData.getClientRedNum(),cData.getClientBlueNum());
+			JOptionPane.showMessageDialog(mp, str);
 			new ClientComThread(socket).start();
-		} else if (cData.isLoginOK())
+		}
+		else if (cData.isLoginOK())
+		{	
+			str = String.format("Red Team : %d/3\nBlue Team: %d/3", 
+					cData.getClientRedNum(),cData.getClientBlueNum());
+			JOptionPane.showMessageDialog(mp, str);
 			loginOk = false;
-
+		}
 		return loginOk;
 
 	}
@@ -102,7 +114,10 @@ class ClientComThread extends Thread {
 				if(obj instanceof ClientData){
 					ClientData cData = (ClientData) obj;
 					
+				}else if(obj instanceof GameData){
+					GameData gData = (GameData) obj;
 				}
+				
 
 				
 				/*

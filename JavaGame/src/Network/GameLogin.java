@@ -41,6 +41,8 @@ public class GameLogin extends Thread {
 					System.out.println("로그인 성공");
 					//cData.setMsg("로그인 성공");
 					cData.setLoginOK(true);
+					cData.setClientBlueNum(GameServer.blueTeam.size());
+					cData.setClientRedNum(GameServer.redTeam.size());
 					toClient.writeObject(cData);
 					toClient.flush();
 					GameServer.userMap.put(cData.getUserId(), socket);
@@ -50,6 +52,8 @@ public class GameLogin extends Thread {
 				} else {
 					System.out.println("로그인 실패");
 					//cData.setMsg("로그인 실패");
+					cData.setClientBlueNum(GameServer.blueTeam.size());
+					cData.setClientRedNum(GameServer.redTeam.size());
 					cData.setLoginOK(false);
 					toClient.writeObject(cData);
 					toClient.flush();
@@ -69,14 +73,12 @@ public class GameLogin extends Thread {
 		PrintWriter pw;
 		
 		try {
-			pw = new PrintWriter(new FileWriter("E:/test/test.txt"));
+			pw = new PrintWriter(new FileWriter("E:/test/test.txt",true));
 			fr = new FileReader("E:/test/test.txt");
 			br = new BufferedReader(fr);
-			String[] token = null;
 			
 			while ((line = br.readLine()) != null) {
-				token = line.split("\\|");
-				if (token[0].equals(cData.getUserId())) { // id비교
+				if (line.equals(cData.getUserId())) { // id비교
 					return false;			// 등록된 아이디가 있으면 실패
 				}
 			}
@@ -88,7 +90,7 @@ public class GameLogin extends Thread {
 				cData.setTeamOK(false);
 				return false;
 			}
-			
+			pw.close();
 			br.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -104,7 +106,6 @@ public class GameLogin extends Thread {
 		{
 			if(GameServer.blueTeam.size()<3){
 				GameServer.blueTeam.put(cData.getUserId(), socket);
-				cData.setTeamName("Blue");
 				return true;
 			}
 			else{
@@ -114,7 +115,6 @@ public class GameLogin extends Thread {
 		else if(team.equals("Red")){
 			if(GameServer.redTeam.size()<3){
 				GameServer.redTeam.put(cData.getUserId(), socket);
-				cData.setTeamName("Red");
 				return true;
 			}
 			else{
