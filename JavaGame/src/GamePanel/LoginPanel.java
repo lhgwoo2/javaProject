@@ -91,7 +91,7 @@ public class LoginPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				gClient = new GameClient(mp);
-				loginAfter(mp);
+				loginAfter();
 				repaint();
 				
 				//ldp.loadingPanel();
@@ -106,7 +106,7 @@ public class LoginPanel extends JPanel {
 		});
 	}
 
-	public void loginAfter(MainPanel mp) {
+	public void loginAfter() {
 
 		// Connect ID
 		JLabel ja = new JLabel(this.jt.getText());
@@ -137,25 +137,22 @@ public class LoginPanel extends JPanel {
 		if(gClient.loginSend(cData))
 		{
 			JOptionPane.showMessageDialog(mp, "접속성공");
+			// Connect Team - 로그인패널에서 표시
+			JLabel team = new JLabel(teams);
+			team.setBounds(650, 10, 100, 30);
+			this.add(team);
+
+			this.remove(bjb);
+			this.remove(bjb2);
+			this.remove(jt);
+			this.remove(entB);
+			
 		}
 		else{
 			JOptionPane.showMessageDialog(mp, "접속실패");
-
 		}
-		ChatPanel cp = new ChatPanel();
-		mp.drawingPlayImage();
-		mp.add(cp);
-		mp.repaint();
 		
-		// Connect Team
-		JLabel team = new JLabel(teams);
-		team.setBounds(650, 10, 100, 30);
-		this.add(team);
-
-		this.remove(bjb);
-		this.remove(bjb2);
-		this.remove(jt);
-		this.remove(entB);
+		
 		
 
 	}

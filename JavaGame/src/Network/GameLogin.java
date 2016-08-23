@@ -32,7 +32,7 @@ public class GameLogin extends Thread {
 	@Override
 	public void run() {
 		super.run();
-		ClientData cData = new ClientData();
+		ClientData cData;
 		while (true) {
 			try {
 				cData = (ClientData) fromClient.readObject();
@@ -46,7 +46,9 @@ public class GameLogin extends Thread {
 					toClient.writeObject(cData);
 					toClient.flush();
 					GameServer.userMap.put(cData.getUserId(), socket);
-					new GameServerThread(fromClient, socket).start();
+					if(GameServer.blueTeam.size()==3 && GameServer.redTeam.size()==3){
+						new GameServerThread(fromClient, socket).start();
+					}
 					break;
 
 				} else {
@@ -73,8 +75,9 @@ public class GameLogin extends Thread {
 		PrintWriter pw;
 		
 		try {
-			pw = new PrintWriter(new FileWriter("E:/test/test.txt",true));
-			fr = new FileReader("E:/test/test.txt");
+			System.out.println("파일에서 로그인 매치하는 곳");
+			pw = new PrintWriter(new FileWriter("D:/test/test.txt",true));
+			fr = new FileReader("D:/test/test.txt");
 			br = new BufferedReader(fr);
 			
 			while ((line = br.readLine()) != null) {
@@ -105,6 +108,8 @@ public class GameLogin extends Thread {
 		if(team.equals("Blue"))
 		{
 			if(GameServer.blueTeam.size()<3){
+				
+				// 블루팀 들어온 상황 확인. 
 				GameServer.blueTeam.put(cData.getUserId(), socket);
 				return true;
 			}
@@ -114,6 +119,8 @@ public class GameLogin extends Thread {
 		}
 		else if(team.equals("Red")){
 			if(GameServer.redTeam.size()<3){
+				
+				//	Red팀이 들어온 상황 확인.
 				GameServer.redTeam.put(cData.getUserId(), socket);
 				return true;
 			}

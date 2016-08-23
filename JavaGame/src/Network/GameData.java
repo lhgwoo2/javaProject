@@ -1,5 +1,7 @@
 package Network;
 
-public class GameData implements DataFormat {
+import java.io.Serializable;
+
+public class GameData implements Serializable {
 
 }

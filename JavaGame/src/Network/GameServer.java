@@ -51,10 +51,10 @@ class GameServerThread extends Thread{
 	@Override
 	public void run() {
 		try {
-			DataFormat Data;
+			Object Data;
 
 			while (true) {
-				Data= (DataFormat) fromClient.readObject();
+				Data= fromClient.readObject();
 				boardCast(Data);
 			}
 		} catch (Exception e) {
@@ -63,7 +63,7 @@ class GameServerThread extends Thread{
 
 	}
 
-	public void boardCast(DataFormat d) {
+	public void boardCast(Object d) {
 		Set<String> keys = GameServer.userMap.keySet();
 		Iterator<String> it = keys.iterator();
 		while (it.hasNext()) {

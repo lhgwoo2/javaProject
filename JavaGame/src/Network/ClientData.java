@@ -1,6 +1,8 @@
 package Network;
 
-public class ClientData implements DataFormat{
+import java.io.Serializable;
+
+public class ClientData implements Serializable{
 
 	private String userId;
 	private String chatMsg;
@@ -8,7 +10,14 @@ public class ClientData implements DataFormat{
 	private boolean teamOK;
 	private int clientBlueNum;
 	private int clientRedNum;
+	private boolean allTeamOK;
 	
+	public boolean isAllTeamOK() {
+		return allTeamOK;
+	}
+	public void setAllTeamOK(boolean allTeamOK) {
+		this.allTeamOK = allTeamOK;
+	}
 	public int getClientBlueNum() {
 		return clientBlueNum;
 	}

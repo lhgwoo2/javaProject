@@ -7,6 +7,8 @@ import java.net.Socket;
 
 import javax.swing.JOptionPane;
 
+import GamePanel.ChatPanel;
+import GamePanel.MainFrame;
 import GamePanel.MainPanel;
 
 public class GameClient {
@@ -16,7 +18,7 @@ public class GameClient {
 	Socket socket;
 	String clientId;
 	MainPanel mp;
-	
+
 	public GameClient(MainPanel mp) {
 		this.mp = mp;
 	}
@@ -40,34 +42,46 @@ public class GameClient {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		System.out.println("스트림 오픈");
 	}
 
 	public boolean loginSend(ClientData cData) {
 
 		boolean loginOk = false;
-		String str=null;
+		String str = null;
 		try {
 			toServer.writeObject(cData);
 			toServer.flush();
+			System.out.println("객체를 쐇다.");
 
 			cData = (ClientData) fromServer.readObject();
-
+			System.out.println("로그인 객체를 받음");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		// team 인원수  파악 및 로그인 성공
+		// team 인원수 파악 및 로그인 성공
 		if (cData.isLoginOK()) {
 			loginOk = true;
 			clientId = cData.getUserId();
-			str = String.format("Red Team : %d/3\nBlue Team: %d/3", 
-					cData.getClientRedNum(),cData.getClientBlueNum());
+			str = String.format("Red Team : %d/3\nBlue Team: %d/3", cData.getClientRedNum(), cData.getClientBlueNum());
 			JOptionPane.showMessageDialog(mp, str);
-			new ClientComThread(socket).start();
-		}
-		else if (cData.isLoginOK())
-		{	
-			str = String.format("Red Team : %d/3\nBlue Team: %d/3", 
-					cData.getClientRedNum(),cData.getClientBlueNum());
+			new ClientComThread(socket, mp).start();
+			if (cData.getClientBlueNum() == 3 && cData.getClientRedNum() == 3) {
+				try {
+					// 모든 팀원들이 들어와서 모두 매칭되었다. 서버로 신호를 보냄 -> 서버에서 다시 모든 클라이언트로 값을
+					// 보내어 게임에 입장하도록 함.
+					System.out.println("모든 팀원이 들어왔다.");
+					cData.setAllTeamOK(true);
+					toServer.writeObject(cData);
+					toServer.flush();
+					System.out.println("모든 팀원이 로그인 성공 들어왔다.");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+			}
+		} else if (cData.isLoginOK()) {
+			str = String.format("Red Team : %d/3\nBlue Team: %d/3", cData.getClientRedNum(), cData.getClientBlueNum());
 			JOptionPane.showMessageDialog(mp, str);
 			loginOk = false;
 		}
@@ -97,10 +111,12 @@ public class GameClient {
 class ClientComThread extends Thread {
 	private Socket socket;
 	private ObjectInputStream fromServer;
-	//static DataFormat uData;
+	MainPanel mp;
+	// static DataFormat uData;
 
-	ClientComThread(Socket socket) {
+	ClientComThread(Socket socket, MainPanel mp) {
 		this.socket = socket;
+		this.mp = mp;
 	}
 
 	@Override
@@ -109,29 +125,33 @@ class ClientComThread extends Thread {
 		while (true) {
 			try {
 				fromServer = new ObjectInputStream(socket.getInputStream());
-				Object obj =  fromServer.readObject();
-				
-				if(obj instanceof ClientData){
+				Object obj = fromServer.readObject();
+
+				if (obj instanceof ClientData) {
 					ClientData cData = (ClientData) obj;
-					
-				}else if(obj instanceof GameData){
+					if (cData.isAllTeamOK()) {
+
+						ChatPanel cp = new ChatPanel();
+						mp.drawingPlayImage();
+						mp.add(cp);
+						mp.repaint();
+					}
+
+				} else if (obj instanceof GameData) {
 					GameData gData = (GameData) obj;
 				}
-				
 
-				
 				/*
-				if (uData.getFileDate() != null) {
-					// Client.fileSave(uData);
-					WinMain.dp = new DrawingPanel(uData.getFileDate());
-					WinMain.dp.setBounds(400, 100, 600, 480);
-					WinMain.f.add(WinMain.dp);
-					WinMain.dp.repaint();
-					WinMain.ta.append(uData.getUserId() + " : " + uData.getFileName() + "\n");
-				} else
-					WinMain.ta.append(uData.getUserId() + " : " + uData.getMsg() + "\n");
-
-*/			} catch (Exception e) {
+				 * if (uData.getFileDate() != null) { // Client.fileSave(uData);
+				 * WinMain.dp = new DrawingPanel(uData.getFileDate());
+				 * WinMain.dp.setBounds(400, 100, 600, 480);
+				 * WinMain.f.add(WinMain.dp); WinMain.dp.repaint();
+				 * WinMain.ta.append(uData.getUserId() + " : " +
+				 * uData.getFileName() + "\n"); } else
+				 * WinMain.ta.append(uData.getUserId() + " : " + uData.getMsg()
+				 * + "\n");
+				 * 
+				 */ } catch (Exception e) {
 				e.printStackTrace();
 			}
 
