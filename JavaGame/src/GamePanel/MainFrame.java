@@ -8,7 +8,7 @@ public class MainFrame extends JFrame {
 	public MainFrame() {
 		super("ÆÎÆÎ");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setBounds(20, 20, 1805, 978);
+		this.setBounds(20, 20, 1605, 978);
 		getContentPane().setLayout(null);
 		setVisible(true);
 
@@ -16,7 +16,7 @@ public class MainFrame extends JFrame {
 		this.setResizable(false);
 		
 		// Main Page Screen
-		MainPanel mp = new MainPanel();
+		MainPanel mp = new MainPanel(this);
 		this.add(mp);
 		mp.requestFocusInWindow();
 		
