@@ -42,7 +42,6 @@ public class GameClient {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("스트림 오픈");
 	}
 
 	public boolean loginSend(ClientData cData) {
@@ -52,10 +51,8 @@ public class GameClient {
 		try {
 			toServer.writeObject(cData);
 			toServer.flush();
-			System.out.println("객체를 쐇다.");
 
 			cData = (ClientData) fromServer.readObject();
-			System.out.println("로그인 객체를 받음");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -70,11 +67,9 @@ public class GameClient {
 				try {
 					// 모든 팀원들이 들어와서 모두 매칭되었다. 서버로 신호를 보냄 -> 서버에서 다시 모든 클라이언트로 값을
 					// 보내어 게임에 입장하도록 함.
-					System.out.println("모든 팀원이 들어왔다.");
 					cData.setAllTeamOK(true);
 					toServer.writeObject(cData);
 					toServer.flush();
-					System.out.println("모든 팀원이 로그인 성공 들어왔다.");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -95,11 +90,9 @@ public class GameClient {
 		ClientData cData = new ClientData();
 		cData.setChatMsg(msg);
 		cData.setUserId(clientId);
-
 		try {
 			toServer.writeObject(cData);
 			toServer.flush();
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

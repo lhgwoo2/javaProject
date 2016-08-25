@@ -17,13 +17,12 @@ public class ClientComThread extends Thread {
 	ClientComThread(Socket socket, MainPanel mp, GameClient gc) {
 		this.socket = socket;
 		this.mp = mp;
-		this.cp = new ChatPanel(gc);
 		this.gc=gc;
 	}
 
 	@Override
 	public void run() {
-
+		cp = new ChatPanel(gc);
 		while (true) {
 			try {
 				fromServer = new ObjectInputStream(socket.getInputStream());
@@ -37,8 +36,9 @@ public class ClientComThread extends Thread {
 						mp.add(cp);
 						mp.repaint();
 					}
-					if(!cData.getChatMsg().equals(null)){
+					if(cData.getChatMsg()!=null){
 						cp.chatAppendMsg(cData);
+						mp.repaint();
 					}
 
 				} else if (obj instanceof GameData) {

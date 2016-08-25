@@ -39,21 +39,19 @@ public class GameLogin extends Thread {
 
 				if (loginMatch(cData)) {
 					System.out.println("로그인 성공");
-					//cData.setMsg("로그인 성공");
+					// cData.setMsg("로그인 성공");
 					cData.setLoginOK(true);
 					cData.setClientBlueNum(GameServer.blueTeam.size());
 					cData.setClientRedNum(GameServer.redTeam.size());
 					toClient.writeObject(cData);
 					toClient.flush();
 					GameServer.userMap.put(cData.getUserId(), socket);
-					if(GameServer.blueTeam.size()==3 && GameServer.redTeam.size()==3){
-						new GameServerThread(fromClient, socket).start();
-					}
+					new GameServerThread(fromClient, socket).start();
 					break;
 
 				} else {
 					System.out.println("로그인 실패");
-					//cData.setMsg("로그인 실패");
+					// cData.setMsg("로그인 실패");
 					cData.setClientBlueNum(GameServer.blueTeam.size());
 					cData.setClientRedNum(GameServer.redTeam.size());
 					cData.setLoginOK(false);
@@ -73,23 +71,22 @@ public class GameLogin extends Thread {
 		FileReader fr;
 		String line;
 		PrintWriter pw;
-		
+
 		try {
 			System.out.println("파일에서 로그인 매치하는 곳");
-			pw = new PrintWriter(new FileWriter("E:/test/test.txt",true));
-			fr = new FileReader("E:/test/test.txt");
+			pw = new PrintWriter(new FileWriter("D:/test/test.txt", true));
+			fr = new FileReader("D:/test/test.txt");
 			br = new BufferedReader(fr);
-			
+
 			while ((line = br.readLine()) != null) {
 				if (line.equals(cData.getUserId())) { // id비교
-					return false;			// 등록된 아이디가 있으면 실패
+					return false; // 등록된 아이디가 있으면 실패
 				}
 			}
-			if(teamMatch(cData))
-			{
-				pw.println(cData.getUserId());		// userID input
+			if (teamMatch(cData)) {
+				pw.println(cData.getUserId()); // userID input
 				cData.setTeamOK(true);
-			}else{
+			} else {
 				cData.setTeamOK(false);
 				return false;
 			}
@@ -101,35 +98,30 @@ public class GameLogin extends Thread {
 		return true;
 
 	}
-	
+
 	// Team select Ok
-	public boolean teamMatch(ClientData cData){
+	public boolean teamMatch(ClientData cData) {
 		String team = cData.getTeamName();
-		if(team.equals("Blue"))
-		{
-			if(GameServer.blueTeam.size()<3){
-				
-				// 블루팀 들어온 상황 확인. 
+		if (team.equals("Blue")) {
+			if (GameServer.blueTeam.size() < 3) {
+
+				// 블루팀 들어온 상황 확인.
 				GameServer.blueTeam.put(cData.getUserId(), socket);
 				return true;
-			}
-			else{
+			} else {
 				return false;
 			}
-		}
-		else if(team.equals("Red")){
-			if(GameServer.redTeam.size()<3){
-				
-				//	Red팀이 들어온 상황 확인.
+		} else if (team.equals("Red")) {
+			if (GameServer.redTeam.size() < 3) {
+
+				// Red팀이 들어온 상황 확인.
 				GameServer.redTeam.put(cData.getUserId(), socket);
 				return true;
-			}
-			else{
+			} else {
 				return false;
 			}
 
-		}
-		else{
+		} else {
 			return false;
 		}
 	}

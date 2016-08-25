@@ -38,16 +38,19 @@ public class ChatPanel extends JPanel {
 	// 채팅보여지는 창
 	public void chatShowText() {
 		chatField = new JTextArea("");
-		JScrollPane sp = new JScrollPane(chatField);
-		sp.setBounds(0, 0, 600, 170);
-		sp.setOpaque(false);
-		sp.setBackground(new Color(0.5f, 0.3f, 0.1f, 0.5f));
-		sp.setBorder(BorderFactory.createEmptyBorder());
-		this.add(sp);
+		//JScrollPane sp = new JScrollPane(chatField);
+		chatField.setBounds(0, 0, 600, 170);
+		chatField.setBackground(new Color(0.5f, 0.3f, 0.1f, 0.5f));
+		chatField.setBorder(BorderFactory.createEmptyBorder());
+//		sp.setOpaque(false);
+//		sp.setBackground(new Color(0.5f, 0.3f, 0.1f, 0.5f));
+//		sp.setBorder(BorderFactory.createEmptyBorder());
+		this.add(chatField);
 	}
 	//채팅창에 업로드
 	public void chatAppendMsg(ClientData cdata){
 		chatField.append(cdata.getUserId()+" : "+cdata.getChatMsg()+"\n");
+		
 	}
 	
 	// 채팅 입력하는 창

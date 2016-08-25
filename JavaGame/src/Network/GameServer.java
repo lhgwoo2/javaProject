@@ -56,6 +56,7 @@ class GameServerThread extends Thread{
 			while (true) {
 				Data= fromClient.readObject();
 				boardCast(Data);
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
