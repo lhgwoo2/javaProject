@@ -37,6 +37,7 @@ public class FirstBall extends BufferedImage {
 	}
 
 	public void loop() {
+		//공 
 		x += xspeed;
 		y += yspeed;
 		yspeed += 1;
@@ -50,20 +51,28 @@ public class FirstBall extends BufferedImage {
 		if (x <= 0) {
 			x = 0; xspeed = -xspeed;
 		}
-		for(int i=0;i<MainPanel.brick.size();i++){
-			bx =MainPanel.brick.get(i).x;
-			by =MainPanel.brick.get(i).y;
-			bw =MainPanel.brick.get(i).w;
-			bh =MainPanel.brick.get(i).h;
-			if(MainPanel.GetDistance(x+60,y+60,bx+bw/2,by+bh/2)<=this.getWidth()/2+bh){
-				yspeed = -yspeed;
-			}
-			
-		}	
+		//공
+		
+		//공와 총알 충돌 탐지
+		if (MainPanel.GetDistance(MainFrame.bux, MainFrame.buy,x + 60, y + 60) <= 72.5) { 
+			MainPanel.fbx =x;
+			MainPanel.fby =y;
+			MainFrame.mp.secondBall();
+			fbswitch = true;
+		}
+		//공와 총알 충돌 탐지
+		
+		//벽돌과 볼 충돌탐지
+		
+		
+		
+		//벽돌과 볼 충돌탐지
+		
 	}
 
 	public void draw(Graphics2D g2d) {
 		g2d.drawImage(this, (int) x, (int) y, null);
 
 	}
+	
 }

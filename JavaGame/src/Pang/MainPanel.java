@@ -51,7 +51,7 @@ public class MainPanel extends JPanel  {
 	
 	public MainPanel(){
 		setLayout(null);
-		setBounds(0, 50, 1800, 900);
+		setBounds(0, 50, 1600, 900);
 		setBackground(Color.WHITE);
 		ch = new Character(this); //캐릭터 클래스 
 		firstBall(); //첫번째 공 메소드
@@ -110,6 +110,7 @@ public class MainPanel extends JPanel  {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		if(ch!=null) ch.draw(g2d); //캐릭터를 그린다. 
+
 		if (bullet.size() > 0) {
 			for (int i = 0; i < bullet.size(); i++) {
 				if (!bullet.get(i).bool) bullet.get(i).draw(g2d); // 총알의 좌표를 계속 패널에 그린다.

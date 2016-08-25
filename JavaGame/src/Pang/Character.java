@@ -22,6 +22,7 @@ public class Character extends BufferedImage  {
 	int c = 90;
 	int d = 360;
 	JPanel j;
+	boolean bool ;
 
 	public Character(JPanel j){
 	    super(40, 40, BufferedImage.TYPE_INT_ARGB);
@@ -47,23 +48,28 @@ public class Character extends BufferedImage  {
 			c=90;				
 		}
 		
+/*		if (MainPanel.GetDistance(MainPanel.fbx, MainPanel.fby,x + 60, y + 60) <= 72.5) { 
+			MainPanel.fbx =x;
+			MainPanel.fby =y;
+			MainFrame.mp.secondBall();
+			fbswitch = true;
+		}
+		*/
+		
 	}
 	public void draw(Graphics2D g2d) { //캐릭터가 패널 밖으로 나가는순간 어떻게해야 할지 모르겠음.
 		AffineTransform old = g2d.getTransform(); //유사 변환 행렬 변환에 대한정보를 가지고 있는 객체이다. 붓의 초기 위치 값을 가지고 있다 
 		g2d.translate(j.getWidth()/2+MainPanel.chx, j.getHeight()-80);
+		double x = j.getWidth() / 2 + MainPanel.chx;
 
-		if (j.getWidth() / 2 + MainPanel.chx <= 0 || j.getWidth() / 2 + MainPanel.chx >= j.getWidth() - 80) {
-			if (j.getWidth() / 2 + MainPanel.chx >= j.getWidth() - 80 || j.getWidth() / 2 + MainPanel.chx <= 0) {
-				if (j.getWidth() / 2 + MainPanel.chx >= j.getWidth() - 80) {
-					MainPanel.chx = 810;
-					g2d.translate(MainPanel.chx, j.getHeight() / 2);
-				}
-				if (j.getWidth() / 2 + MainPanel.chx <= 0) {
-					MainPanel.chx = -j.getWidth() / 2 + 10;
-					g2d.translate(MainPanel.chx, j.getHeight() / 2);
-				}
-			}
+		if (x >= j.getWidth() - 80) {
+			MainPanel.chx = 710;
+			g2d.translate(MainPanel.chx, j.getHeight() -80);
+		} else if (x <= 0) {
+			MainPanel.chx = -j.getWidth() / 2 + 10;
+			g2d.translate(MainPanel.chx, j.getHeight() -80);
 		}
+
 		g2d.drawImage(img, 0, 0,90,90,a,b,c,d,null);
 		g2d.setTransform(old); //붓을 원래위치로 ㅊ초기화
 	}

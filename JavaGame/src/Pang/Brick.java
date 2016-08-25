@@ -16,6 +16,7 @@ public class Brick extends BufferedImage {
 	JPanel j;
 	
 	public Brick(JPanel j,int w,int h,double x,double y,Color color) {
+		
 		super(w, h, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2d = (Graphics2D) getGraphics();
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -25,6 +26,7 @@ public class Brick extends BufferedImage {
 		this.x=x;
 		this.y=y;
 		this.w=w;
+		this.h=h;
 
 	}
 	

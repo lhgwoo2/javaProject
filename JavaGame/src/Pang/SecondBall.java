@@ -57,6 +57,13 @@ public class SecondBall extends BufferedImage {
 			x = 0;
 			xspeed = -xspeed;
 		}
+		
+		if (MainPanel.GetDistance(MainFrame.bux, MainFrame.buy,x + 40, y + 40) <= 52.5) {
+			MainPanel.sbx =x;
+			MainPanel.sby =y;
+			MainFrame.mp.thirdBall();
+			sbswitch = true;
+		}
 	}
 
 	public void draw(Graphics2D g2d) {

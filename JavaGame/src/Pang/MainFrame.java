@@ -1,12 +1,14 @@
 package Pang;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 public class MainFrame extends JFrame {
-	double bux;
-	double buy;
+	static double bux;
+	static double buy;
+	static MainPanel mp;
 
 	public MainFrame() {
 		super("팡팡");
@@ -16,7 +18,7 @@ public class MainFrame extends JFrame {
 
 		setVisible(true);
 
-		MainPanel mp = new MainPanel();
+		mp = new MainPanel();
 		this.add(mp);
 		mp.requestFocusInWindow();
 
@@ -24,55 +26,35 @@ public class MainFrame extends JFrame {
 			@Override
 			public void run() {
 				while (true) {
-					
-					if(MainPanel.bullet.size()>-1){// 총알 루프
-						for (int i = 0; i < MainPanel.bullet.size(); i++) {// 총알 루프
+
+					if (MainPanel.bullet.size() > -1) {// 총알 루프
+						for (int i = 0; i < MainPanel.bullet.size(); i++) {
 							MainPanel.bullet.get(i).loop();
-							bux=MainPanel.bullet.get(i).x+12.5;
-							buy= MainPanel.bullet.get(i).y+12.5;
+
 						}
 					}
-
 					if (MainPanel.fb.size() > 0) {
 						for (int i = 0; i < MainPanel.fb.size(); i++) {
 							if (!MainPanel.fb.get(i).fbswitch) {
-								MainPanel.fb.get(i).loop();
-								MainPanel.fbx = MainPanel.fb.get(i).x;
-								MainPanel.fby = MainPanel.fb.get(i).y;
-								if (MainPanel.GetDistance(bux, buy,MainPanel.fbx + 60, MainPanel.fby + 60) <= 72.5) {
-									mp.secondBall();
-									MainPanel.fb.get(i).fbswitch = true;
-								}
+									MainPanel.fb.get(i).loop();
 							}
 						}
 					}
-
-					if (MainPanel.sb.size() > 0) { //두번째볼
+					if (MainPanel.sb.size() > 0) { // 두번째볼
 						for (int i = 0; i < MainPanel.sb.size(); i++) {
 							if (!MainPanel.sb.get(i).sbswitch) {
-								MainPanel.sb.get(i).loop();
-								MainPanel.sbx = MainPanel.sb.get(i).x;
-								MainPanel.sby = MainPanel.sb.get(i).y;
-								if (MainPanel.GetDistance(bux, buy ,MainPanel.sbx + 40, MainPanel.sby + 40) <= 52.5) {
-									mp.thirdBall();
-									MainPanel.sb.get(i).sbswitch = true;
-								}
+									MainPanel.sb.get(i).loop();
 							}
 						}
 					}
-					if (MainPanel.tb.size() > 0) { //세번째볼
+					if (MainPanel.tb.size() > 0) { // 세번째볼
 						for (int i = 0; i < MainPanel.tb.size(); i++) {
 							if (!MainPanel.tb.get(i).tbswitch) {
-								MainPanel.tb.get(i).loop();
-								MainPanel.tbx = MainPanel.tb.get(i).x;
-								MainPanel.tby = MainPanel.tb.get(i).y;
-								if (MainPanel.GetDistance(bux, buy,MainPanel.tbx + 20, MainPanel.tby + 20) <= 32.5) {
-									MainPanel.tb.get(i).tbswitch = true;
-								}
+									MainPanel.tb.get(i).loop();
 							}
 						}
 					}
-					repaint();			//리풰인트~~~~~~~		
+					repaint(); // 리풰인트~~~~~~~
 					try {
 						Thread.sleep(30);
 					} catch (Exception e) {
