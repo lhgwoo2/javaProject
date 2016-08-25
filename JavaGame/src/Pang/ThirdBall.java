@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
 public class ThirdBall extends BufferedImage {
-	
+	//1
 	double x;
 	double y;
 	double xspeed;

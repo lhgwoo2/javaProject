@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 
 public class Character extends BufferedImage  {
 	
-
+	//1
 	Image img;
 	int a =0;
 	int b =288;

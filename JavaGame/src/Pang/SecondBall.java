@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import javax.swing.JPanel;
-
+//1
 public class SecondBall extends BufferedImage {
 	Random rd = new Random();
 	double x;

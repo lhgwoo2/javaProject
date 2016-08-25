@@ -23,7 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class MainPanel extends JPanel  {
-	
+	//1
 	static Character ch ; 			//캐릭터 클래스
 	static double chx; 					//Character 의 x 좌표
 	//static Bullet bu; 				//총알 클래스 

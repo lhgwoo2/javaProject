@@ -9,7 +9,7 @@ public class MainFrame extends JFrame {
 	static double bux;
 	static double buy;
 	static MainPanel mp;
-
+	//1
 	public MainFrame() {
 		super("ÆÎÆÎ");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

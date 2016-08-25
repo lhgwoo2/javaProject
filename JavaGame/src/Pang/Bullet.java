@@ -15,7 +15,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class Bullet extends BufferedImage {
-
+	//1
 	Random rd = new Random();
 	Image img;
 	double x;
