@@ -32,7 +32,7 @@ public class LoginPanel extends JPanel {
 	JRadioButton bjb;
 	JRadioButton bjb2;
 	JButton entB;
-	GameClient gClient;
+	static GameClient gClient;
 
 	public LoginPanel(MainPanel mp,LoadingPanel ldp) {
 		super();

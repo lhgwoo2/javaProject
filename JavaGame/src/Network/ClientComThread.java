@@ -33,16 +33,24 @@ public class ClientComThread extends Thread {
 					//모든 팀 입장 게임화면 진입.
 					if (cData.isAllTeamOK()) {
 						mp.drawingPlayImage();
+						mp.eventKey();		//이벤트 처리를 위한 키보드사용
 						mp.add(cp);
 						mp.repaint();
 					}
 					if(cData.getChatMsg()!=null){
 						cp.chatAppendMsg(cData);
-						mp.repaint();
+						cp.repaint();
 					}
 
 				} else if (obj instanceof GameData) {
 					GameData gData = (GameData) obj;
+					if(gData.getChx()!=0)
+					{
+						mp.pCharac.chx+=gData.getChx();
+						mp.pCharac.loop();
+						mp.repaint();
+					}
+					
 				}
 
 				/*

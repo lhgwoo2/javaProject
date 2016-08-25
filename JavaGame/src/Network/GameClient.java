@@ -62,7 +62,7 @@ public class GameClient {
 			clientId = cData.getUserId();
 			str = String.format("Red Team : %d/3\nBlue Team: %d/3", cData.getClientRedNum(), cData.getClientBlueNum());
 			JOptionPane.showMessageDialog(mp, str);
-			new ClientComThread(socket, mp,this).start();
+			new ClientComThread(socket, mp, this).start();
 			if (cData.getClientBlueNum() == 3 && cData.getClientRedNum() == 3) {
 				try {
 					// 모든 팀원들이 들어와서 모두 매칭되었다. 서버로 신호를 보냄 -> 서버에서 다시 모든 클라이언트로 값을
@@ -99,5 +99,16 @@ public class GameClient {
 
 	}
 
-}
+	// 게임 데이터를 보낸다.
+	public void sendGameData(GameData gData) {
 
+		try {
+			toServer.writeObject(gData);
+			toServer.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+}

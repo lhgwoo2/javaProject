@@ -3,9 +3,15 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashSet;
+import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -14,13 +20,19 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.Timer;
+
+import Network.GameData;
 
 public class MainPanel extends JPanel{
 	
-	BufferedImage bimg;
-	Graphics2D g2d;
-	JFrame f;
-	
+	public BufferedImage bimg;
+	public Graphics2D g2d;
+	public JFrame f;
+	public PlayCharacter pCharac;		// 캐릭터 클래스
+	public HashSet<Integer> keyCodes = new HashSet<>();
+	public Timer timer;
+
 	public MainPanel(JFrame f) {
 		super();
 		this.setBounds(0, 50, 1600, 900);
@@ -30,6 +42,57 @@ public class MainPanel extends JPanel{
 		
 		repaint();
 		drawingMainImage();
+		
+	}
+	public void eventKey(){
+		// 캐릭터를 생성한다.
+		pCharac = new PlayCharacter(this);
+		
+		//보낼 데이터 객체 생성
+		GameData gData = new GameData();
+		// 키보드 타이머를 줌으로써 중복된 키가 안눌리도록 한다.
+				timer = new Timer(50, new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						//데이터 객체 초기화
+						gData.setChx(0);
+						Iterator<Integer> it = keyCodes.iterator();
+						if(it.hasNext()){
+							int keyCode = it.next();
+							switch(keyCode){
+							case KeyEvent.VK_A : 
+								gData.setChx(-10);
+								LoginPanel.gClient.sendGameData(gData);
+								break;
+							case KeyEvent.VK_D : 
+								gData.setChx(+10);
+								LoginPanel.gClient.sendGameData(gData);
+								break;
+							}
+						}
+					}
+				});
+				
+				// adapter는 내가 원하는 메소드만 사용하여 첨부할수 있다.
+				// 그러나 listener는 3개의 메소드 모드 사용해야 한다.
+				this.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyPressed(KeyEvent e) {
+						
+						int keyCode = e.getKeyCode();
+						keyCodes.add(keyCode);
+						if(!timer.isRunning()) timer.start();
+						// 키보드가 눌릴때 타이머가 작동함. 기능정지
+					}
+					
+					@Override
+					public void keyReleased(KeyEvent e){
+						int keyCode = e.getKeyCode();
+						keyCodes.remove(keyCode);
+						if(timer.isRunning())timer.stop();
+						//키보드가 떨어질때 타이머가 해제됨.정지해제
+					}
+				});
 		
 	}
 	
@@ -73,6 +136,9 @@ public class MainPanel extends JPanel{
 		super.paintComponent(g);
 		g2d = (Graphics2D)g;
 		g2d.drawImage(bimg,0,0,1600,900,null);
+		
+		//캐릭터를 그린다.
+		if(pCharac!=null)pCharac.draw(g2d);
 	}
 
 }
