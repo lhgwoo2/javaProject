@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
 public class ThirdBall extends BufferedImage {
-	//1
+	
 	double x;
 	double y;
 	double xspeed;
@@ -54,16 +54,26 @@ public class ThirdBall extends BufferedImage {
 			x = 0;
 			xspeed = -xspeed;
 		}
-
+		//공와 총알 충돌 탐지
+		MainPanel.tbx =x;
+		MainPanel.tby =y;
 		if (MainPanel.GetDistance(MainFrame.bux, MainFrame.buy,x + 20, y + 20) <= 32.5) {
-			MainPanel.tbx =x;
-			MainPanel.tby =y;
 			tbswitch = true;
 		}
+		//공와 총알 충돌 탐지
+		
+		//캐릭터와 볼의 충돌 탐지
+		if (MainPanel.GetDistance(MainPanel.tbx + 20, MainPanel.tby + 20, j.getWidth() / 2 + MainPanel.chx,j.getHeight() - 80) <= 20) {
+			Character.isDead = true;
+			Character.DeadTime = System.currentTimeMillis();
+		}
+		//캐릭터와 볼의 충돌 탐지
 	}
 	
 	public void draw(Graphics2D g2d) {
-		g2d.drawImage(this, (int) x, (int) y, null);
+		if(!tbswitch){
+			g2d.drawImage(this, (int) x, (int) y, null);
+		}
 
 	}
 

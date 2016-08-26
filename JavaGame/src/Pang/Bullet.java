@@ -15,7 +15,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class Bullet extends BufferedImage {
-	//1
+
 	Random rd = new Random();
 	Image img;
 	double x;
@@ -83,11 +83,11 @@ public class Bullet extends BufferedImage {
 	}
 	
 	public void draw(Graphics2D g2d){
-
-		AffineTransform old = g2d.getTransform();
-		g2d.translate((int)x, (int)y);
-		g2d.drawImage(img, 0, 0,90,90,a,b,c,d,null);
-		g2d.setTransform(old); //붓을 원래위치로 ㅊ초기화
-		
+		if (!bool){
+			AffineTransform old = g2d.getTransform();
+			g2d.translate((int)x, (int)y);
+			g2d.drawImage(img, 0, 0,90,90,a,b,c,d,null);
+			g2d.setTransform(old); //붓을 원래위치로 ㅊ초기화
+		}
 	}
 }
