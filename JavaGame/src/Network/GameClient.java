@@ -13,12 +13,14 @@ import GamePanel.MainPanel;
 
 public class GameClient {
 
-	ObjectOutputStream toServer;
-	ObjectInputStream fromServer;
-	Socket socket;
-	String clientId;
-	MainPanel mp;
-
+	public ObjectOutputStream toServer;
+	public ObjectInputStream fromServer;
+	public Socket socket;
+	public String clientId;
+	public MainPanel mp;
+	public int clientNumber;		// 클라이언트 캐릭터 번호
+	public String teamColor;		// 팀 칼라
+	
 	public GameClient(MainPanel mp) {
 		this.mp = mp;
 	}
@@ -60,10 +62,13 @@ public class GameClient {
 		if (cData.isLoginOK()) {
 			loginOk = true;
 			clientId = cData.getUserId();
+			teamColor = cData.getTeamColor();		// 서버로부터 팀 배정
+			clientNumber = cData.getTeamNum();		// 서버로부터 팀순번 배정
+			
 			str = String.format("Red Team : %d/3\nBlue Team: %d/3", cData.getClientRedNum(), cData.getClientBlueNum());
 			JOptionPane.showMessageDialog(mp, str);
 			new ClientComThread(socket, mp, this).start();
-			if (cData.getClientBlueNum() == 3 && cData.getClientRedNum() == 3) {
+			if (cData.getClientBlueNum() == 2 /*&& cData.getClientRedNum() == 3*/) {
 				try {
 					// 모든 팀원들이 들어와서 모두 매칭되었다. 서버로 신호를 보냄 -> 서버에서 다시 모든 클라이언트로 값을
 					// 보내어 게임에 입장하도록 함.

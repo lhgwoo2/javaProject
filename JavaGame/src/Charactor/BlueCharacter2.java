@@ -1,4 +1,4 @@
-package GamePanel;
+package Charactor;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -13,7 +13,7 @@ import java.io.InputStream;
 import javax.imageio.ImageIO; 
 import javax.swing.JPanel;
 
-public class PlayCharacter extends BufferedImage  {
+public class BlueCharacter2 extends BufferedImage  {
 	
 	//1
 	Image img;
@@ -26,7 +26,7 @@ public class PlayCharacter extends BufferedImage  {
 	public double chx;	//캐릭터의 x좌표
 	
 	
-	public PlayCharacter(JPanel j){
+	public BlueCharacter2(JPanel j){
 	    super(40, 40, BufferedImage.TYPE_INT_ARGB);
 		this.j = j;
 		InputStream is = getClass().getResourceAsStream("123.png"); //내가 불러온 이미지를 InputStream 형으로 받아온다.
@@ -61,15 +61,15 @@ public class PlayCharacter extends BufferedImage  {
 	}
 	public void draw(Graphics2D g2d) { //캐릭터가 패널 밖으로 나가는순간 어떻게해야 할지 모르겠음.
 		AffineTransform old = g2d.getTransform(); //유사 변환 행렬 변환에 대한정보를 가지고 있는 객체이다. 붓의 초기 위치 값을 가지고 있다 
-		g2d.translate(j.getWidth()/2+chx, j.getHeight()-80);
+		g2d.translate(j.getWidth()/2+chx, j.getHeight()-500);
 		double x = j.getWidth() / 2 + chx;
 
 		if (x >= j.getWidth() - 80) {
 			chx = 710;
-			g2d.translate(chx, j.getHeight() -80);
+			g2d.translate(chx, j.getHeight() -500);
 		} else if (x <= 0) {
 			chx = -j.getWidth() / 2 + 10;
-			g2d.translate(chx, j.getHeight() -80);
+			g2d.translate(chx, j.getHeight() -500);//-80
 		}
 
 		g2d.drawImage(img, 0, 0,90,90,a,b,c,d,null);

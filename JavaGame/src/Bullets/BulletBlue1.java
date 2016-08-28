@@ -1,7 +1,6 @@
-package Pang;
+package Bullets;
 
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
@@ -14,29 +13,30 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public class Bullet extends BufferedImage {
+public class BulletBlue1 extends BufferedImage implements Bullets{
 
 	Random rd = new Random();
 	Image img;
-	public double x;			
-	public double y;
-	public double xspeed;
-	public double yspeed;
+	double x;
+	double y;
+	double xspeed;
+	double yspeed;
 	JPanel j;
 	double bx; // 벽돌x
 	double by; // 벽돌y
 	double bw; // 벽돌 가로 크기
 	double bh; // 벽돌 세로 크기
-	public boolean bool;
-	public int a =0;
-	public int b =288;
-	public int c = 90;
-	public int d = 360;
+	boolean bool;
+	int a =0;
+	int b =288;
+	int c = 90;
+	int d = 360;
 	
 
-	public Bullet(){
+	public BulletBlue1(){
 	      super(40, 40, BufferedImage.TYPE_INT_ARGB);
-
+	      
+	      
 	      Graphics2D g2d = (Graphics2D) getGraphics();
 	      g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -48,12 +48,13 @@ public class Bullet extends BufferedImage {
 	        }
 	        g2d.drawImage(img, 0, 0,90,90,a,b,c,d,null);
 	}
-	public Bullet(double x, double y, double yspeed, JPanel j) {
+	public BulletBlue1(double x, double y, double yspeed, JPanel j) {
 		this();
-		this.x = x;				//생성시작위치 x
-		this.y = y;				//생성시작위치 y
-		this.yspeed = yspeed;		//총알 속도
+		this.x = x;
+		this.y = y;
+		this.yspeed = yspeed;
 		this.j = j;
+		bool = false;		// 처음 총알을 그리도록 한다.
 	}
 	
 	public void loop() { // x좌표는 캐릭터의 x 좌표임.
@@ -61,7 +62,7 @@ public class Bullet extends BufferedImage {
 		if (y <= 0) {
 			bool = true;
 		}
-		for (int i = 0; i < MainPanel.brick.size(); i++) {
+		/*for (int i = 0; i < MainPanel.brick.size(); i++) {
 			bx = MainPanel.brick.get(i).x;
 			by = MainPanel.brick.get(i).y;
 			bw = MainPanel.brick.get(i).w;
@@ -70,11 +71,11 @@ public class Bullet extends BufferedImage {
 				this.y=j.getHeight()+50;
 				bool = true;
 			}
-		}
-		MainFrame.bux = x + 12.5;
-		MainFrame.buy = y + 12.5;
+		}*/
+		//MainFrame.bux = x + 12.5;		//아직 뭔지 감이 안옴
+		//MainFrame.buy = y + 12.5;
 		
-		a+=90;
+		a+=90;							//총알이미지의 변환
 		c+=90;
 		if(a==450){
 			a=0;
@@ -89,5 +90,19 @@ public class Bullet extends BufferedImage {
 			g2d.drawImage(img, 0, 0,90,90,a,b,c,d,null);
 			g2d.setTransform(old); //붓을 원래위치로 ㅊ초기화
 		}
+	}
+	public void initBullet(boolean bool){
+		 this.bool=bool;
+	}
+	public boolean getBulletBool(){
+		return this.bool;
+	}
+	public void initBulletX(double initX)
+	{
+		x= initX;
+	}
+	public void initBulletY(double initY)
+	{
+		y= initY;
 	}
 }

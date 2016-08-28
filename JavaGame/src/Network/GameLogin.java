@@ -16,6 +16,8 @@ public class GameLogin extends Thread {
 	ObjectInputStream fromClient;
 	ObjectOutputStream toClient;
 	Socket socket;
+	//플레이어들어온 수 확인
+	int playerNumber;
 
 	public GameLogin(Socket socket) {
 		super();
@@ -46,7 +48,7 @@ public class GameLogin extends Thread {
 					toClient.writeObject(cData);
 					toClient.flush();
 					GameServer.userMap.put(cData.getUserId(), socket);
-					new GameServerThread(fromClient, socket).start();
+					new GameServerThread(fromClient, socket,playerNumber).start();
 					break;
 
 				} else {
@@ -107,6 +109,10 @@ public class GameLogin extends Thread {
 
 				// 블루팀 들어온 상황 확인.
 				GameServer.blueTeam.put(cData.getUserId(), socket);
+				// 현재들어온 이용자 자신의 순번과 팀 파악을 위한 데이터 전송 - 캐릭터배정을 위한
+				cData.setTeamColor("Blue");
+				cData.setTeamNum(GameServer.blueTeam.size());
+				playerNumber+=1;		//입장한 플레이어 추가
 				return true;
 			} else {
 				return false;
@@ -116,6 +122,10 @@ public class GameLogin extends Thread {
 
 				// Red팀이 들어온 상황 확인.
 				GameServer.redTeam.put(cData.getUserId(), socket);
+				// 현재들어온 이용자 자신의 순번과 팀 파악을 위한 데이터 전송 - 캐릭터배정을 위한
+				cData.setTeamColor("Red");
+				cData.setTeamNum(GameServer.redTeam.size());
+				playerNumber+=1;		//입장한 플레이어 추가
 				return true;
 			} else {
 				return false;
