@@ -42,10 +42,16 @@ public class ClientComThread extends Thread {
 						cp.repaint();
 					}
 
-				} else if (obj instanceof GameData) {
-					GameData gData = (GameData) obj;
+				} else if (obj instanceof GameBroadData) {
+					GameBroadData gbData = (GameBroadData) obj;
 					//캐릭터가 이동하여 좌표변경하여 다시 그려준다.
-					if(gData.getChx()!=0)
+					mp.bCharac1.chx+=gbData.getBlueP1x();
+					mp.bCharac2.chx+=gbData.getBlueP2x();
+					mp.bCharac1.loop();
+					mp.bCharac2.loop();
+					mp.repaint();
+					
+					/*if(gData.getChx()!=0)
 					{
 						if(gData.getTeamColor().equals("Blue"))
 						{
@@ -63,7 +69,7 @@ public class ClientComThread extends Thread {
 							}
 						}
 						
-					}
+					}*/
 					
 				}
 

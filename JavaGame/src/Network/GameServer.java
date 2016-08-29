@@ -62,13 +62,14 @@ class GameServerThread extends Thread{
 
 			while (true) {
 				Data= fromClient.readObject();
-
+				
+				//게임데이터만 분리하여 로직쓰레드로 보냄.
 				if (Data instanceof GameData) {
 					GameData gData = (GameData) Data;
 					GameLogicThread.serverSetData(gData);
 				}
 				else
-				boardCast(Data);
+				broadCast(Data);
 				
 			}
 		} catch (Exception e) {
@@ -77,7 +78,7 @@ class GameServerThread extends Thread{
 
 	}
 
-	public void boardCast(Object d) {
+	public void broadCast(Object d) {
 		Set<String> keys = GameServer.userMap.keySet();
 		Iterator<String> it = keys.iterator();
 		while (it.hasNext()) {
@@ -94,7 +95,7 @@ class GameServerThread extends Thread{
 			}
 		}
 	}
-	public void gDataboardCast(GameData d) {
+	public static void gDatabroadCast(GameBroadData d) {
 		Set<String> keys = GameServer.userMap.keySet();
 		Iterator<String> it = keys.iterator();
 		while (it.hasNext()) {

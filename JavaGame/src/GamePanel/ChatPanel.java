@@ -52,7 +52,9 @@ public class ChatPanel extends JPanel {
 		sp.setBounds(0, 0, 600, 170);
 		sp.setBackground(new Color(0.5f, 0.3f, 0.1f, 0.5f));
 		sp.setBorder(BorderFactory.createEmptyBorder());
+
 		
+		// sp.setOpaque(false);
 		// sp.setBackground(new Color(0.5f, 0.3f, 0.1f, 0.5f));
 		// sp.setBorder(BorderFactory.createEmptyBorder());
 		this.add(sp);
@@ -74,7 +76,7 @@ public class ChatPanel extends JPanel {
 		ttf.setBounds(0, 170, 600, 30);
 		ttf.setForeground(Color.white); // 텍스트 필드 폰트 색상변경
 		ttf.setOpaque(false);
-		ttf.setBackground(new Color(0.5f, 0.3f, 0.1f, 0.5f));
+		ttf.setBackground(new Color(0.5f, 0.3f, 0.1f, 0.7f));
 		ttf.setColumns(50);
 		this.add(ttf);
 
