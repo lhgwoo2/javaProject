@@ -28,7 +28,7 @@ public class GameClient {
 	// 한개에 프로그램에 접속하는 것으로 고정아이피, 고정포트넘버사용
 	public boolean connect() {
 		try {
-			socket = new Socket("127.0.0.1", 1234);
+			socket = new Socket("192.168.2.13", 1234);
 			System.out.println("Server Connectted");
 			return true;
 		} catch (IOException e) {

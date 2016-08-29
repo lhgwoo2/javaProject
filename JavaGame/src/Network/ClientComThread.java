@@ -22,7 +22,7 @@ public class ClientComThread extends Thread {
 
 	@Override
 	public void run() {
-		cp = new ChatPanel(gc);
+		cp = new ChatPanel(gc,mp);
 		while (true) {
 			try {
 				fromServer = new ObjectInputStream(socket.getInputStream());
@@ -47,8 +47,8 @@ public class ClientComThread extends Thread {
 					//캐릭터가 이동하여 좌표변경하여 다시 그려준다.
 					mp.bCharac1.chx+=gbData.getBlueP1x();
 					mp.bCharac2.chx+=gbData.getBlueP2x();
-					mp.bCharac1.loop();
-					mp.bCharac2.loop();
+					//mp.bCharac1.loop();
+					//mp.bCharac2.loop();
 					mp.repaint();
 					
 					/*if(gData.getChx()!=0)
@@ -72,18 +72,7 @@ public class ClientComThread extends Thread {
 					}*/
 					
 				}
-
-				/*
-				 * if (uData.getFileDate() != null) { // Client.fileSave(uData);
-				 * WinMain.dp = new DrawingPanel(uData.getFileDate());
-				 * WinMain.dp.setBounds(400, 100, 600, 480);
-				 * WinMain.f.add(WinMain.dp); WinMain.dp.repaint();
-				 * WinMain.ta.append(uData.getUserId() + " : " +
-				 * uData.getFileName() + "\n"); } else
-				 * WinMain.ta.append(uData.getUserId() + " : " + uData.getMsg()
-				 * + "\n");
-				 * 
-				 */ } catch (Exception e) {
+				} catch (Exception e) {
 				e.printStackTrace();
 			}
 

@@ -24,11 +24,13 @@ public class ChatPanel extends JPanel {
 	JTextField ttf;
 	// TransparentTextField ttf;
 	GameClient gc;
+	MainPanel mp;
 	private Font font1 = new Font("Serif", Font.PLAIN, 15);
 
-	public ChatPanel(GameClient gc) {
+	public ChatPanel(GameClient gc, MainPanel mp) {
 		super();
 		this.gc = gc;
+		this.mp = mp;
 		this.setBackground(new Color(0.5f, 0.3f, 0.1f, 0.5f));
 		this.setLayout(null);
 		this.setBounds(0, 700, 600, 200);
@@ -98,6 +100,11 @@ public class ChatPanel extends JPanel {
 					ttf.setText("");
 					ttf.setEnabled(false);
 					// ttf.requestFocus(); //
+					
+					//게임화면의 포커스를 맞추어준다.
+					mp.setFocusable(true);			// 메인패널의 포커스를 맟추어준다
+					mp.requestFocus();				// 포커스를 요청한다.
+					
 				}
 			}
 

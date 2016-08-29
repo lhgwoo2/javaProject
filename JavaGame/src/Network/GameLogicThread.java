@@ -3,13 +3,13 @@ package Network;
 public class GameLogicThread extends Thread {
 
 	//캐릭터별 x좌표
-	public static double blueP1x;
-	public static double blueP2x;
-	public static double blueP3x;
+	public static double blueP1x=0.0;
+	public static double blueP2x=0.0;
+	public static double blueP3x=0.0;
 	
-	public static double redP1x;
-	public static double redP2x;
-	public static double redP3x;
+	public static double redP1x=0.0;
+	public static double redP2x=0.0;
+	public static double redP3x=0.0;
 	
 	//각캐릭터 총알 좌표
 	public static double blueBulletX1;
@@ -47,6 +47,9 @@ public class GameLogicThread extends Thread {
 			GameBroadData gbData = new GameBroadData();
 			gbData.setBlueP1x(blueP1x);
 			gbData.setBlueP2x(blueP2x);
+			
+			blueP1x = 0;		//캐릭터 속도초기화
+			blueP2x = 0;		//캐릭터 속도초기화
 			GameServerThread.gDatabroadCast(gbData);
 			try {
 				Thread.sleep(30);

@@ -86,6 +86,9 @@ public class MainPanel extends JPanel {
 								gData.setTeamColor(teamColor);
 								gData.setTeamNum(teamNumber);
 								gData.setChx(-10);
+								bCharac1.loop();
+								bCharac2.loop();
+								
 								LoginPanel.gClient.sendGameData(gData);
 								break;
 							case KeyEvent.VK_D : 
@@ -94,6 +97,9 @@ public class MainPanel extends JPanel {
 								gData.setTeamColor(teamColor);
 								gData.setTeamNum(teamNumber);
 								gData.setChx(+10);
+								bCharac1.loop();
+								bCharac2.loop();
+								
 								LoginPanel.gClient.sendGameData(gData);
 								break;
 							case KeyEvent.VK_N:// 가상키 n , n를 누른경우! bullet 메소드를 부름.
