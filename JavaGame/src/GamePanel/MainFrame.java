@@ -20,7 +20,6 @@ public class MainFrame extends JFrame {
 		this.add(mp);
 		mp.requestFocusInWindow();
 		
-
 		// Loading Panel
 		//LoadingPanel ldp = new LoadingPanel();
 		

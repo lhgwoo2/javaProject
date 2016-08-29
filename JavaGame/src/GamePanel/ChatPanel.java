@@ -52,7 +52,7 @@ public class ChatPanel extends JPanel {
 		sp.setBounds(0, 0, 600, 170);
 		sp.setBackground(new Color(0.5f, 0.3f, 0.1f, 0.5f));
 		sp.setBorder(BorderFactory.createEmptyBorder());
-		// sp.setOpaque(false);
+		
 		// sp.setBackground(new Color(0.5f, 0.3f, 0.1f, 0.5f));
 		// sp.setBorder(BorderFactory.createEmptyBorder());
 		this.add(sp);
@@ -63,7 +63,7 @@ public class ChatPanel extends JPanel {
 		
 		chatField.append(cdata.getUserId() + " : " + cdata.getChatMsg() + "\n");
 		chatField.setCaretPosition(chatField.getDocument().getLength()); // 스크롤
-																			// 자동이동
+																		// 자동이동
 
 	}
 
