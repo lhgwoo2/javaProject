@@ -53,6 +53,37 @@ public class ClientComThread extends Thread {
 					for(int i =0;i<mp.fb.size();i++){
 						mp.fb.get(i).loop();	
 					}
+					//총알 start
+					//블루1번총알 시작
+					if(gbData.isbP1bulletStart()){
+						mp. bP1bullet();
+					}
+					//블루1번총알 끝
+					
+					//블루2번총알 시작
+					if(gbData.isbP2bulletStart()){
+						mp. bP2bullet();
+					}
+					//블루2번총알 끝
+					//총알 end
+					
+					//총알 루프 시작
+					//블루 1번 총알 루프
+					for (int i = 0; i < mp.bullet.size(); i++) {
+						if (mp.bullet.size() > 0) {
+							mp.bullet.get(i).loop();// 총알의 좌표를 계속 패널에 그린다.
+						}
+					}
+					
+					//블루 2번 총알 루프
+					for (int i = 0; i < mp.bullet2.size(); i++) {
+						if (mp.bullet2.size() > 0) {
+							mp.bullet2.get(i).loop();// 총알의 좌표를 계속 패널에 그린다.
+						}
+					}
+					
+					//총알 루프 시작
+				
 					mp.repaint();
 					
 					/*if(gData.getChx()!=0)

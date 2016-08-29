@@ -20,8 +20,25 @@ public class GameBroadData implements Serializable{
 	private double blueBulletY3;
 	//전체 총알 속도
 	private double bulletSpeed;
+	
+	// 캐릭터 총알 시작
+	private boolean bP1bulletStart;	//블루 1번 총알이 발사 됬는지 확인함!
+	private boolean bP2bulletStart;	//블루 2번 총알이 발사 됬는지 확인함!
 
 	
+
+	public boolean isbP1bulletStart() {
+		return bP1bulletStart;
+	}
+	public void setbP1bulletStart(boolean bP1bulletStart) {
+		this.bP1bulletStart = bP1bulletStart;
+	}
+	public boolean isbP2bulletStart() {
+		return bP2bulletStart;
+	}
+	public void setbP2bulletStart(boolean bP2bulletStart) {
+		this.bP2bulletStart = bP2bulletStart;
+	}
 	public double getBlueP1x() {
 		return blueP1x;
 	}
