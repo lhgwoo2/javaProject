@@ -70,8 +70,8 @@ public class BoardDAO {
 				+ "WHERE rn between ? AND ?";
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, 10*page-9);
-			pstmt.setInt(2, page*10);
+			pstmt.setInt(1, 3*page-2);
+			pstmt.setInt(2, page*3);
 			rs = pstmt.executeQuery();
 			List<BoardVO> list = new ArrayList<>();
 			while (rs.next()) {
@@ -93,6 +93,58 @@ public class BoardDAO {
 		return null;
 		
 	}
+	//writing
+	public boolean insert(BoardVO gameboard){
+		conn = getConn();
+		String sql = 
+				"INSERT INTO gameboard "
+				+ "VALUES(board_num_seq2.NEXTVAL,?,?,'아이디1','red',1111,SYSDATE)";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, gameboard.getBoardTitle());
+			pstmt.setString(2, gameboard.getContent());
+
+
+			int n = pstmt.executeUpdate();
+
+			return n > 0 ? true : false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeAll();
+		}
+		return false;
+	}
+	public BoardVO getDetail(int boardNum){
+		System.out.println("접속");
+		conn = getConn();
+		String sql = "select BOARDTITLE,BOARDCONTENT,BOARDID,BOARDTEAM,BOARDSCORE,BOARDHIREDATE "
+				+ "from gameboard "
+				+ "where BOARDNUM = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNum);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				BoardVO BoardVO = new BoardVO();
+				BoardVO.setBoardTitle(rs.getString("BOARDTITLE"));
+				BoardVO.setContent(rs.getString("BOARDCONTENT"));
+				BoardVO.setBoardId(rs.getString("BOARDID"));
+				BoardVO.setBoardTeam(rs.getString("BOARDTEAM"));
+				BoardVO.setBoardScore(rs.getInt("BOARDSCORE"));
+				BoardVO.setBoardHiredate(rs.getDate("BOARDHIREDATE"));
+				return BoardVO;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeAll();
+		}
+		return null;
+	}
+	
 	//clsoeCode
 	public void closeAll() {
 		try {
