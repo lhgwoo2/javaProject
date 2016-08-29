@@ -45,7 +45,8 @@ public class ClientComThread extends Thread {
 				} else if (obj instanceof GameData) {
 					GameData gData = (GameData) obj;
 					if(gData.getChx()!=0)
-					{
+					{	
+						System.out.println("클라이언트에서 게임데이터 받음");
 						mp.pCharac.chx+=gData.getChx();
 						mp.pCharac.loop();
 						mp.repaint();

@@ -30,12 +30,13 @@ public class MainFrame extends JFrame {
 		lp.requestFocusInWindow();
 		
 		
-		/*new Thread() {
+		new Thread() {
 			@Override
 			public void run() {
 				super.run();
 				while (true) {
-					repaint();
+				repaint();
+					
 					try {
 						Thread.sleep(30);
 					} catch (InterruptedException e) {
@@ -44,7 +45,7 @@ public class MainFrame extends JFrame {
 				}
 			}
 		}.start();
-*/	}
+	}
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

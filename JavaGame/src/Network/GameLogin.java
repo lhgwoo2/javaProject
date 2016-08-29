@@ -74,8 +74,8 @@ public class GameLogin extends Thread {
 
 		try {
 			System.out.println("파일에서 로그인 매치하는 곳");
-			pw = new PrintWriter(new FileWriter("E:/test/test.txt", true));
-			fr = new FileReader("E:/test/test.txt");
+			pw = new PrintWriter(new FileWriter("D:/test/test.txt", true));
+			fr = new FileReader("D:/test/test.txt");
 			br = new BufferedReader(fr);
 
 			while ((line = br.readLine()) != null) {
