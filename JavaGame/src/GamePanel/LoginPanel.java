@@ -34,13 +34,13 @@ public class LoginPanel extends JPanel {
 	JButton entB;
 	static GameClient gClient;			// 게임 클라이언트 객체
 
-	public LoginPanel(MainPanel mp,LoadingPanel ldp) {
+	public LoginPanel(MainPanel mp/* ,LoadingPanel ldp */) {
 		super();
 		this.setBounds(0, 0, 1600, 50);
 		this.setLayout(null);
 		this.setBackground(Color.GREEN);
 		this.mp = mp;
-		this.ldp = ldp;
+		//this.ldp = ldp;		//로딩 패널
 		
 		
 		// sever entrance - ID

@@ -22,10 +22,10 @@ public class MainFrame extends JFrame {
 		
 
 		// Loading Panel
-		LoadingPanel ldp = new LoadingPanel();
+		//LoadingPanel ldp = new LoadingPanel();
 		
 		// Login page Screen
-		LoginPanel lp = new LoginPanel(mp,ldp);
+		LoginPanel lp = new LoginPanel(mp/*,ldp*/);
 		this.add(lp);
 		lp.requestFocusInWindow();
 		
