@@ -28,7 +28,7 @@ public class GameServer {
 				clientIP = socket.getInetAddress().getHostAddress();
 				System.out.printf("클라이언트(%s) 접속됨...\n", clientIP);
 				
-				new GameLogin(socket).start();
+				new GameLogin(socket).start();		// 로그인쓰레드
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -40,11 +40,18 @@ public class GameServer {
 class GameServerThread extends Thread{
 	private Socket socket;
 	private ObjectInputStream fromClient;
+	GameLogicThread gLogicThread;
 	
-	
-	GameServerThread(ObjectInputStream fromClient,Socket socket) {
+	GameServerThread(ObjectInputStream fromClient,Socket socket,int playerNumber) {
 		this.socket = socket;
 		this.fromClient = fromClient;
+		
+		//플레이어가 모두 입장이 확인되면 로직쓰레드를 실행
+		if(playerNumber==2)
+		{
+			gLogicThread = new GameLogicThread();
+			gLogicThread.start();	// 게임로직(볼,충돌로직 등) 쓰레드 시작
+		}
 		
 	}
 
@@ -55,6 +62,12 @@ class GameServerThread extends Thread{
 
 			while (true) {
 				Data= fromClient.readObject();
+
+				if (Data instanceof GameData) {
+					GameData gData = (GameData) Data;
+					GameLogicThread.serverSetData(gData);
+				}
+				else
 				boardCast(Data);
 				
 			}
@@ -79,8 +92,23 @@ class GameServerThread extends Thread{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
 		}
+	}
+	public void gDataboardCast(GameData d) {
+		Set<String> keys = GameServer.userMap.keySet();
+		Iterator<String> it = keys.iterator();
+		while (it.hasNext()) {
+			String id = it.next();
+			Socket soc = GameServer.userMap.get(id);
 
+			ObjectOutputStream toClient;
+			try {
+				toClient = new ObjectOutputStream(soc.getOutputStream());
+				toClient.writeObject(d);
+				toClient.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

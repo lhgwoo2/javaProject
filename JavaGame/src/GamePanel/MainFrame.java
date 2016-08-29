@@ -13,7 +13,7 @@ public class MainFrame extends JFrame {
 		setVisible(true);
 
 		// MainFrame size hold
-		this.setResizable(false);
+		//this.setResizable(false);
 		
 		// Main Page Screen
 		MainPanel mp = new MainPanel(this);

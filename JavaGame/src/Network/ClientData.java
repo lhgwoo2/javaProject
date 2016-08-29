@@ -11,7 +11,21 @@ public class ClientData implements Serializable{
 	private int clientBlueNum;
 	private int clientRedNum;
 	private boolean allTeamOK;
+	private String teamColor;				// 현재들어온 이용자의 팀
+	private int teamNum;					// 현재들어온 이용자의 팀의 순번
 	
+	public String getTeamColor() {
+		return teamColor;
+	}
+	public void setTeamColor(String teamColor) {
+		this.teamColor = teamColor;
+	}
+	public int getTeamNum() {
+		return teamNum;
+	}
+	public void setTeamNum(int teamNum) {
+		this.teamNum = teamNum;
+	}
 	public boolean isAllTeamOK() {
 		return allTeamOK;
 	}

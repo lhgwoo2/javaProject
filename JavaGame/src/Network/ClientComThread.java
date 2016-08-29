@@ -44,12 +44,25 @@ public class ClientComThread extends Thread {
 
 				} else if (obj instanceof GameData) {
 					GameData gData = (GameData) obj;
+					//캐릭터가 이동하여 좌표변경하여 다시 그려준다.
 					if(gData.getChx()!=0)
-					{	
-						System.out.println("클라이언트에서 게임데이터 받음");
-						mp.pCharac.chx+=gData.getChx();
-						mp.pCharac.loop();
-						mp.repaint();
+					{
+						if(gData.getTeamColor().equals("Blue"))
+						{
+							if(gData.getTeamNum()==1)
+							{
+								mp.bCharac1.chx+=gData.getChx();
+								mp.bCharac1.loop();
+								mp.repaint();
+							}
+							else if(gData.getTeamNum()==2)
+							{
+								mp.bCharac2.chx+=gData.getChx();
+								mp.bCharac2.loop();
+								mp.repaint();
+							}
+						}
+						
 					}
 					
 				}

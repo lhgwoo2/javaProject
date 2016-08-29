@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import javax.swing.JPanel;
-//1
+
 public class SecondBall extends BufferedImage {
 	Random rd = new Random();
 	double x;
@@ -57,17 +57,27 @@ public class SecondBall extends BufferedImage {
 			x = 0;
 			xspeed = -xspeed;
 		}
-		
+		//공와 총알 충돌 탐지
+		MainPanel.sbx =x;
+		MainPanel.sby =y;
 		if (MainPanel.GetDistance(MainFrame.bux, MainFrame.buy,x + 40, y + 40) <= 52.5) {
-			MainPanel.sbx =x;
-			MainPanel.sby =y;
 			MainFrame.mp.thirdBall();
 			sbswitch = true;
 		}
+		//공와 총알 충돌 탐지
+		
+		//캐릭터와 볼의 충돌 탐지
+		if (MainPanel.GetDistance(MainPanel.sbx+40, MainPanel.sby+40, j.getWidth() / 2 + MainPanel.chx, j.getHeight()-80) <=35) { 
+			Character.isDead=true;
+			Character.DeadTime = System.currentTimeMillis();
+		}
+		//캐릭터와 볼의 충돌 탐지
 	}
 
 	public void draw(Graphics2D g2d) {
-		g2d.drawImage(this, (int) x, (int) y, null);
+		if(!sbswitch){
+			g2d.drawImage(this, (int) x, (int) y, null);
+		}
 
 	}
 

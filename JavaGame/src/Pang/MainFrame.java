@@ -9,7 +9,8 @@ public class MainFrame extends JFrame {
 	static double bux;
 	static double buy;
 	static MainPanel mp;
-	//1
+	int count ;
+
 	public MainFrame() {
 		super("ÆÎÆÎ");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,11 +27,10 @@ public class MainFrame extends JFrame {
 			@Override
 			public void run() {
 				while (true) {
-
+					
 					if (MainPanel.bullet.size() > -1) {// ÃÑ¾Ë ·çÇÁ
 						for (int i = 0; i < MainPanel.bullet.size(); i++) {
 							MainPanel.bullet.get(i).loop();
-
 						}
 					}
 					if (MainPanel.fb.size() > 0) {
@@ -54,7 +54,9 @@ public class MainFrame extends JFrame {
 							}
 						}
 					}
-					repaint(); // ¸®¿RÀÎÆ®~~~~~~~
+
+					repaint(); 
+					
 					try {
 						Thread.sleep(30);
 					} catch (Exception e) {
