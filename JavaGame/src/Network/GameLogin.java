@@ -17,7 +17,7 @@ public class GameLogin extends Thread {
 	ObjectOutputStream toClient;
 	Socket socket;
 	//플레이어들어온 수 확인
-	int playerNumber;
+	public static int playerNumber;
 
 	public GameLogin(Socket socket) {
 		super();
@@ -113,6 +113,8 @@ public class GameLogin extends Thread {
 				cData.setTeamColor("Blue");
 				cData.setTeamNum(GameServer.blueTeam.size());
 				playerNumber+=1;		//입장한 플레이어 추가
+				System.out.println(playerNumber);
+
 				return true;
 			} else {
 				return false;
