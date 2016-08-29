@@ -28,7 +28,7 @@ public class GameClient {
 	// 한개에 프로그램에 접속하는 것으로 고정아이피, 고정포트넘버사용
 	public boolean connect() {
 		try {
-			socket = new Socket("127.0.0.1", 1234);
+			socket = new Socket("192.168.2.13", 1234);
 			System.out.println("Server Connectted");
 			return true;
 		} catch (IOException e) {
@@ -68,7 +68,10 @@ public class GameClient {
 			str = String.format("Red Team : %d/3\nBlue Team: %d/3", cData.getClientRedNum(), cData.getClientBlueNum());
 			JOptionPane.showMessageDialog(mp, str);
 			new ClientComThread(socket, mp, this).start();
-			if (cData.getClientBlueNum() == 2 /*&& cData.getClientRedNum() == 3*/) {
+			
+			//들어온 인원수를 제한한다.	블루 1/ 레드 1
+			if (cData.getClientBlueNum() == 2 /*&& cData.getClientRedNum() == 1*/) {
+
 				try {
 					// 모든 팀원들이 들어와서 모두 매칭되었다. 서버로 신호를 보냄 -> 서버에서 다시 모든 클라이언트로 값을
 					// 보내어 게임에 입장하도록 함.
@@ -108,6 +111,8 @@ public class GameClient {
 	public void sendGameData(GameData gData) {
 
 		try {
+			System.out.println("게임데이터 나간다. 서버쪽으로");
+			
 			toServer.writeObject(gData);
 			toServer.flush();
 		} catch (IOException e) {

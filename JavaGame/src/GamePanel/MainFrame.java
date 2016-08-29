@@ -20,7 +20,6 @@ public class MainFrame extends JFrame {
 		this.add(mp);
 		mp.requestFocusInWindow();
 		
-
 		// Loading Panel
 		//LoadingPanel ldp = new LoadingPanel();
 		
@@ -35,7 +34,8 @@ public class MainFrame extends JFrame {
 			public void run() {
 				super.run();
 				while (true) {
-					repaint();
+				repaint();
+					
 					try {
 						Thread.sleep(30);
 					} catch (InterruptedException e) {
@@ -43,8 +43,8 @@ public class MainFrame extends JFrame {
 					}
 				}
 			}
-		}.start();
-*/	}
+		}.start();*/
+	}
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

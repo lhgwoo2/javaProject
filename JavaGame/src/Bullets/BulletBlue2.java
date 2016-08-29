@@ -1,6 +1,7 @@
 package Bullets;
 
 
+
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
@@ -13,7 +14,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public class BulletBlue1 extends BufferedImage implements Bullets{
+public class BulletBlue2 extends BufferedImage implements Bullets{
 
 	Random rd = new Random();
 	public Image img;
@@ -32,7 +33,7 @@ public class BulletBlue1 extends BufferedImage implements Bullets{
 	public int c = 90;
 	public int d = 360;
 
-	public BulletBlue1(){
+	public BulletBlue2(){
 	      super(40, 40, BufferedImage.TYPE_INT_ARGB);
 	      
 	      
@@ -47,7 +48,7 @@ public class BulletBlue1 extends BufferedImage implements Bullets{
 	        }
 	        g2d.drawImage(img, 0, 0,90,90,a,b,c,d,null);
 	}
-	public BulletBlue1(double x, double y, double yspeed, JPanel j) {
+	public BulletBlue2(double x, double y, double yspeed, JPanel j) {
 		this();
 		this.x = x;
 		this.y = y;
@@ -87,7 +88,7 @@ public class BulletBlue1 extends BufferedImage implements Bullets{
 			AffineTransform old = g2d.getTransform();
 			g2d.translate((int)x, (int)y);
 			g2d.drawImage(img, 0, 0,90,90,a,b,c,d,null);
-			g2d.setTransform(old); //붓을 원래위치로 초기화
+			g2d.setTransform(old); //붓을 원래위치로 ㅊ초기화
 		}
 	}
 	public void initBullet(boolean bool){

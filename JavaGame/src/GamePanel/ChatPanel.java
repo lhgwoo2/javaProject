@@ -24,11 +24,13 @@ public class ChatPanel extends JPanel {
 	JTextField ttf;
 	// TransparentTextField ttf;
 	GameClient gc;
+	MainPanel mp;
 	private Font font1 = new Font("Serif", Font.PLAIN, 15);
 
-	public ChatPanel(GameClient gc) {
+	public ChatPanel(GameClient gc, MainPanel mp) {
 		super();
 		this.gc = gc;
+		this.mp = mp;
 		this.setBackground(new Color(0.5f, 0.3f, 0.1f, 0.5f));
 		this.setLayout(null);
 		this.setBounds(0, 700, 600, 200);
@@ -46,12 +48,14 @@ public class ChatPanel extends JPanel {
 		JScrollPane sp = new JScrollPane(chatField, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		chatField.setFont(font1);				//폰트 변경
 		chatField.setForeground(Color.white); // 텍스트 필드 폰트 색상변경
-		chatField.setBackground(new Color(0.5f, 0.3f, 0.1f, 0.7f));
+		chatField.setBackground(new Color(0.5f, 0.3f, 0.1f, 0.5f));
 		chatField.setColumns(30);		//출력되는 열 제한
 		chatField.setLineWrap(true);	//텍스트필드 자동 줄바꿈
 		sp.setBounds(0, 0, 600, 170);
-		sp.setBackground(new Color(0.5f, 0.3f, 0.1f, 0.7f));
+		sp.setBackground(new Color(0.5f, 0.3f, 0.1f, 0.5f));
 		sp.setBorder(BorderFactory.createEmptyBorder());
+
+		
 		// sp.setOpaque(false);
 		// sp.setBackground(new Color(0.5f, 0.3f, 0.1f, 0.5f));
 		// sp.setBorder(BorderFactory.createEmptyBorder());
@@ -63,7 +67,7 @@ public class ChatPanel extends JPanel {
 		
 		chatField.append(cdata.getUserId() + " : " + cdata.getChatMsg() + "\n");
 		chatField.setCaretPosition(chatField.getDocument().getLength()); // 스크롤
-																			// 자동이동
+																		// 자동이동
 
 	}
 
@@ -96,6 +100,11 @@ public class ChatPanel extends JPanel {
 					ttf.setText("");
 					ttf.setEnabled(false);
 					// ttf.requestFocus(); //
+					
+					//게임화면의 포커스를 맞추어준다.
+					mp.setFocusable(true);			// 메인패널의 포커스를 맟추어준다
+					mp.requestFocus();				// 포커스를 요청한다.
+					
 				}
 			}
 

@@ -22,7 +22,7 @@ public class ClientComThread extends Thread {
 
 	@Override
 	public void run() {
-		cp = new ChatPanel(gc);
+		cp = new ChatPanel(gc,mp);
 		while (true) {
 			try {
 				fromServer = new ObjectInputStream(socket.getInputStream());
@@ -34,6 +34,7 @@ public class ClientComThread extends Thread {
 					if (cData.isAllTeamOK()) {
 						mp.drawingPlayImage();
 						mp.eventKey();		//이벤트 처리를 위한 키보드사용
+						mp.firstBall();
 						mp.add(cp);
 						mp.repaint();
 					}
@@ -49,6 +50,40 @@ public class ClientComThread extends Thread {
 					mp.bCharac2.chx+=gbData.getBlueP2x();
 					mp.bCharac1.loop();
 					mp.bCharac2.loop();
+					for(int i =0;i<mp.fb.size();i++){
+						mp.fb.get(i).loop();	
+					}
+					//총알 start
+					//블루1번총알 시작
+					if(gbData.isbP1bulletStart()){
+						mp. bP1bullet();
+					}
+					//블루1번총알 끝
+					
+					//블루2번총알 시작
+					if(gbData.isbP2bulletStart()){
+						mp. bP2bullet();
+					}
+					//블루2번총알 끝
+					//총알 end
+					
+					//총알 루프 시작
+					//블루 1번 총알 루프
+					for (int i = 0; i < mp.bullet.size(); i++) {
+						if (mp.bullet.size() > 0) {
+							mp.bullet.get(i).loop();// 총알의 좌표를 계속 패널에 그린다.
+						}
+					}
+					
+					//블루 2번 총알 루프
+					for (int i = 0; i < mp.bullet2.size(); i++) {
+						if (mp.bullet2.size() > 0) {
+							mp.bullet2.get(i).loop();// 총알의 좌표를 계속 패널에 그린다.
+						}
+					}
+					
+					//총알 루프 시작
+				
 					mp.repaint();
 					
 					/*if(gData.getChx()!=0)
@@ -72,18 +107,7 @@ public class ClientComThread extends Thread {
 					}*/
 					
 				}
-
-				/*
-				 * if (uData.getFileDate() != null) { // Client.fileSave(uData);
-				 * WinMain.dp = new DrawingPanel(uData.getFileDate());
-				 * WinMain.dp.setBounds(400, 100, 600, 480);
-				 * WinMain.f.add(WinMain.dp); WinMain.dp.repaint();
-				 * WinMain.ta.append(uData.getUserId() + " : " +
-				 * uData.getFileName() + "\n"); } else
-				 * WinMain.ta.append(uData.getUserId() + " : " + uData.getMsg()
-				 * + "\n");
-				 * 
-				 */ } catch (Exception e) {
+				} catch (Exception e) {
 				e.printStackTrace();
 			}
 

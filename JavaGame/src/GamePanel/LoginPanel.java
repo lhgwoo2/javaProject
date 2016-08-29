@@ -42,7 +42,6 @@ public class LoginPanel extends JPanel {
 		this.mp = mp;
 		//this.ldp = ldp;		//로딩 패널
 		
-		
 		// sever entrance - ID
 		JLabel ja = new JLabel("User ID : ");
 		ja.setBounds(200, 10, 50, 30);

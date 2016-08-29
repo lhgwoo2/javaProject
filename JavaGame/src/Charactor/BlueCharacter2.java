@@ -61,15 +61,15 @@ public class BlueCharacter2 extends BufferedImage  {
 	}
 	public void draw(Graphics2D g2d) { //캐릭터가 패널 밖으로 나가는순간 어떻게해야 할지 모르겠음.
 		AffineTransform old = g2d.getTransform(); //유사 변환 행렬 변환에 대한정보를 가지고 있는 객체이다. 붓의 초기 위치 값을 가지고 있다 
-		g2d.translate(j.getWidth()/2+chx, j.getHeight()-500);
+		g2d.translate(j.getWidth()/2+chx, j.getHeight()-270);
 		double x = j.getWidth() / 2 + chx;
 
 		if (x >= j.getWidth() - 80) {
 			chx = 710;
-			g2d.translate(chx, j.getHeight() -500);
+			g2d.translate(chx, j.getHeight() -270);
 		} else if (x <= 0) {
 			chx = -j.getWidth() / 2 + 10;
-			g2d.translate(chx, j.getHeight() -500);//-80
+			g2d.translate(chx, j.getHeight() -270);//-80
 		}
 
 		g2d.drawImage(img, 0, 0,90,90,a,b,c,d,null);
