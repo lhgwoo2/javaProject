@@ -22,15 +22,15 @@ public class MainFrame extends JFrame {
 		
 
 		// Loading Panel
-		LoadingPanel ldp = new LoadingPanel();
+		//LoadingPanel ldp = new LoadingPanel();
 		
 		// Login page Screen
-		LoginPanel lp = new LoginPanel(mp,ldp);
+		LoginPanel lp = new LoginPanel(mp);
 		this.add(lp);
 		lp.requestFocusInWindow();
 		
 		
-		new Thread() {
+		/*new Thread() {
 			@Override
 			public void run() {
 				super.run();
@@ -44,7 +44,7 @@ public class MainFrame extends JFrame {
 					}
 				}
 			}
-		}.start();
+		}.start();*/
 	}
 
 	public static void main(String[] args) {
