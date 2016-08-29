@@ -3,6 +3,7 @@ package KSH;
 public class BoardVO {
 	private int boardNum;
 	private String boardTitle;
+	private String content;
 	private String boardId;
 	private String boardTeam;
 	private int boardScore;
@@ -30,6 +31,13 @@ public class BoardVO {
 
 	public void setBoardTitle(String boardTitle) {
 		this.boardTitle = boardTitle;
+	}
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public String getBoardId() {
