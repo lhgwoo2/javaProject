@@ -20,14 +20,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import Ball.FirstBall;
 import Bullets.BulletBlue1;
 import Bullets.BulletBlue2;
-import Bullets.Bullets;
 import Charactor.BlueCharacter1;
 import Charactor.BlueCharacter2;
 import Network.GameData;
-import Bullets.BulletBlue1;
-import Ball.FirstBall;
+import Ball.SecondBall;
+import Ball.ThirdBall;
 
 public class MainPanel extends JPanel {
 
@@ -51,6 +51,8 @@ public class MainPanel extends JPanel {
 	public GameData gData;				// 게임데이터 전송
 	
 	public static List<FirstBall> fb  = new ArrayList<>();		
+	public static List<SecondBall> sb  = new ArrayList<>();		
+	public static List<ThirdBall> tb  = new ArrayList<>();	
 	public static List<BulletBlue1> bullet = new ArrayList<>();		//Bullet 배열
 	public static List<BulletBlue2> bullet2 = new ArrayList<>();		//Bullet 배열
 	
@@ -72,6 +74,9 @@ public class MainPanel extends JPanel {
 		fb.add(new FirstBall(this,0,getHeight()-420,10,-26)); 
 		fb.add(new FirstBall(this,getWidth()-120,getHeight()-420,-10,-26)); 
 	}
+	
+
+
 
 	public void eventKey() {
 		// 캐릭터를 생성한다. 블루팀
@@ -87,7 +92,7 @@ public class MainPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 
 				Iterator<Integer> it = keyCodes.iterator();
-				if (it.hasNext()) {
+				while(it.hasNext()) {
 					int keyCode = it.next();
 
 					switch (keyCode) {
@@ -160,61 +165,34 @@ public class MainPanel extends JPanel {
 
 	//MainPanel 에 메소드 시작
 	
-	// 블루팀 1번캐릭터 총알
-/*	public void bullet(){ //컬렉션에 넣어줘야할듯! 재활용 성공!
-		if (!blue1fb) {
-			bullet.add(new BulletBlue1((getWidth() + 65) / 2 + bCharac1.chx, getHeight() - 80, 15, this));
-			blue1fb = true;
-		}
-		for (int i = 0; i < bullet.size(); i++) {
-			if (bullet.get(i).getBulletBool()) {
-				bullet.get(i).initBulletX((getWidth() + 65) / 2 + bCharac1.chx); 
-				bullet.get(i).initBulletY(getHeight() - 80);
-				bullet.get(i).initBullet(false);
-				
-				return;
-			} else {
-				return;
-			}
-		}
-	}*/
 	//블루팀 1번 총알
-	public void bP1bullet(){ //컬렉션에 넣어줘야할듯! 재활용 성공!
+	public void bP1bullet() { // 컬렉션에 넣어줘야할듯! 재활용 성공!
 		if (!blue1fb) {
-			bullet.add(new BulletBlue1((getWidth() + 65) / 2 + bCharac1.chx, getHeight() - 80, 15, this));
+			bullet.add(new BulletBlue1((getWidth() + 65) / 2 + bCharac1.chx, getHeight() - 270, 15, this));
 			blue1fb = true;
+			System.out.println("blue1fb:" + "또들어왓냐");
 		}
 		for (int i = 0; i < bullet.size(); i++) {
-			if (bullet.get(i).getBulletBool()) {
-				bullet.get(i).initBulletX((getWidth() + 65) / 2 + bCharac1.chx); 
-				bullet.get(i).initBulletY(getHeight() - 80);
+				bullet.get(i).initBulletX((getWidth() + 65) / 2 + bCharac1.chx);
+				bullet.get(i).initBulletY(getHeight() - 270);
 				bullet.get(i).initBullet(false);
-				
-				return;
-			} else {
-				return;
+				System.out.println("blue1fb:" + "새로들어옴");
 			}
 		}
-	}
 	//블루팀 2번 총알
 		public void bP2bullet(){ //컬렉션에 넣어줘야할듯! 재활용 성공!
 			if (!blue2fb) {
-				bullet2.add(new BulletBlue2((getWidth() + 65) / 2 + bCharac2.chx, getHeight() - 80, 15, this));
+				bullet2.add(new BulletBlue2((getWidth() + 65) / 2 + bCharac2.chx, getHeight() - 270, 15, this));
 				blue2fb = true;
 			}
 			for (int i = 0; i < bullet2.size(); i++) {
-				if (bullet2.get(i).getBulletBool()) {
 					bullet2.get(i).initBulletX((getWidth() + 65) / 2 + bCharac2.chx); 
-					bullet2.get(i).initBulletY(getHeight() - 80);
-					bullet2.get(i).initBullet(false);
-					
-					return;
-				} else {
-					return;
+					bullet2.get(i).initBulletY(getHeight() - 270);
+					bullet2.get(i).initBullet(false);	
 				}
 			}
-		}
 	
+		
 	// 객체간 거리 측정
 	public static double GetDistance(double x1, double y1, double x2, double y2) { // 거리
 		return Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
@@ -243,20 +221,9 @@ public class MainPanel extends JPanel {
 			System.out.println("게임화면 로드 실패");
 			e.printStackTrace();
 		}
-		// g2d.drawImage(bimg,0,0,1800,900,null);
-
 	}
 
-	/*
-	 * public void drawBlackPanel(){ BufferedImage chatBImg = new
-	 * BufferedImage(350, 300, BufferedImage.TYPE_INT_ARGB); Graphics2D g2d =
-	 * (Graphics2D) chatBImg.getGraphics(); g2d.setColor(Color.black);
-	 * g2d.fillRect(0, 0, chatBImg.getWidth(),chatBImg.getHeight());
-	 * g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-	 * RenderingHints.VALUE_ANTIALIAS_ON);
-	 * 
-	 * g2d.dispose(); // 붓 필요없다. }
-	 */
+
 
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -268,13 +235,19 @@ public class MainPanel extends JPanel {
 		if(bCharac1!=null)bCharac1.draw(g2d);
 		if(bCharac2!=null)bCharac2.draw(g2d);
 		for(int i =0;i<fb.size();i++){
-			fb.get(i).draw(g2d);	
+			if(!fb.get(i).fbswitch) fb.get(i).draw(g2d);	
 		}
 		if (bullet.size() > 0) {
 			for (int i = 0; i < bullet.size(); i++)  bullet.get(i).draw(g2d); // 총알의 좌표를 계속 패널에 그린다.	
 		}
 		if (bullet2.size() > 0) {
 			for (int i = 0; i < bullet2.size(); i++)  bullet2.get(i).draw(g2d); // 총알의 좌표를 계속 패널에 그린다.	
+		}
+		for(int i =0;i<sb.size();i++){
+			if(!sb.get(i).sbswitch) sb.get(i).draw(g2d);	
+		}
+		for(int i =0;i<tb.size();i++){
+			if(!tb.get(i).tbswitch) tb.get(i).draw(g2d);	
 		}
 		
 	}

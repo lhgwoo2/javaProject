@@ -9,6 +9,11 @@ import GamePanel.MainPanel;
 public class ClientComThread extends Thread {
 	private Socket socket;
 	private ObjectInputStream fromServer;
+	public static double bux;
+	public static double buy;
+	public static double bux2;
+	public static double buy2;
+	
 	MainPanel mp;
 	ChatPanel cp;
 	GameClient gc;
@@ -51,7 +56,14 @@ public class ClientComThread extends Thread {
 					mp.bCharac1.loop();
 					mp.bCharac2.loop();
 					for(int i =0;i<mp.fb.size();i++){
-						mp.fb.get(i).loop();	
+						if(!mp.fb.get(i).fbswitch)	mp.fb.get(i).loop();	
+					}
+					for(int i =0;i<mp.sb.size();i++){
+						if(!mp.sb.get(i).sbswitch)	mp.sb.get(i).loop();	
+					}
+					for(int i =0;i<mp.tb.size();i++){
+						if(!mp.tb.get(i).tbswitch)	mp.tb.get(i).loop();	
+
 					}
 					//총알 start
 					//블루1번총알 시작
@@ -63,6 +75,8 @@ public class ClientComThread extends Thread {
 					//블루2번총알 시작
 					if(gbData.isbP2bulletStart()){
 						mp. bP2bullet();
+
+						
 					}
 					//블루2번총알 끝
 					//총알 end
@@ -71,16 +85,22 @@ public class ClientComThread extends Thread {
 					//블루 1번 총알 루프
 					for (int i = 0; i < mp.bullet.size(); i++) {
 						if (mp.bullet.size() > 0) {
-							mp.bullet.get(i).loop();// 총알의 좌표를 계속 패널에 그린다.
+							mp.bullet.get(i).loop();
+							bux  =mp.bullet.get(i).x;
+							buy = mp.bullet.get(i).y;// 총알의 좌표를 계속 패널에 그린다.
 						}
 					}
+
 					
 					//블루 2번 총알 루프
 					for (int i = 0; i < mp.bullet2.size(); i++) {
 						if (mp.bullet2.size() > 0) {
-							mp.bullet2.get(i).loop();// 총알의 좌표를 계속 패널에 그린다.
+							mp.bullet2.get(i).loop();
+							bux2  =mp.bullet2.get(i).x;
+							buy2= mp.bullet2.get(i).y;// 총알의 좌표를 계속 패널에 그린다.
 						}
 					}
+
 					
 					//총알 루프 시작
 				

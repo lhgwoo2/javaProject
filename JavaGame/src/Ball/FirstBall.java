@@ -3,23 +3,26 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.util.Random;
+
+import GamePanel.MainPanel;
+import Network.ClientComThread;
+import Ball.SecondBall;
 
 import javax.swing.JPanel;
 
 public class FirstBall extends BufferedImage {
-	Random rd = new Random();
-	double x;
-	double y;
-	double bx; //벽돌x
-	double by; //벽돌y
-	double bw; //벽돌 가로 크기
-	double bh; //벽돌 세로 크기
-	double xspeed;
-	double yspeed;
-	double firstyspeed;
-	JPanel j;
-	boolean fbswitch  ;
+
+	public double x;
+	public double y;
+	public double bx; //벽돌x
+	public double by; //벽돌y
+	public double bw; //벽돌 가로 크기
+	public double bh; //벽돌 세로 크기
+	public double xspeed;
+	public double yspeed;
+	public double firstyspeed;
+	public JPanel jp;
+	public boolean fbswitch  ;
 
 	public FirstBall(JPanel j,double x,double y,double xspeed,double yspeed) {
 		super(120, 120, BufferedImage.TYPE_INT_ARGB);
@@ -27,7 +30,7 @@ public class FirstBall extends BufferedImage {
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2d.setColor(Color.black);
 		g2d.fillOval(0, 0, 120, 120);
-		this.j = j;
+		this.jp = j;
 		this.x = x;
 		this.y = y;
 		this.xspeed = xspeed;
@@ -40,11 +43,11 @@ public class FirstBall extends BufferedImage {
 		x += xspeed;
 		y += yspeed;
 		yspeed += 1;
-		if (y >= j.getHeight() - 310) {
+		if (y >= jp.getHeight() - 310) {
 			yspeed = firstyspeed - 8;
 		}
-		if (x >= j.getWidth() - 120) {
-			x = j.getWidth() - 120;
+		if (x >= jp.getWidth() - 120) {
+			x = jp.getWidth() - 120;
 			xspeed = -xspeed;
 		}
 		if (x <= 0) {
@@ -53,15 +56,16 @@ public class FirstBall extends BufferedImage {
 		//공
 		
 		//공와 총알 충돌 탐지
-/*		MainPanel.fbx =x;
-		MainPanel.fby =y;
-		if (MainPanel.GetDistance(MainFrame.bux, MainFrame.buy,x + 60, y + 60) <= 72.5) { 
-			MainFrame.mp.secondBall();
+
+		if (MainPanel.GetDistance(ClientComThread.bux, ClientComThread.buy,x + 60, y + 60) <= 80) { 
+			secondBall(jp,x,y);
+			x=jp.getHeight()+300;
+			y=jp.getHeight()+300;
 			fbswitch = true;
 		}
 		//공와 총알 충돌 탐지
 		//캐릭터와 볼의 충돌 탐지
-		if (MainPanel.GetDistance(MainPanel.fbx+60, MainPanel.fby+60, j.getWidth() / 2 + MainPanel.chx, j.getHeight()-80) <=58) { 
+/*		if (MainPanel.GetDistance(MainPanel.fbx+60, MainPanel.fby+60, j.getWidth() / 2 + MainPanel.chx, j.getHeight()-80) <=58) { 
 			Character.isDead=true;
 			Character.DeadTime = System.currentTimeMillis();
 		}*/
@@ -73,6 +77,11 @@ public class FirstBall extends BufferedImage {
 		
 		//벽돌과 볼 충돌탐지
 		
+	}
+	
+	public void secondBall(JPanel jp,double x, double y){
+		MainPanel.sb.add(new SecondBall(jp,x+120,y,13,-28));
+		MainPanel.sb.add(new SecondBall(jp,x-120,y,-13,-28)); 
 	}
 
 	public void draw(Graphics2D g2d) {
