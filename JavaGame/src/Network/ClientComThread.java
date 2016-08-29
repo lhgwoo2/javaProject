@@ -34,6 +34,7 @@ public class ClientComThread extends Thread {
 					if (cData.isAllTeamOK()) {
 						mp.drawingPlayImage();
 						mp.eventKey();		//이벤트 처리를 위한 키보드사용
+						mp.firstBall();
 						mp.add(cp);
 						mp.repaint();
 					}
@@ -47,8 +48,11 @@ public class ClientComThread extends Thread {
 					//캐릭터가 이동하여 좌표변경하여 다시 그려준다.
 					mp.bCharac1.chx+=gbData.getBlueP1x();
 					mp.bCharac2.chx+=gbData.getBlueP2x();
-					//mp.bCharac1.loop();
-					//mp.bCharac2.loop();
+					mp.bCharac1.loop();
+					mp.bCharac2.loop();
+					for(int i =0;i<mp.fb.size();i++){
+						mp.fb.get(i).loop();	
+					}
 					mp.repaint();
 					
 					/*if(gData.getChx()!=0)

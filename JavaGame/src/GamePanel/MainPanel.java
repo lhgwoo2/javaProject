@@ -25,6 +25,8 @@ import Bullets.Bullets;
 import Charactor.BlueCharacter1;
 import Charactor.BlueCharacter2;
 import Network.GameData;
+import Pang.Bullet;
+import Ball.FirstBall;
 
 public class MainPanel extends JPanel {
 
@@ -35,7 +37,7 @@ public class MainPanel extends JPanel {
 	public BlueCharacter2 bCharac2;		// 블루팀 1번 캐릭터 클래스
 	//public blueCharacter3 bCharac13;		// 블루팀 1번 캐릭터 클래스
 	
-	static List<Bullets> bullet = new ArrayList<>();		//Bullet 배열
+
 	boolean blue1fb ; 			//블루팀 1번 캐릭터 처음에 총알 생성!
 	boolean blue2fb ; 			//블루팀 2번 캐릭터 처음에 총알 생성!
 
@@ -46,6 +48,9 @@ public class MainPanel extends JPanel {
 	public HashSet<Integer> keyCodes = new HashSet<>();
 	public Timer timer;
 	public GameData gData;				// 게임데이터 전송
+	
+	public static List<FirstBall> fb  = new ArrayList<>();		
+	public static List<Bullets> bullet = new ArrayList<>();		//Bullet 배열
 	
 	public MainPanel(JFrame f) {
 		super();
@@ -59,6 +64,11 @@ public class MainPanel extends JPanel {
 		drawingMainImage();
 		setFocusable(true);			// 메인패널의 포커스를 맟추어준다
 		requestFocus();				// 포커스를 요청한다.
+	}
+	
+	public void firstBall(){
+		fb.add(new FirstBall(this,0,getHeight()-420,10,-26)); 
+		fb.add(new FirstBall(this,getWidth()-120,getHeight()-420,-10,-26)); 
 	}
 
 	public void eventKey(){
@@ -86,8 +96,7 @@ public class MainPanel extends JPanel {
 								gData.setTeamColor(teamColor);
 								gData.setTeamNum(teamNumber);
 								gData.setChx(-10);
-								bCharac1.loop();
-								bCharac2.loop();
+
 								
 								LoginPanel.gClient.sendGameData(gData);
 								break;
@@ -97,8 +106,7 @@ public class MainPanel extends JPanel {
 								gData.setTeamColor(teamColor);
 								gData.setTeamNum(teamNumber);
 								gData.setChx(+10);
-								bCharac1.loop();
-								bCharac2.loop();
+
 								
 								LoginPanel.gClient.sendGameData(gData);
 								break;
@@ -162,6 +170,7 @@ public class MainPanel extends JPanel {
 			}
 		}
 	}
+
 	
 	// 객체간 거리 측정
 	public static double GetDistance(double x1, double y1, double x2, double y2) { // 거리
@@ -215,6 +224,13 @@ public class MainPanel extends JPanel {
 		//캐릭터를 그린다.
 		if(bCharac1!=null)bCharac1.draw(g2d);
 		if(bCharac2!=null)bCharac2.draw(g2d);
+		for(int i =0;i<fb.size();i++){
+			fb.get(i).draw(g2d);	
+		}
+
+		
 	}
+	
+
 
 }

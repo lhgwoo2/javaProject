@@ -26,6 +26,8 @@ public class GameLogicThread extends Thread {
 	}
 	
 	public static void serverSetData(GameData gData){
+		
+		
 		if(gData.getTeamColor().equals("Blue")){
 			if(gData.getTeamNum()==1){
 				if(gData.getChx()!=0){
