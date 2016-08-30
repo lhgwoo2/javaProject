@@ -51,6 +51,7 @@ public class GameClient {
 		boolean loginOk = false;
 		String str = null;
 		try {
+			toServer.reset();
 			toServer.writeObject(cData);
 			toServer.flush();
 
@@ -76,6 +77,7 @@ public class GameClient {
 					// 모든 팀원들이 들어와서 모두 매칭되었다. 서버로 신호를 보냄 -> 서버에서 다시 모든 클라이언트로 값을
 					// 보내어 게임에 입장하도록 함.
 					cData.setAllTeamOK(true);
+					toServer.reset();
 					toServer.writeObject(cData);
 					toServer.flush();
 				} catch (IOException e) {
@@ -93,12 +95,10 @@ public class GameClient {
 	}
 
 	// Chatting sending
-	public void sendMessage(String msg) {
-
-		ClientData cData = new ClientData();
-		cData.setChatMsg(msg);
+	public void sendMessage(ClientData cData) {
 		cData.setUserId(clientId);
 		try {
+			toServer.reset();
 			toServer.writeObject(cData);
 			toServer.flush();
 		} catch (IOException e) {
@@ -111,6 +111,7 @@ public class GameClient {
 	public void sendGameData(GameData gData) {
 
 		try {
+			toServer.reset();
 			toServer.writeObject(gData);
 			toServer.flush();
 		} catch (IOException e) {

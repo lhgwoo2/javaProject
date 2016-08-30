@@ -1,7 +1,10 @@
 package Network;
 
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.HashSet;
+import java.util.Set;
 
 import GamePanel.ChatPanel;
 import GamePanel.MainPanel;
@@ -26,6 +29,16 @@ public class ClientComThread extends Thread {
 	public static double bux3R;
 	public static double buy3R;
 	
+	//캐릭터 좌우 이동 플래그
+	public boolean b1MoveFlag;				//블루팀
+	public boolean b2MoveFlag;
+	public boolean b3MoveFlag;
+	public boolean r1MoveFlag;				//레드팀
+	public boolean r2MoveFlag;
+	public boolean r3MoveFlag;
+	
+	public boolean oisFlag; 						//ois생성 플래그
+
 	MainPanel mp;
 	ChatPanel cp;
 	GameClient gc;
@@ -40,11 +53,16 @@ public class ClientComThread extends Thread {
 	@Override
 	public void run() {
 		cp = new ChatPanel(gc,mp);
+		
 		while (true) {
 			try {
-				fromServer = new ObjectInputStream(socket.getInputStream());
+				if(!oisFlag){
+					fromServer = new ObjectInputStream(socket.getInputStream()); 
+					oisFlag=true;
+				}
 				Object obj = fromServer.readObject();
 
+				// 클라이언트 로그인 및 채팅데이터
 				if (obj instanceof ClientData) {
 					ClientData cData = (ClientData) obj;
 					//모든 팀 입장 게임화면 진입.
@@ -60,7 +78,9 @@ public class ClientComThread extends Thread {
 						cp.repaint();
 					}
 
+					// 게임 데이터 받는 부분
 				} else if (obj instanceof GameBroadData) {
+					long start = System.currentTimeMillis();
 					GameBroadData gbData = (GameBroadData) obj;
 					//캐릭터가 이동하여 좌표변경하여 다시 그려준다.
 					
@@ -80,6 +100,21 @@ public class ClientComThread extends Thread {
 					mp.rCharac2.loop();
 					mp.rCharac3.loop();
 					
+					// 캐릭터 좌우이동 변환
+					// 블루팀
+					if(!b1MoveFlag && gbData.isB1left()){mp.bCharac1.setMove(90, 180);b1MoveFlag = true;}
+					else if(b1MoveFlag && gbData.isB1right()){	mp.bCharac1.setMove(0, 90);b1MoveFlag=false;	}
+					if(!b2MoveFlag && gbData.isB2left()){mp.bCharac2.setMove(90, 180);b2MoveFlag = true;}
+					else if(b2MoveFlag && gbData.isB2right()){	mp.bCharac2.setMove(0, 90);b2MoveFlag=false;	}
+					if(!b3MoveFlag && gbData.isB3left()){mp.bCharac3.setMove(90, 180);b3MoveFlag = true;}
+					else if(b3MoveFlag && gbData.isB3right()){	mp.bCharac3.setMove(0, 90);b3MoveFlag=false;	}
+					
+					if(!r1MoveFlag && gbData.isR1left()){mp.rCharac1.setMove(90, 180);r1MoveFlag = true;}
+					else if(r1MoveFlag && gbData.isR1right()){	mp.rCharac1.setMove(0, 90);r1MoveFlag=false;	}
+					if(!r2MoveFlag && gbData.isR2left()){mp.rCharac2.setMove(90, 180);r2MoveFlag = true;}
+					else if(r2MoveFlag && gbData.isR2right()){	mp.rCharac2.setMove(0, 90);r2MoveFlag=false;	}
+					if(!r3MoveFlag && gbData.isR3left()){mp.rCharac3.setMove(90, 180);r3MoveFlag = true;}
+					else if(r3MoveFlag && gbData.isR3right()){	mp.rCharac3.setMove(0, 90);r3MoveFlag=false;	}
 					
 					//Ball 루프 
 					for(int i =0;i<mp.fb.size();i++){
@@ -161,7 +196,9 @@ public class ClientComThread extends Thread {
 				
 					mp.repaint();
 
-					
+					Thread.sleep(30); 
+					long end = System.currentTimeMillis();
+					System.out.printf("클라이언트에서 받는데 걸린시간:%d\n",end-start);
 				}
 				} catch (Exception e) {
 				e.printStackTrace();

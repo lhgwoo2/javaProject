@@ -8,7 +8,25 @@ public class GameData implements Serializable {
 	private String teamColor;			// 캐릭터 팀
 	private double chx;					// 캐릭터좌표
 	private boolean bulletStart;		// 캐릭터 총알 시작
+	private boolean leftMove;			//캐릭터 왼쪽 움직임
+	private boolean rightMove;		//캐릭터 오른쪽 움직임
 	
+	public boolean isLeftMove() {
+		return leftMove;
+	}
+
+	public void setLeftMove(boolean leftMove) {
+		this.leftMove = leftMove;
+	}
+
+	public boolean isRightMove() {
+		return rightMove;
+	}
+
+	public void setRightMove(boolean rightMove) {
+		this.rightMove = rightMove;
+	}
+
 	public boolean isBulletStart() {
 		return bulletStart;
 	}

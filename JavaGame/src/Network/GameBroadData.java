@@ -3,6 +3,8 @@ package Network;
 import java.io.Serializable;
 
 public class GameBroadData implements Serializable{
+	
+	//캐릭터 좌표값데이터
 	private double blueP1x;
 	private double blueP2x;
 	private double blueP3x;
@@ -10,6 +12,27 @@ public class GameBroadData implements Serializable{
 	private double redP1x;
 	private double redP2x;
 	private double redP3x;
+	
+	
+	//캐릭터 좌우움직임 감지
+	// 블루팀
+	private  boolean b1right; // 오른쪽
+	private  boolean b2right;
+	private  boolean b3right;
+	private  boolean b1left; // 왼쪽
+	private  boolean b2left;
+	private  boolean b3left;
+
+	// 레드팀
+	private  boolean r1right; // 오른쪽
+	private  boolean r2right;
+	private  boolean r3right;
+	private  boolean r1left; // 왼쪽
+	private  boolean r2left;
+	private  boolean r3left;
+	//캐릭터 좌우 이동 끝
+	
+	
 	
 	//각캐릭터 총알 좌표
 	private double blueBulletX1;
@@ -37,6 +60,78 @@ public class GameBroadData implements Serializable{
 
 	public boolean isbP3bulletStart() {
 		return bP3bulletStart;
+	}
+	public boolean isB1right() {
+		return b1right;
+	}
+	public void setB1right(boolean b1right) {
+		this.b1right = b1right;
+	}
+	public boolean isB2right() {
+		return b2right;
+	}
+	public void setB2right(boolean b2right) {
+		this.b2right = b2right;
+	}
+	public boolean isB3right() {
+		return b3right;
+	}
+	public void setB3right(boolean b3right) {
+		this.b3right = b3right;
+	}
+	public boolean isB1left() {
+		return b1left;
+	}
+	public void setB1left(boolean b1left) {
+		this.b1left = b1left;
+	}
+	public boolean isB2left() {
+		return b2left;
+	}
+	public void setB2left(boolean b2left) {
+		this.b2left = b2left;
+	}
+	public boolean isB3left() {
+		return b3left;
+	}
+	public void setB3left(boolean b3left) {
+		this.b3left = b3left;
+	}
+	public boolean isR1right() {
+		return r1right;
+	}
+	public void setR1right(boolean r1right) {
+		this.r1right = r1right;
+	}
+	public boolean isR2right() {
+		return r2right;
+	}
+	public void setR2right(boolean r2right) {
+		this.r2right = r2right;
+	}
+	public boolean isR3right() {
+		return r3right;
+	}
+	public void setR3right(boolean r3right) {
+		this.r3right = r3right;
+	}
+	public boolean isR1left() {
+		return r1left;
+	}
+	public void setR1left(boolean r1left) {
+		this.r1left = r1left;
+	}
+	public boolean isR2left() {
+		return r2left;
+	}
+	public void setR2left(boolean r2left) {
+		this.r2left = r2left;
+	}
+	public boolean isR3left() {
+		return r3left;
+	}
+	public void setR3left(boolean r3left) {
+		this.r3left = r3left;
 	}
 	public boolean isrP1bulletStart() {
 		return rP1bulletStart;

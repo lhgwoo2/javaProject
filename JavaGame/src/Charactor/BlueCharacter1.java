@@ -18,9 +18,9 @@ public class BlueCharacter1 extends BufferedImage  {
 	//1
 	Image img;
 	int a =0;
-	int b =288;
+	int b =0;
 	int c = 90;
-	int d = 360;
+	int d = 90;
 	JPanel j;
 	boolean bool ;
 	public double chx;	//캐릭터의 x좌표
@@ -29,7 +29,7 @@ public class BlueCharacter1 extends BufferedImage  {
 	public BlueCharacter1(JPanel j){
 	    super(40, 40, BufferedImage.TYPE_INT_ARGB);
 		this.j = j;
-		InputStream is = getClass().getResourceAsStream("123.png"); //내가 불러온 이미지를 InputStream 형으로 받아온다.
+		InputStream is = getClass().getResourceAsStream("/imagePack/attackBLUE.png"); //내가 불러온 이미지를 InputStream 형으로 받아온다.
 	        try { 
 	        	img = ImageIO.read(is); //프로젝트에 포함된 이미지 파일을 BufferedImage로 로드한다.
 	        } catch (IOException e) { 
@@ -49,17 +49,12 @@ public class BlueCharacter1 extends BufferedImage  {
 			a=0;
 			c=90;				
 		}
-		
-/*		if (MainPanel.GetDistance(MainPanel.fbx, MainPanel.fby,x + 60, y + 60) <= 72.5) { 
-			MainPanel.fbx =x;
-			MainPanel.fby =y;
-			MainFrame.mp.secondBall();
-			fbswitch = true;
-		}
-		*/
-		
 	}
 	
+	public void setMove(int b, int d){
+		this.b=b;
+		this.d=d;
+	}
 	
 	
 	public void draw(Graphics2D g2d) { //캐릭터가 패널 밖으로 나가는순간 어떻게해야 할지 모르겠음.

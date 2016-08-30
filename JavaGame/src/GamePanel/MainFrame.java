@@ -12,18 +12,10 @@ public class MainFrame extends JFrame {
 		getContentPane().setLayout(null);
 		setVisible(true);
 
-		// MainFrame size hold
-		//this.setResizable(false);
-		
-		// Main Page Screen
 		MainPanel mp = new MainPanel(this);
 		this.add(mp);
 		mp.requestFocusInWindow();
 		
-		// Loading Panel
-		//LoadingPanel ldp = new LoadingPanel();
-		
-		// Login page Screen
 		LoginPanel lp = new LoginPanel(mp/*,ldp*/);
 		this.add(lp);
 		lp.requestFocusInWindow();
@@ -32,7 +24,7 @@ public class MainFrame extends JFrame {
 		/*new Thread() {
 			@Override
 			public void run() {
-				super.run();
+				super.run();nn
 				while (true) {
 				repaint();
 					

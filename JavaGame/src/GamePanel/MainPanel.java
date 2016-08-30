@@ -60,7 +60,7 @@ public class MainPanel extends JPanel {
 	
 	public HashSet<Integer> keyCodes = new HashSet<>();
 	public Timer timer;
-	public GameData gData;				// 게임데이터 전송
+	public GameData gData;		// 게임데이터 전송
 	
 	public static List<FirstBall> fb  = new ArrayList<>();		
 	public static List<SecondBall> sb  = new ArrayList<>();		
@@ -73,10 +73,14 @@ public class MainPanel extends JPanel {
 	
 	
 	// 레드 총알
-	public static List<BulletBlue1> bullet1R = new ArrayList<>(); 		//레드팀 1번 Bullet 배열
-	public static List<BulletBlue2> bullet2R = new ArrayList<>(); 		// 레드팀 2번 Bullet 배열
-	public static List<BulletBlue3> bullet3R = new ArrayList<>(); 		// 레드팀 3번 Bullet 배열
+	public static List<BulletRed1> bullet1R = new ArrayList<>(); 		//레드팀 1번 Bullet 배열
+	public static List<BulletRed2> bullet2R = new ArrayList<>(); 		// 레드팀 2번 Bullet 배열
+	public static List<BulletRed3> bullet3R = new ArrayList<>(); 		// 레드팀 3번 Bullet 배열
 	
+	
+	// 캐릭터 좌우 이동
+	public boolean left;
+	public boolean right;
 	
 	public MainPanel(JFrame f) {
 		super();
@@ -90,6 +94,7 @@ public class MainPanel extends JPanel {
 		drawingMainImage();
 		setFocusable(true);			// 메인패널의 포커스를 맟추어준다
 		requestFocus();				// 포커스를 요청한다.
+		gData= new GameData();
 	}
 	
 	public void firstBall(){
@@ -124,42 +129,34 @@ public class MainPanel extends JPanel {
 
 					switch (keyCode) {
 					case KeyEvent.VK_A:
-						gData = new GameData();
+						//왼쪽 이동 캐릭터 그림파일 위치 이동
 						// 팀 색과 팀 순번 전송, 캐릭터의 좌표전송
 						gData.setTeamColor(teamColor);
 						gData.setTeamNum(teamNumber);
 						gData.setChx(-10);
-
+						gData.setLeftMove(true);
 						LoginPanel.gClient.sendGameData(gData);
+						gData.setChx(0);
+						gData.setLeftMove(false);
 						break;
 					case KeyEvent.VK_D:
-						gData = new GameData();
+						//오른쪽 이동 캐릭터 그림파일 위치 이동
 						// 팀 색과 팀 순번 전송, 캐릭터의 좌표전송
 						gData.setTeamColor(teamColor);
 						gData.setTeamNum(teamNumber);
 						gData.setChx(+10);
-
+						gData.setRightMove(true);
 						LoginPanel.gClient.sendGameData(gData);
+						gData.setChx(0);
+						gData.setRightMove(false);
 						break;
 					case KeyEvent.VK_N:// 가상키 n , n를 누른경우! bullet 메소드를 부름.
-						// if(!Character.isDead) bullet();
-						/*if (teamColor.equals("Blue")) {
-							if (teamNumber == 1) {
-								bP1bullet();
-							}
-						}
-						if (teamColor.equals("Blue")) {
-							if (teamNumber == 2) {
-								bP2bullet();
-							}
-						}*/
-						
-						gData = new GameData();
 						// 팀 색과 팀 순번 전송, 캐릭터의 좌표전송
 						gData.setTeamColor(teamColor);
 						gData.setTeamNum(teamNumber);
 						gData.setBulletStart(true); // 총알이 출발했다.
 						LoginPanel.gClient.sendGameData(gData);
+						gData.setBulletStart(false); // 총알이 출발했다.
 
 						break;
 					}
@@ -237,7 +234,7 @@ public class MainPanel extends JPanel {
 	//레드팀 1번 총알
 		public void rP1bullet() { 
 			if (!red1fb) {
-				bullet1R.add(new BulletBlue1((getWidth() + 65) / 2 + rCharac1.chx, getHeight() - 270, 15, this));
+				bullet1R.add(new BulletRed1((getWidth() + 65) / 2 + rCharac1.chx, getHeight() - 270, 15, this));
 				red1fb = true;
 			}
 			for (int i = 0; i < bullet1R.size(); i++) {
@@ -250,7 +247,7 @@ public class MainPanel extends JPanel {
 		// 레드팀 2번 총알
 		public void rP2bullet() { 
 			if (!red2fb) {
-				bullet2R.add(new BulletBlue2((getWidth() + 65) / 2 + rCharac2.chx, getHeight() - 270, 15, this));
+				bullet2R.add(new BulletRed2((getWidth() + 65) / 2 + rCharac2.chx, getHeight() - 270, 15, this));
 				red2fb = true;
 			}
 			for (int i = 0; i < bullet2R.size(); i++) {
@@ -262,7 +259,7 @@ public class MainPanel extends JPanel {
 		// 레드팀 3번 총알
 		public void rP3bullet() { 
 			if (!red3fb) {
-				bullet3R.add(new BulletBlue3((getWidth() + 65) / 2 + rCharac3.chx, getHeight() - 270, 15, this));
+				bullet3R.add(new BulletRed3((getWidth() + 65) / 2 + rCharac3.chx, getHeight() - 270, 15, this));
 				red3fb = true;
 			}
 			for (int i = 0; i < bullet3R.size(); i++) {
