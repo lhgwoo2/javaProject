@@ -22,11 +22,43 @@ public class GameBroadData implements Serializable{
 	private double bulletSpeed;
 	
 	// 캐릭터 총알 시작
-	private boolean bP1bulletStart;	//블루 1번 총알이 발사 됬는지 확인함!
-	private boolean bP2bulletStart;	//블루 2번 총알이 발사 됬는지 확인함!
+	// 블루팀
+	private boolean bP1bulletStart; // 블루 1번 총알이 발사 됬는지 확인함!
+	private boolean bP2bulletStart; // 블루 2번 총알이 발사 됬는지 확인함!
+	private boolean bP3bulletStart; // 블루 3번 총알이 발사 됬는지 확인함!
+	
+	// 레드팀
+	private boolean rP1bulletStart; // 블루 1번 총알이 발사 됬는지 확인함!
+	private boolean rP2bulletStart; // 블루 2번 총알이 발사 됬는지 확인함!
+	private boolean rP3bulletStart; // 블루 3번 총알이 발사 됬는지 확인함!
+	// 캐릭터 총알 끝
 
 	
 
+	public boolean isbP3bulletStart() {
+		return bP3bulletStart;
+	}
+	public boolean isrP1bulletStart() {
+		return rP1bulletStart;
+	}
+	public void setrP1bulletStart(boolean rP1bulletStart) {
+		this.rP1bulletStart = rP1bulletStart;
+	}
+	public boolean isrP2bulletStart() {
+		return rP2bulletStart;
+	}
+	public void setrP2bulletStart(boolean rP2bulletStart) {
+		this.rP2bulletStart = rP2bulletStart;
+	}
+	public boolean isrP3bulletStart() {
+		return rP3bulletStart;
+	}
+	public void setrP3bulletStart(boolean rP3bulletStart) {
+		this.rP3bulletStart = rP3bulletStart;
+	}
+	public void setbP3bulletStart(boolean bP3bulletStart) {
+		this.bP3bulletStart = bP3bulletStart;
+	}
 	public boolean isbP1bulletStart() {
 		return bP1bulletStart;
 	}

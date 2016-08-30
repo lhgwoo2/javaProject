@@ -56,14 +56,51 @@ public class FirstBall extends BufferedImage {
 		//공
 		
 		//공와 총알 충돌 탐지
-
-		if (MainPanel.GetDistance(ClientComThread.bux, ClientComThread.buy,x + 60, y + 60) <= 80) { 
-			secondBall(jp,x,y);
-			x=jp.getHeight()+300;
-			y=jp.getHeight()+300;
+		//블루팀 총알과 충돌
+		if (MainPanel.GetDistance(ClientComThread.buxB, ClientComThread.buyB,x + 60, y + 60) <= 6400) { //6400 은 80*80  
+			secondBall(jp,x,y); 		//첫번째볼이 터지면서 두번째볼을 생성
+			x=jp.getHeight()+300; //첫번째볼이 터지면 좌표를 초기화
+			y=jp.getHeight()+300; //첫번째볼이 터지면 좌표를 초기화
+			fbswitch = true;
+		}
+		if (MainPanel.GetDistance(ClientComThread.bux2B, ClientComThread.buy2B,x + 60, y + 60) <= 6400) { //6400 은 80*80  
+			secondBall(jp,x,y); 		//첫번째볼이 터지면서 두번째볼을 생성
+			x=jp.getHeight()+300; //첫번째볼이 터지면 좌표를 초기화
+			y=jp.getHeight()+300; //첫번째볼이 터지면 좌표를 초기화
+			fbswitch = true;
+		}
+		if (MainPanel.GetDistance(ClientComThread.bux3B, ClientComThread.buy3B,x + 60, y + 60) <= 6400) { //6400 은 80*80  
+			secondBall(jp,x,y); //첫번째볼이 터지면서 두번째볼을 생성
+			x=jp.getHeight()+300; //첫번째볼이 터지면 좌표를 초기화
+			y=jp.getHeight()+300; //첫번째볼이 터지면 좌표를 초기화
+			fbswitch = true;
+		}
+		
+		
+		
+		//레드팀 총알과 충돌
+		if (MainPanel.GetDistance(ClientComThread.buxR, ClientComThread.buyR,x + 60, y + 60) <= 6400) { //6400 은 80*80  
+			secondBall(jp,x,y); //첫번째볼이 터지면서 두번째볼을 생성
+			x=jp.getHeight()+300; //첫번째볼이 터지면 좌표를 초기화
+			y=jp.getHeight()+300; //첫번째볼이 터지면 좌표를 초기화
+			fbswitch = true;
+		}
+		if (MainPanel.GetDistance(ClientComThread.bux2R, ClientComThread.buy2R,x + 60, y + 60) <= 6400) { //6400 은 80*80  
+			secondBall(jp,x,y); //첫번째볼이 터지면서 두번째볼을 생성
+			x=jp.getHeight()+300; //첫번째볼이 터지면 좌표를 초기화
+			y=jp.getHeight()+300; //첫번째볼이 터지면 좌표를 초기화
+			fbswitch = true;
+		}
+		if (MainPanel.GetDistance(ClientComThread.bux3R, ClientComThread.buy3R,x + 60, y + 60) <= 6400) { //6400 은 80*80  
+			secondBall(jp,x,y); //첫번째볼이 터지면서 두번째볼을 생성
+			x=jp.getHeight()+300; //첫번째볼이 터지면 좌표를 초기화
+			y=jp.getHeight()+300; //첫번째볼이 터지면 좌표를 초기화
 			fbswitch = true;
 		}
 		//공와 총알 충돌 탐지
+		
+		
+		
 		//캐릭터와 볼의 충돌 탐지
 /*		if (MainPanel.GetDistance(MainPanel.fbx+60, MainPanel.fby+60, j.getWidth() / 2 + MainPanel.chx, j.getHeight()-80) <=58) { 
 			Character.isDead=true;

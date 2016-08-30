@@ -9,10 +9,22 @@ import GamePanel.MainPanel;
 public class ClientComThread extends Thread {
 	private Socket socket;
 	private ObjectInputStream fromServer;
-	public static double bux;
-	public static double buy;
-	public static double bux2;
-	public static double buy2;
+	
+	//블루팀 총알 좌표
+	public static double buxB;
+	public static double buyB;
+	public static double bux2B;
+	public static double buy2B;
+	public static double bux3B;
+	public static double buy3B;
+	
+	//레드팀 총알 좌표
+	public static double buxR;
+	public static double buyR;
+	public static double bux2R;
+	public static double buy2R;
+	public static double bux3R;
+	public static double buy3R;
 	
 	MainPanel mp;
 	ChatPanel cp;
@@ -51,10 +63,25 @@ public class ClientComThread extends Thread {
 				} else if (obj instanceof GameBroadData) {
 					GameBroadData gbData = (GameBroadData) obj;
 					//캐릭터가 이동하여 좌표변경하여 다시 그려준다.
-					mp.bCharac1.chx+=gbData.getBlueP1x();
+					
+					//블루 캐릭터
+					mp.bCharac1.chx+=gbData.getBlueP1x(); 
 					mp.bCharac2.chx+=gbData.getBlueP2x();
+					mp.bCharac3.chx+=gbData.getBlueP3x();
 					mp.bCharac1.loop();
 					mp.bCharac2.loop();
+					mp.bCharac3.loop();
+					
+					//레드 캐릭터
+					mp.rCharac1.chx+=gbData.getRedP1x(); 
+					mp.rCharac2.chx+=gbData.getRedP2x();
+					mp.rCharac3.chx+=gbData.getRedP3x();
+					mp.rCharac1.loop();
+					mp.rCharac2.loop();
+					mp.rCharac3.loop();
+					
+					
+					//Ball 루프 
 					for(int i =0;i<mp.fb.size();i++){
 						if(!mp.fb.get(i).fbswitch)	mp.fb.get(i).loop();	
 					}
@@ -65,66 +92,75 @@ public class ClientComThread extends Thread {
 						if(!mp.tb.get(i).tbswitch)	mp.tb.get(i).loop();	
 
 					}
-					//총알 start
-					//블루1번총알 시작
-					if(gbData.isbP1bulletStart()){
-						mp. bP1bullet();
-					}
-					//블루1번총알 끝
+					//Ball 루프 
 					
-					//블루2번총알 시작
-					if(gbData.isbP2bulletStart()){
-						mp. bP2bullet();
+					//총알 start
+					//블루 팀 총알
+					if(gbData.isbP1bulletStart()) mp. bP1bullet();
+					if(gbData.isbP2bulletStart()) mp. bP2bullet();
+					if(gbData.isbP3bulletStart()) mp. bP3bullet();
 
-						
-					}
-					//블루2번총알 끝
+					//레드 팀 총알
+					if(gbData.isrP1bulletStart()) mp. rP1bullet();
+					if(gbData.isrP2bulletStart()) mp. rP2bullet();
+					if(gbData.isrP3bulletStart()) mp. rP3bullet();
 					//총알 end
 					
 					//총알 루프 시작
 					//블루 1번 총알 루프
-					for (int i = 0; i < mp.bullet.size(); i++) {
-						if (mp.bullet.size() > 0) {
-							mp.bullet.get(i).loop();
-							bux  =mp.bullet.get(i).x;
-							buy = mp.bullet.get(i).y;// 총알의 좌표를 계속 패널에 그린다.
+					for (int i = 0; i < mp.bullet1B.size(); i++) {
+						if (mp.bullet1B.size() > 0) {
+							mp.bullet1B.get(i).loop();
+							buxB = mp.bullet1B.get(i).x;
+							buyB = mp.bullet1B.get(i).y;// 총알의 좌표를 계속 패널에 그린다.
 						}
 					}
-
-					
-					//블루 2번 총알 루프
-					for (int i = 0; i < mp.bullet2.size(); i++) {
-						if (mp.bullet2.size() > 0) {
-							mp.bullet2.get(i).loop();
-							bux2  =mp.bullet2.get(i).x;
-							buy2= mp.bullet2.get(i).y;// 총알의 좌표를 계속 패널에 그린다.
+					// 블루 2번 총알 루프
+					for (int i = 0; i < mp.bullet2B.size(); i++) {
+						if (mp.bullet2B.size() > 0) {
+							mp.bullet2B.get(i).loop();
+							bux2B = mp.bullet2B.get(i).x;
+							buy2B = mp.bullet2B.get(i).y;// 총알의 좌표를 계속 패널에 그린다.
 						}
 					}
-
+					// 블루 3번 총알 루프
+					for (int i = 0; i < mp.bullet3B.size(); i++) {
+						if (mp.bullet3B.size() > 0) {
+							mp.bullet3B.get(i).loop();
+							bux3B = mp.bullet3B.get(i).x;
+							buy3B = mp.bullet3B.get(i).y;// 총알의 좌표를 계속 패널에 그린다.
+						}
+					}
 					
-					//총알 루프 시작
+					//레드팀 1번 총알 루프
+					for (int i = 0; i < mp.bullet1R.size(); i++) {
+						if (mp.bullet1R.size() > 0) {
+							mp.bullet1R.get(i).loop();
+							buxR = mp.bullet1R.get(i).x;
+							buyR = mp.bullet1R.get(i).y;// 총알의 좌표를 계속 패널에 그린다.
+						}
+					}
+					// 레드 2번 총알 루프
+					for (int i = 0; i < mp.bullet2R.size(); i++) {
+						if (mp.bullet2R.size() > 0) {
+							mp.bullet2R.get(i).loop();
+							bux2R = mp.bullet2R.get(i).x;
+							buy2R = mp.bullet2R.get(i).y;// 총알의 좌표를 계속 패널에 그린다.
+						}
+					}
+					// 레드 3번 총알 루프
+					for (int i = 0; i < mp.bullet3R.size(); i++) {
+						if (mp.bullet3R.size() > 0) {
+							mp.bullet3R.get(i).loop();
+							bux3R = mp.bullet3R.get(i).x;
+							buy3R = mp.bullet3R.get(i).y;// 총알의 좌표를 계속 패널에 그린다.
+						}
+					}
+			
+					//총알 루프 끝
 				
 					mp.repaint();
-					
-					/*if(gData.getChx()!=0)
-					{
-						if(gData.getTeamColor().equals("Blue"))
-						{
-							if(gData.getTeamNum()==1)
-							{
-								mp.bCharac1.chx+=gData.getChx();
-								mp.bCharac1.loop();
-								mp.repaint();
-							}
-							else if(gData.getTeamNum()==2)
-							{
-								mp.bCharac2.chx+=gData.getChx();
-								mp.bCharac2.loop();
-								mp.repaint();
-							}
-						}
-						
-					}*/
+
 					
 				}
 				} catch (Exception e) {

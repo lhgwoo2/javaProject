@@ -70,7 +70,7 @@ public class GameClient {
 			new ClientComThread(socket, mp, this).start();
 			
 			//들어온 인원수를 제한한다.	블루 1/ 레드 1
-			if (cData.getClientBlueNum() == 2 /*&& cData.getClientRedNum() == 1*/) {
+			if (cData.getClientBlueNum() == 3 && cData.getClientRedNum() == 3) {
 
 				try {
 					// 모든 팀원들이 들어와서 모두 매칭되었다. 서버로 신호를 보냄 -> 서버에서 다시 모든 클라이언트로 값을
@@ -111,8 +111,6 @@ public class GameClient {
 	public void sendGameData(GameData gData) {
 
 		try {
-			System.out.println("게임데이터 나간다. 서버쪽으로");
-			
 			toServer.writeObject(gData);
 			toServer.flush();
 		} catch (IOException e) {

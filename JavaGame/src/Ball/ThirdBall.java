@@ -58,12 +58,41 @@ public class ThirdBall extends BufferedImage {
 			xspeed = -xspeed;
 		}
 		//°ø¿Í ÃÑ¾Ë Ãæµ¹ Å½Áö
-
-		if (MainPanel.GetDistance(ClientComThread.bux, ClientComThread.buy,x + 20, y + 20) <= 32.5) {
+		//ºí·çÆÀ ÃÑ¾Ë Å½Áö
+		if (MainPanel.GetDistance(ClientComThread.buxB, ClientComThread.buyB,x + 20, y + 20) <= 1056.25) { // 1056.25 ´Â 32.5*32.5
 			tbswitch = true;
 			x=j.getHeight()+300;
 			y=j.getHeight()+300;
 		}
+		if (MainPanel.GetDistance(ClientComThread.bux2B, ClientComThread.buy2B,x + 20, y + 20) <= 1056.25) { // 1056.25 ´Â 32.5*32.5
+			tbswitch = true;
+			x=j.getHeight()+300;
+			y=j.getHeight()+300;
+		}
+		if (MainPanel.GetDistance(ClientComThread.bux3B, ClientComThread.buy3B,x + 20, y + 20) <= 1056.25) { // 1056.25 ´Â 32.5*32.5
+			tbswitch = true;
+			x=j.getHeight()+300;
+			y=j.getHeight()+300;
+		}
+		
+		
+		//·¹µåÆÀ ÃÑ¾Ë Å½Áö
+		if (MainPanel.GetDistance(ClientComThread.buxR, ClientComThread.buyR,x + 20, y + 20) <= 1056.25) { // 1056.25 ´Â 32.5*32.5
+			tbswitch = true;
+			x=j.getHeight()+300;
+			y=j.getHeight()+300;
+		}
+		if (MainPanel.GetDistance(ClientComThread.bux2R, ClientComThread.buy2R,x + 20, y + 20) <= 1056.25) { // 1056.25 ´Â 32.5*32.5
+			tbswitch = true;
+			x=j.getHeight()+300;
+			y=j.getHeight()+300;
+		}
+		if (MainPanel.GetDistance(ClientComThread.bux3R, ClientComThread.buy3R,x + 20, y + 20) <= 1056.25) { // 1056.25 ´Â 32.5*32.5
+			tbswitch = true;
+			x=j.getHeight()+300;
+			y=j.getHeight()+300;
+		}
+		
 		//°ø¿Í ÃÑ¾Ë Ãæµ¹ Å½Áö
 		
 		//Ä³¸¯ÅÍ¿Í º¼ÀÇ Ãæµ¹ Å½Áö

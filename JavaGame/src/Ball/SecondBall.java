@@ -60,10 +60,44 @@ public class SecondBall extends BufferedImage {
 			xspeed = -xspeed;
 		}
 		//공와 총알 충돌 탐지
-		if (MainPanel.GetDistance(ClientComThread.bux, ClientComThread.buy,x + 40, y + 40) <= 52.5) {
-			thirdBall(jp,x,y);
-			x=jp.getHeight()+300;
-			y=jp.getHeight()+300;
+		//블루팀 총알 탐지
+		if (MainPanel.GetDistance(ClientComThread.buxB, ClientComThread.buyB,x + 40, y + 40) <= 2756.25) { //2756.25 는 52.5*52.5
+			thirdBall(jp,x,y); //두번째볼이 터지면서 세번째볼을 생성
+			x=jp.getHeight()+300; //두번째볼이 터지면 좌표를 초기화
+			y=jp.getHeight()+300; //두번째볼이 터지면 좌표를 초기화
+			sbswitch = true;
+		}
+		if (MainPanel.GetDistance(ClientComThread.bux2B, ClientComThread.buy2B,x + 40, y + 40) <= 2756.25) {
+			thirdBall(jp,x,y); //두번째볼이 터지면서 세번째볼을 생성
+			x=jp.getHeight()+300; //두번째볼이 터지면 좌표를 초기화
+			y=jp.getHeight()+300; //두번째볼이 터지면 좌표를 초기화
+			sbswitch = true;
+		}
+		if (MainPanel.GetDistance(ClientComThread.bux3B, ClientComThread.buy3B,x + 40, y + 40) <= 2756.25) {
+			thirdBall(jp,x,y); //두번째볼이 터지면서 세번째볼을 생성
+			x=jp.getHeight()+300; //두번째볼이 터지면 좌표를 초기화
+			y=jp.getHeight()+300; //두번째볼이 터지면 좌표를 초기화
+			sbswitch = true;
+		}
+		
+		
+		//레드팀 총알 탐지
+		if (MainPanel.GetDistance(ClientComThread.buxR, ClientComThread.buyR,x + 40, y + 40) <= 2756.25) {
+			thirdBall(jp,x,y); //두번째볼이 터지면서 세번째볼을 생성
+			x=jp.getHeight()+300; //두번째볼이 터지면 좌표를 초기화
+			y=jp.getHeight()+300; //두번째볼이 터지면 좌표를 초기화
+			sbswitch = true;
+		}
+		if (MainPanel.GetDistance(ClientComThread.bux2R, ClientComThread.buy2R,x + 40, y + 40) <= 2756.25) {
+			thirdBall(jp,x,y); //두번째볼이 터지면서 세번째볼을 생성
+			x=jp.getHeight()+300; //두번째볼이 터지면 좌표를 초기화
+			y=jp.getHeight()+300; //두번째볼이 터지면 좌표를 초기화
+			sbswitch = true;
+		}
+		if (MainPanel.GetDistance(ClientComThread.bux3R, ClientComThread.buy3R,x + 40, y + 40) <= 2756.25) {
+			thirdBall(jp,x,y); //두번째볼이 터지면서 세번째볼을 생성
+			x=jp.getHeight()+300; //두번째볼이 터지면 좌표를 초기화
+			y=jp.getHeight()+300; //두번째볼이 터지면 좌표를 초기화
 			sbswitch = true;
 		}
 		//공와 총알 충돌 탐지

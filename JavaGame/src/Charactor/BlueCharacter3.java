@@ -1,5 +1,6 @@
 package Charactor;
 
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -13,7 +14,7 @@ import java.io.InputStream;
 import javax.imageio.ImageIO; 
 import javax.swing.JPanel;
 
-public class BlueCharacter2 extends BufferedImage  {
+public class BlueCharacter3 extends BufferedImage  {
 	
 	//1
 	Image img;
@@ -26,7 +27,7 @@ public class BlueCharacter2 extends BufferedImage  {
 	public double chx;	//캐릭터의 x좌표
 	
 	
-	public BlueCharacter2(JPanel j){
+	public BlueCharacter3(JPanel j){
 	    super(40, 40, BufferedImage.TYPE_INT_ARGB);
 		this.j = j;
 		InputStream is = getClass().getResourceAsStream("123.png"); //내가 불러온 이미지를 InputStream 형으로 받아온다.
