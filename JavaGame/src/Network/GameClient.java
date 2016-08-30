@@ -51,7 +51,6 @@ public class GameClient {
 		boolean loginOk = false;
 		String str = null;
 		try {
-			toServer.reset();
 			toServer.writeObject(cData);
 			toServer.flush();
 
@@ -71,13 +70,12 @@ public class GameClient {
 			new ClientComThread(socket, mp, this).start();
 			
 			//들어온 인원수를 제한한다.	블루 1/ 레드 1
-			if (cData.getClientBlueNum() == 3 && cData.getClientRedNum() == 3) {
+			if (cData.getClientBlueNum() == 3 && cData.getClientRedNum() ==  3) {
 
 				try {
 					// 모든 팀원들이 들어와서 모두 매칭되었다. 서버로 신호를 보냄 -> 서버에서 다시 모든 클라이언트로 값을
 					// 보내어 게임에 입장하도록 함.
 					cData.setAllTeamOK(true);
-					toServer.reset();
 					toServer.writeObject(cData);
 					toServer.flush();
 				} catch (IOException e) {
@@ -95,10 +93,12 @@ public class GameClient {
 	}
 
 	// Chatting sending
-	public void sendMessage(ClientData cData) {
+	public void sendMessage(String msg) {
+
+		ClientData cData = new ClientData();
+		cData.setChatMsg(msg);
 		cData.setUserId(clientId);
 		try {
-			toServer.reset();
 			toServer.writeObject(cData);
 			toServer.flush();
 		} catch (IOException e) {
@@ -111,7 +111,8 @@ public class GameClient {
 	public void sendGameData(GameData gData) {
 
 		try {
-			toServer.reset();
+			System.out.println("게임데이터 나간다. 서버쪽으로");
+			
 			toServer.writeObject(gData);
 			toServer.flush();
 		} catch (IOException e) {

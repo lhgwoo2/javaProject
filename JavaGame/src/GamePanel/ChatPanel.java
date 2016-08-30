@@ -26,7 +26,7 @@ public class ChatPanel extends JPanel {
 	GameClient gc;
 	MainPanel mp;
 	private Font font1 = new Font("Serif", Font.PLAIN, 15);
-	ClientData cData ;
+
 	public ChatPanel(GameClient gc, MainPanel mp) {
 		super();
 		this.gc = gc;
@@ -81,7 +81,6 @@ public class ChatPanel extends JPanel {
 		ttf.setBackground(new Color(0.5f, 0.3f, 0.1f, 0.7f));
 		ttf.setColumns(50);
 		this.add(ttf);
-		cData = new ClientData();
 
 		// 메시지를 보내기 위해서 클릭으로 채팅창 활성화
 		ttf.addMouseListener(new MouseAdapter() {
@@ -97,8 +96,7 @@ public class ChatPanel extends JPanel {
 				char keyCode = e.getKeyChar();
 				if (keyCode == KeyEvent.VK_ENTER) {
 					String sendM = ttf.getText();
-					cData.setChatMsg(sendM);
-					gc.sendMessage(cData );
+					gc.sendMessage(sendM);
 					ttf.setText("");
 					ttf.setEnabled(false);
 					// ttf.requestFocus(); //

@@ -94,7 +94,7 @@ public class MainPanel extends JPanel {
 		drawingMainImage();
 		setFocusable(true);			// 메인패널의 포커스를 맟추어준다
 		requestFocus();				// 포커스를 요청한다.
-		gData= new GameData();
+		
 	}
 	
 	public void firstBall(){
@@ -119,7 +119,7 @@ public class MainPanel extends JPanel {
 		teamColor = LoginPanel.gClient.teamColor;
 		teamNumber = LoginPanel.gClient.clientNumber;
 		// 키보드 타이머를 줌으로써 중복된 키가 안눌리도록 한다.
-		timer = new Timer(50, new ActionListener() {
+		timer = new Timer(30, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
@@ -131,32 +131,32 @@ public class MainPanel extends JPanel {
 					case KeyEvent.VK_A:
 						//왼쪽 이동 캐릭터 그림파일 위치 이동
 						// 팀 색과 팀 순번 전송, 캐릭터의 좌표전송
+						gData= new GameData();
 						gData.setTeamColor(teamColor);
 						gData.setTeamNum(teamNumber);
 						gData.setChx(-10);
 						gData.setLeftMove(true);
 						LoginPanel.gClient.sendGameData(gData);
-						gData.setChx(0);
-						gData.setLeftMove(false);
+
 						break;
 					case KeyEvent.VK_D:
 						//오른쪽 이동 캐릭터 그림파일 위치 이동
 						// 팀 색과 팀 순번 전송, 캐릭터의 좌표전송
+						gData= new GameData();
 						gData.setTeamColor(teamColor);
 						gData.setTeamNum(teamNumber);
 						gData.setChx(+10);
 						gData.setRightMove(true);
 						LoginPanel.gClient.sendGameData(gData);
-						gData.setChx(0);
-						gData.setRightMove(false);
+		
 						break;
 					case KeyEvent.VK_N:// 가상키 n , n를 누른경우! bullet 메소드를 부름.
 						// 팀 색과 팀 순번 전송, 캐릭터의 좌표전송
+						gData= new GameData();
 						gData.setTeamColor(teamColor);
 						gData.setTeamNum(teamNumber);
 						gData.setBulletStart(true); // 총알이 출발했다.
 						LoginPanel.gClient.sendGameData(gData);
-						gData.setBulletStart(false); // 총알이 출발했다.
 
 						break;
 					}

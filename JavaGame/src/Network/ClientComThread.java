@@ -37,8 +37,6 @@ public class ClientComThread extends Thread {
 	public boolean r2MoveFlag;
 	public boolean r3MoveFlag;
 	
-	public boolean oisFlag; 						//ois생성 플래그
-
 	MainPanel mp;
 	ChatPanel cp;
 	GameClient gc;
@@ -56,11 +54,8 @@ public class ClientComThread extends Thread {
 		
 		while (true) {
 			try {
-				if(!oisFlag){
 					fromServer = new ObjectInputStream(socket.getInputStream()); 
-					oisFlag=true;
-				}
-				Object obj = fromServer.readObject();
+					Object obj = fromServer.readObject();
 
 				// 클라이언트 로그인 및 채팅데이터
 				if (obj instanceof ClientData) {
