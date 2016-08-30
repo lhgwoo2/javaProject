@@ -119,7 +119,7 @@ public class MainPanel extends JPanel {
 		teamColor = LoginPanel.gClient.teamColor;
 		teamNumber = LoginPanel.gClient.clientNumber;
 		// 키보드 타이머를 줌으로써 중복된 키가 안눌리도록 한다.
-		timer = new Timer(30, new ActionListener() {
+		timer = new Timer(25, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 

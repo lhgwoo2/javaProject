@@ -83,17 +83,20 @@ public class ClientComThread extends Thread {
 					mp.bCharac1.chx+=gbData.getBlueP1x(); 
 					mp.bCharac2.chx+=gbData.getBlueP2x();
 					mp.bCharac3.chx+=gbData.getBlueP3x();
-					mp.bCharac1.loop();
-					mp.bCharac2.loop();
-					mp.bCharac3.loop();
-					
+					if(gbData.getBlueP1x()!=0)	mp.bCharac1.loop();
+					if(gbData.getBlueP2x()!=0)	mp.bCharac2.loop();
+					if(gbData.getBlueP3x()!=0) mp.bCharac3.loop();
+				
+									
 					//레드 캐릭터
 					mp.rCharac1.chx+=gbData.getRedP1x(); 
 					mp.rCharac2.chx+=gbData.getRedP2x();
 					mp.rCharac3.chx+=gbData.getRedP3x();
-					mp.rCharac1.loop();
-					mp.rCharac2.loop();
-					mp.rCharac3.loop();
+					if(gbData.getRedP1x()!=0)	mp.rCharac1.loop();
+					if(gbData.getRedP2x()!=0)	mp.rCharac2.loop();
+					if(gbData.getRedP3x()!=0) mp.rCharac3.loop();
+				
+							
 					
 					// 캐릭터 좌우이동 변환
 					// 블루팀
