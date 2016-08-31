@@ -167,10 +167,12 @@ public class GameLogicThread extends Thread {
 	public void run() {
 		super.run();
 		GameBroadData gbData = new GameBroadData();
+		long start;
+		long end;
 		while (true) {
-			long start = System.currentTimeMillis();
+			long start1 = System.currentTimeMillis();
 			
-
+			start = System.currentTimeMillis();
 			// 블루팀캐릭터 x좌표
 			gbData.setBlueP1x(blueP1x);
 			gbData.setBlueP2x(blueP2x);
@@ -179,7 +181,10 @@ public class GameLogicThread extends Thread {
 			gbData.setRedP1x(redP1x);
 			gbData.setRedP2x(redP2x);
 			gbData.setRedP3x(redP3x);
-
+			end= System.currentTimeMillis();
+			System.out.printf("서버에서 캐릭터좌표 걸린시간:%d\n",end-start);
+			
+			start = System.currentTimeMillis();
 			// 만약 블루 총알이 발생됬다면 여기서 true 값으로 데이터를 보내고 아니면 false
 			gbData.setbP1bulletStart(bP1BulletStart);
 			gbData.setbP2bulletStart(bP2BulletStart);
@@ -188,7 +193,10 @@ public class GameLogicThread extends Thread {
 			gbData.setrP1bulletStart(rP1BulletStart);
 			gbData.setrP2bulletStart(rP2BulletStart);
 			gbData.setrP3bulletStart(rP3BulletStart);
+			end= System.currentTimeMillis();
+			System.out.printf("서버에서 총알탐지 걸린시간:%d\n",end-start);
 			
+			start = System.currentTimeMillis();
 			//캐릭터 좌우 움직임 데이터 전송
 			//블루
 			gbData.setB1left(b1left);
@@ -204,8 +212,18 @@ public class GameLogicThread extends Thread {
 			gbData.setR2right(r2right);
 			gbData.setR3left(r3left);
 			gbData.setR3right(r3right);
+			end= System.currentTimeMillis();
+			System.out.printf("서버에서 좌우움직임 걸린시간:%d\n",end-start);
 			
 			
+			start = System.currentTimeMillis();
+			
+			GameServerThread.gDatabroadCast(gbData);
+			
+			end= System.currentTimeMillis();
+			System.out.printf("서버에서 보정된값을보낸다 걸린시간:%d\n",end-start);
+			
+			start = System.currentTimeMillis();
 			// 블루 캐릭터 속도초기화
 			blueP1x = 0;
 			blueP2x = 0;
@@ -214,7 +232,6 @@ public class GameLogicThread extends Thread {
 			redP1x = 0;
 			redP2x = 0;
 			redP3x = 0;
-
 			// 블루 총알 초기화
 			bP1BulletStart = false;
 			bP2BulletStart = false;
@@ -223,12 +240,14 @@ public class GameLogicThread extends Thread {
 			rP1BulletStart = false;
 			rP2BulletStart = false;
 			rP3BulletStart = false;
+			end= System.currentTimeMillis();
+			System.out.printf("서버에서 값초기화 걸린시간:%d\n",end-start);
+			
 
-			GameServerThread.gDatabroadCast(gbData);
 			try {
 				Thread.sleep(30); 
-				long end = System.currentTimeMillis();
-				System.out.printf("서버에서 보내는데 걸린시간:%d\n",end-start);
+				long end1 = System.currentTimeMillis();
+				System.out.printf("서버에서 보내는데 걸린시간:%d\n",end1-start1);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
