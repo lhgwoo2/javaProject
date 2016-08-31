@@ -27,24 +27,24 @@ public class BulletRed1 extends BufferedImage implements Bullets{
 	public double bh; // 벽돌 세로 크기
 	public boolean bool;
 	public int a = 0;
-	public int b = 288;
-	public int c = 90;
-	public int d = 360;
-
+	public int b = 0;
+	public int c = 58;
+	public int d = 580; //584에 8번
+	
 	public BulletRed1(){
-	      super(40, 40, BufferedImage.TYPE_INT_ARGB);
+		super(58,580, BufferedImage.TYPE_INT_ARGB);
 	      
 	      
 	      Graphics2D g2d = (Graphics2D) getGraphics();
 	      g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-			InputStream is = getClass().getResourceAsStream("123.png"); 
+			InputStream is = getClass().getResourceAsStream("/imagePack/bulletred.png"); 
 	        try { 
 	        	img = ImageIO.read(is); 
 	        } catch (IOException e) { 
 	            e.printStackTrace(); 
 	        }
-	        g2d.drawImage(img, 0, 0,90,90,a,b,c,d,null);
+	        g2d.drawImage(img, 0, 0,58/2,580,a,b,c,d,null);
 	}
 	public BulletRed1(double x, double y, double yspeed, JPanel j) {
 		this();
@@ -60,32 +60,13 @@ public class BulletRed1 extends BufferedImage implements Bullets{
 		if (y <= 0) {
 			bool = true;
 		}
-		/*for (int i = 0; i < MainPanel.brick.size(); i++) {
-			bx = MainPanel.brick.get(i).x;
-			by = MainPanel.brick.get(i).y;
-			bw = MainPanel.brick.get(i).w;
-			bh = MainPanel.brick.get(i).h;
-			if (MainPanel.GetDistance(x + 12.5, y + 12.5, bx + bw / 2, by + bh / 2) <= this.getWidth() / 2 + bh) {
-				this.y=j.getHeight()+50;
-				bool = true;
-			}
-		}*/
-		//MainFrame.bux = x + 12.5;		//아직 뭔지 감이 안옴
-		//MainFrame.buy = y + 12.5;
-		
-		a+=90;							//총알이미지의 변환
-		c+=90;
-		if(a==450){
-			a=0;
-			c=90;				
-		}
 	}
 	
 	public void draw(Graphics2D g2d){
 		if (!bool){
 			AffineTransform old = g2d.getTransform();
 			g2d.translate((int)x, (int)y);
-			g2d.drawImage(img, 0, 0,90,90,a,b,c,d,null);
+			g2d.drawImage(img, 0, 0,58/2,580,a,b,c,d,null);
 			g2d.setTransform(old); //붓을 원래위치로 ㅊ초기화
 		}
 	}

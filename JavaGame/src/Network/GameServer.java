@@ -47,7 +47,7 @@ class GameServerThread extends Thread{
 		this.fromClient = fromClient;
 		
 		//플레이어가 모두 입장이 확인되면 로직쓰레드를 실행
-		if(playerNumber==2)
+		if(playerNumber==6)
 		{
 			gLogicThread = new GameLogicThread();
 			gLogicThread.start();	// 게임로직(볼,충돌로직 등) 쓰레드 시작
@@ -95,7 +95,7 @@ class GameServerThread extends Thread{
 			}
 		}
 	}
-	public static void gDatabroadCast(GameBroadData d) {
+/*	public static void gDatabroadCast(GameBroadData d) {
 		Set<String> keys = GameServer.userMap.keySet();
 		Iterator<String> it = keys.iterator();
 		while (it.hasNext()) {
@@ -111,5 +111,5 @@ class GameServerThread extends Thread{
 				e.printStackTrace();
 			}
 		}
-	}
+	}*/
 }

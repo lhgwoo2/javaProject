@@ -20,6 +20,7 @@ public class MainFrame extends JFrame {
 		this.add(lp);
 		lp.requestFocusInWindow();
 		
+		//mp.gdp.setVisible(false)
 	
 	}
 

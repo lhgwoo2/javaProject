@@ -30,6 +30,7 @@ public class MainPanel extends JPanel {
 	public BufferedImage bimg;
 	public Graphics2D g2d;
 	public JFrame f;
+	public GameDataPanel gdp ;  //게임정보패널
 	
 	//블루 캐릭터 x 좌표
 	public BlueCharacter1 bCharac1;		// 블루팀 1번 캐릭터 클래스
@@ -88,6 +89,10 @@ public class MainPanel extends JPanel {
 		this.setLayout(null);
 		this.setBackground(Color.BLUE);
 		this.f = f;
+		
+		gdp= new GameDataPanel(this);
+		this.add(gdp);
+		//gdp.setVisible(true);
 
 		this.setFocusable(true);
 		this.requestFocus();
@@ -98,6 +103,7 @@ public class MainPanel extends JPanel {
 	}
 	
 	public void firstBall(){
+		
 		fb.add(new FirstBall(this,0,getHeight()-420,10,-26)); 
 		fb.add(new FirstBall(this,getWidth()-120,getHeight()-420,-10,-26)); 
 	}
