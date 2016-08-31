@@ -11,7 +11,9 @@ import Ball.SecondBall;
 import javax.swing.JPanel;
 
 public class FirstBall extends BufferedImage {
-
+	
+	public static double fbx;
+	public static double fby;
 	public double x;
 	public double y;
 	public double bx; //벽돌x
@@ -54,7 +56,7 @@ public class FirstBall extends BufferedImage {
 			x = 0; xspeed = -xspeed;
 		}
 		//공
-		
+
 		//공와 총알 충돌 탐지
 		//블루팀 총알과 충돌
 		if (MainPanel.GetDistance(ClientComThread.buxB, ClientComThread.buyB,x + 60, y + 60) <= 6400) { //6400 은 80*80  

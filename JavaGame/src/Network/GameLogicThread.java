@@ -11,11 +11,11 @@ public class GameLogicThread extends Thread {
 	
 	public GameLogicThread() {
 		super();
-		try {
+/*		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}
+		}*/
 		gData = new GameData();
 		gData.setTeamColor("Blue");
 		gData.setTeamNum(1);
@@ -49,7 +49,11 @@ public class GameLogicThread extends Thread {
 				gData.setChx(0);
 				gData.setBulletStart(false);
 			}
-
+			try {
+				Thread.sleep(30);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

@@ -12,6 +12,8 @@ import Network.ClientComThread;
 
 public class ThirdBall extends BufferedImage {
 	
+	public static double tbx;
+	public static double tby;
 	public double x;
 	public double y;
 	public double xspeed;
@@ -37,12 +39,6 @@ public class ThirdBall extends BufferedImage {
 
 	public void loop() {
 
-/*		if(!yh){
-			if(y<j.getHeight()-40){
-				yspeed=-yspeed-3;
-				yh=true;
-			}	
-		}*/
 		x += xspeed;
 		y += yspeed;
 		yspeed+=1;
@@ -57,6 +53,7 @@ public class ThirdBall extends BufferedImage {
 			x = 0;
 			xspeed = -xspeed;
 		}
+
 		//°ø¿Í ÃÑ¾Ë Ãæµ¹ Å½Áö
 		//ºí·çÆÀ ÃÑ¾Ë Å½Áö
 		if (MainPanel.GetDistance(ClientComThread.buxB, ClientComThread.buyB,x + 20, y + 20) <= 1056.25) { // 1056.25 ´Â 32.5*32.5

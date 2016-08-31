@@ -1,11 +1,10 @@
 package Network;
 
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.HashSet;
-import java.util.Set;
 
+import Ball.*;
+import Charactor.*;
 import GamePanel.ChatPanel;
 import GamePanel.MainPanel;
 
@@ -93,7 +92,7 @@ public class ClientComThread extends Thread {
 								mp.bP1bullet();						
 							}
 						}
-						else if (gData.getTeamNum() == 2) {
+						 if (gData.getTeamNum() == 2) {
 							if (gData.getChx() != 0) {
 								mp.bCharac2.chx+= gData.getChx(); mp.bCharac2.loop(); gData.setChx(0);
 								if(!b2MoveFlag && gData.isLeftMove()){mp.bCharac2.setMove(90, 180);b2MoveFlag = true;}
@@ -103,7 +102,7 @@ public class ClientComThread extends Thread {
 								mp.bP2bullet();
 							}
 						}
-						else if (gData.getTeamNum() == 3) {
+						 if (gData.getTeamNum() == 3) {
 							if (gData.getChx() != 0) {
 								mp.bCharac3.chx+= gData.getChx();mp.bCharac3.loop();gData.setChx(0);
 								if(!b3MoveFlag && gData.isLeftMove()){mp.bCharac3.setMove(90, 180);b3MoveFlag = true;}
@@ -113,7 +112,7 @@ public class ClientComThread extends Thread {
 								mp.bP3bullet();
 							}
 						}
-					}else if (gData.getTeamColor().equals("Red")) { //레드일때!
+					} if (gData.getTeamColor().equals("Red")) { //레드일때!
 							if (gData.getTeamNum() == 1) {
 								if (gData.getChx() != 0) {
 									mp.rCharac1.chx+= gData.getChx();mp.rCharac1.loop();gData.setChx(0);
@@ -124,7 +123,7 @@ public class ClientComThread extends Thread {
 									mp.rP1bullet();
 								}
 							}
-							else if (gData.getTeamNum() == 2) {
+							 if (gData.getTeamNum() == 2) {
 								if (gData.getChx() != 0) {
 									mp.rCharac2.chx+= gData.getChx(); mp.rCharac2.loop();gData.setChx(0);
 									if(!r2MoveFlag && gData.isLeftMove()){mp.rCharac2.setMove(90, 180);r2MoveFlag = true;}
@@ -134,7 +133,7 @@ public class ClientComThread extends Thread {
 									mp.rP2bullet();
 								}
 							}
-							else if (gData.getTeamNum() == 3) {
+							 if (gData.getTeamNum() == 3) {
 								if (gData.getChx() != 0) {
 									mp.rCharac3.chx+= gData.getChx(); mp.rCharac3.loop();gData.setChx(0);
 									if(!r3MoveFlag && gData.isLeftMove()){mp.rCharac3.setMove(90, 180);r3MoveFlag = true;}
@@ -146,19 +145,39 @@ public class ClientComThread extends Thread {
 							}
 					}
 
-					
-					
-					System.out.println("ball루프전");
-					
 					//Ball 루프 
-					for(int i =0;i<mp.fb.size();i++){
-						if(!mp.fb.get(i).fbswitch)	mp.fb.get(i).loop();	
+					for (int i = 0; i < mp.fb.size(); i++) {
+						if (!mp.fb.get(i).fbswitch) {
+							mp.fb.get(i).loop();
+							FirstBall.fbx = mp.fb.get(i).x;
+							FirstBall.fby = mp.fb.get(i).y;
+							if (MainPanel.GetDistance(FirstBall.fbx + 60, FirstBall.fby + 60, BlueCharacter1.x + 45,
+									BlueCharacter1.y + 45) <= 11025) {
+								System.out.println("첫번째공과 부딪힘");
+							}
+						}
 					}
-					for(int i =0;i<mp.sb.size();i++){
-						if(!mp.sb.get(i).sbswitch)	mp.sb.get(i).loop();	
+					for (int i = 0; i < mp.sb.size(); i++) {
+						if (!mp.sb.get(i).sbswitch) {
+							mp.sb.get(i).loop();
+							SecondBall.sbx = mp.sb.get(i).x;
+							SecondBall.sby = mp.sb.get(i).y;
+							if (MainPanel.GetDistance(SecondBall.sbx + 40, SecondBall.sby + 40, BlueCharacter1.x + 45,
+									BlueCharacter1.y + 45) <= 7225) {
+								System.out.println("두번째공과 부딪힘");
+							}
+						}
 					}
+					
 					for(int i =0;i<mp.tb.size();i++){
-						if(!mp.tb.get(i).tbswitch)	mp.tb.get(i).loop();	
+						if(!mp.tb.get(i).tbswitch)	{
+							mp.tb.get(i).loop();
+							ThirdBall.tbx=mp.tb.get(i).x;
+							ThirdBall.tby=mp.tb.get(i).y;
+							if (MainPanel.GetDistance(ThirdBall.tbx+20,ThirdBall.tby+20,BlueCharacter1.x + 45, BlueCharacter1.y + 45) <= 4225) { 
+								System.out.println("세번째공과 부딪힘");
+							}
+						}
 
 					}
 					//Ball 루프 
@@ -202,18 +221,66 @@ public class ClientComThread extends Thread {
 							buy3R = mp.bullet3R.get(0).y;// 총알의 좌표를 계속 패널에 그린다.
 						}
 					//총알 루프 끝
+						
+					//공과 케릭터 충돌
+						//블루
+						//첫번째 케릭터
+		
+
+
+					/*	//두번째 케릭터
+						if (MainPanel.GetDistance(FirstBall.fbx+60,FirstBall.fby+60,BlueCharacter2.x + 45, BlueCharacter2.y + 45) <= 11025) { 
+						}
+						if (MainPanel.GetDistance(SecondBall.sbx+40,SecondBall.sby+40,BlueCharacter2.x + 45, BlueCharacter2.y + 45) <= 7225) { 
+							System.out.println("두번째공과 부딪힘");
+						}
+						if (MainPanel.GetDistance(ThirdBall.tbx+20,ThirdBall.tby+20,BlueCharacter2.x + 45, BlueCharacter2.y + 45) <= 4225) { 
+							System.out.println("세번째공과 부딪힘");
+						}
+						//세번째 케릭터
+						if (MainPanel.GetDistance(FirstBall.fbx+60,FirstBall.fby+60,BlueCharacter3.x + 45, BlueCharacter3.y + 45) <= 11025) { 
+						}
+						if (MainPanel.GetDistance(SecondBall.sbx+40,SecondBall.sby+40,BlueCharacter3.x + 45, BlueCharacter3.y + 45) <= 7225) { 
+							System.out.println("두번째공과 부딪힘");
+						}
+						if (MainPanel.GetDistance(ThirdBall.tbx+20,ThirdBall.tby+20,BlueCharacter3.x + 45, BlueCharacter3.y + 45) <= 4225) { 
+							System.out.println("세번째공과 부딪힘");
+						}
+						//레드
+						//첫번째케릭터
+						if (MainPanel.GetDistance(FirstBall.fbx+60,FirstBall.fby+60,RedCharacter1.x + 45,RedCharacter1.y + 45) <= 11025) { 
+						}					
+						if (MainPanel.GetDistance(SecondBall.sbx+40,SecondBall.sby+40,RedCharacter1.x + 45,RedCharacter1.y + 45) <= 7225) { 
+							System.out.println("두번째공과 부딪힘");
+						}
+						if (MainPanel.GetDistance(ThirdBall.tbx+20,ThirdBall.tby+20,RedCharacter1.x + 45,RedCharacter1.y + 45) <= 4225) { 
+							System.out.println("세번째공과 부딪힘");
+						}
+						//두번째케릭터
+						if (MainPanel.GetDistance(FirstBall.fbx+60,FirstBall.fby+60,RedCharacter2.x + 45,RedCharacter2.y + 45) <= 11025) { 
+						}					
+						if (MainPanel.GetDistance(SecondBall.sbx+40,SecondBall.sby+40,RedCharacter2.x + 45,RedCharacter2.y + 45) <= 7225) { 
+							System.out.println("두번째공과 부딪힘");
+						}
+						if (MainPanel.GetDistance(ThirdBall.tbx+20,ThirdBall.tby+20,RedCharacter2.x + 45,RedCharacter2.y + 45) <= 4225) { 
+							System.out.println("세번째공과 부딪힘");
+						}
+						//세번째케릭터
+						if (MainPanel.GetDistance(FirstBall.fbx+60,FirstBall.fby+60,RedCharacter3.x + 45,RedCharacter3.y + 45) <= 11025) { 
+						}					
+						if (MainPanel.GetDistance(SecondBall.sbx+40,SecondBall.sby+40,RedCharacter3.x + 45,RedCharacter3.y + 45) <= 7225) { 
+							System.out.println("두번째공과 부딪힘");
+						}
+						if (MainPanel.GetDistance(ThirdBall.tbx+20,ThirdBall.tby+20,RedCharacter3.x + 45,RedCharacter3.y + 45) <= 4225) { 
+							System.out.println("세번째공과 부딪힘");
+						}*/
 					
 					mp.repaint();
 
 					long end = System.currentTimeMillis();
-					System.out.printf("클라이언트에서 받는데 걸린시간:%d\n",end-start);
+				
 				}
 				} catch (Exception e) {
-				e.printStackTrace();
-			}
-			try {
-				Thread.sleep(30);
-			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 
