@@ -30,6 +30,7 @@ public class Ball extends BufferedImage{
 	}
 
 	public void loop() {
+
 		x += xspeed;
 		y += yspeed;
 

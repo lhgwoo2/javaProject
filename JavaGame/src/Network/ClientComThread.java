@@ -62,6 +62,8 @@ public class ClientComThread extends Thread {
 					ClientData cData = (ClientData) obj;
 					//모든 팀 입장 게임화면 진입.
 					if (cData.isAllTeamOK()) {
+						GameClient.loadthread.interrupt();			// 로딩화면 중지 - 쓰레드 중지
+						mp.setVisible(true);						// 메인화면 다시 보여주기
 						mp.drawingPlayImage();
 						mp.eventKey();		//이벤트 처리를 위한 키보드사용
 						mp.firstBall();

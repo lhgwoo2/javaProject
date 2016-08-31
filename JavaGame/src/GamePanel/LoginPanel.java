@@ -34,7 +34,7 @@ public class LoginPanel extends JPanel {
 	JButton entB;
 	static GameClient gClient;			// 게임 클라이언트 객체
 
-	public LoginPanel(MainPanel mp/* ,LoadingPanel ldp */) {
+	public LoginPanel(MainPanel mp) {
 		super();
 		this.setBounds(0, 0, 1600, 50);
 		this.setLayout(null);
@@ -62,7 +62,6 @@ public class LoginPanel extends JPanel {
 		bjb.setBounds(600, 10, 100, 30);
 		bjb.setBackground(Color.CYAN);
 		this.add(bjb);
-		
 		// Red team
 		bjb2 = new JRadioButton("Red");
 		bjb2.setBounds(700, 10, 100, 30);

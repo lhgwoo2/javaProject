@@ -16,26 +16,11 @@ public class MainFrame extends JFrame {
 		this.add(mp);
 		mp.requestFocusInWindow();
 		
-		LoginPanel lp = new LoginPanel(mp/*,ldp*/);
+		LoginPanel lp = new LoginPanel(mp);
 		this.add(lp);
 		lp.requestFocusInWindow();
 		
-		
-		/*new Thread() {
-			@Override
-			public void run() {
-				super.run();nn
-				while (true) {
-				repaint();
-					
-					try {
-						Thread.sleep(30);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}.start();*/
+	
 	}
 
 	public static void main(String[] args) {
