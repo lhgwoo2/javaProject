@@ -62,6 +62,7 @@ public class LoginPanel extends JPanel {
 		bjb.setBounds(600, 10, 100, 30);
 		bjb.setBackground(Color.CYAN);
 		this.add(bjb);
+		
 		// Red team
 		bjb2 = new JRadioButton("Red");
 		bjb2.setBounds(700, 10, 100, 30);

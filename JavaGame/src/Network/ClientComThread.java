@@ -194,7 +194,6 @@ public class ClientComThread extends Thread {
 				
 					mp.repaint();
 
-					Thread.sleep(30); 
 					long end = System.currentTimeMillis();
 					System.out.printf("클라이언트에서 받는데 걸린시간:%d\n",end-start);
 				}

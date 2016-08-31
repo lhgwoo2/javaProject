@@ -288,7 +288,7 @@ public class MainPanel extends JPanel {
 	}
 
 	public void drawingPlayImage() {
-		InputStream is = getClass().getResourceAsStream("/imagePack/pangpangback1.jpg");
+		InputStream is = getClass().getResourceAsStream("/imagePack/pangpangback2.jpg");
 		try {
 			bimg = ImageIO.read(is);
 			System.out.println("게임화면 로드 성공");
