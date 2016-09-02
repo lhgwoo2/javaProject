@@ -2,6 +2,7 @@ package KSH;
 
 public class BoardVO {
 	private int boardNum;
+	private int boardReple;
 	private String boardTitle;
 	private String content;
 	private String boardId;
@@ -23,6 +24,13 @@ public class BoardVO {
 
 	public void setBoardNum(int boardNum) {
 		this.boardNum = boardNum;
+	}
+	public int getBoardReple() {
+		return boardReple;
+	}
+
+	public void setBoardReple(int boardReple) {
+		this.boardReple = boardReple;
 	}
 
 	public String getBoardTitle() {

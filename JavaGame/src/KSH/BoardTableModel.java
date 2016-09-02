@@ -9,13 +9,12 @@ public class BoardTableModel extends AbstractTableModel{
 	
 	// AbstractTableModel 추상 테이블 모델
 	List<BoardVO> list;
-	String[] colName = { "게시물 번호", "제목", "아이디", "팀", "점수","날짜"};
+	String[] colName = { "번호", "제목", "아이디", "팀", "점수","날짜"};
 	Object[][] data ;
 	BoardDAO boardDao;
 		public BoardTableModel(int i){
 			
 			boardDao = new BoardDAO();
-			//list =boardDao.getList();
 			list = boardDao.getPage(i);
 			setData(list);
 			
@@ -76,7 +75,7 @@ public class BoardTableModel extends AbstractTableModel{
 		/** 각셀의 편집가능 여부를 결정한다 */
 		@Override
 		public boolean isCellEditable(int row, int col) {
-			if (col < 2) {
+			if (col < 6) {
 				return false;
 			} else {
 			}
