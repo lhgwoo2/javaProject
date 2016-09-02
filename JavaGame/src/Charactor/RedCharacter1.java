@@ -22,12 +22,14 @@ public class RedCharacter1 extends BufferedImage  {
 	int c = 90;
 	int d = 90;
 	JPanel j;
+	public static double x ;
+	public static int  y;
 	boolean bool ;
 	public double chx;	//캐릭터의 x좌표
 	
 	
 	public RedCharacter1(JPanel j){
-	    super(40, 40, BufferedImage.TYPE_INT_ARGB);
+		super(90,90, BufferedImage.TYPE_INT_ARGB);
 		this.j = j;
 		InputStream is = getClass().getResourceAsStream("/imagePack/attackRED3.png"); //내가 불러온 이미지를 InputStream 형으로 받아온다.
 	        try { 
@@ -35,10 +37,6 @@ public class RedCharacter1 extends BufferedImage  {
 	        } catch (IOException e) { 
 	            e.printStackTrace(); 
 	        } 
-	        
-	    Graphics2D g2d = (Graphics2D) getGraphics();
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2d.drawImage(img, 0, 0,90,90,a,b,c,d,null);
 	}
 	
 	public void loop(){
@@ -49,15 +47,6 @@ public class RedCharacter1 extends BufferedImage  {
 			a=0;
 			c=90;				
 		}
-		
-/*		if (MainPanel.GetDistance(MainPanel.fbx, MainPanel.fby,x + 60, y + 60) <= 72.5) { 
-			MainPanel.fbx =x;
-			MainPanel.fby =y;
-			MainFrame.mp.secondBall();
-			fbswitch = true;
-		}
-		*/
-		
 	}
 	//캐릭터 좌우 이동을 위한 좌표값 변경
 		public void setMove(int b, int d){
@@ -68,20 +57,18 @@ public class RedCharacter1 extends BufferedImage  {
 	
 	
 	public void draw(Graphics2D g2d) { //캐릭터가 패널 밖으로 나가는순간 어떻게해야 할지 모르겠음.
-		AffineTransform old = g2d.getTransform(); //유사 변환 행렬 변환에 대한정보를 가지고 있는 객체이다. 붓의 초기 위치 값을 가지고 있다 
-		g2d.translate(j.getWidth()/2+chx, j.getHeight()-270);
 		double x = j.getWidth() / 2 + chx;
+		int y =  j.getHeight()-290;
 
 		if (x >= j.getWidth() - 80) {
 			chx = 710;
-			g2d.translate(chx, j.getHeight()-270);
+			g2d.translate(chx, j.getHeight() -270);
 		} else if (x <= 0) {
 			chx = -j.getWidth() / 2 + 10;
 			g2d.translate(chx, j.getHeight() -270);//-80
 		}
 
-		g2d.drawImage(img, 0, 0,90,90,a,b,c,d,null);
-		g2d.setTransform(old); //붓을 원래위치로 ㅊ초기화
+		g2d.drawImage(img, (int)x, y,(int)(x+90),y+90,a,b,c,d,null);
 	}
 
 

@@ -27,9 +27,9 @@ public class BulletRed3 extends BufferedImage implements Bullets{
 	public double bh; // 벽돌 세로 크기
 	public boolean bool;
 	public int a = 0;
-	public int b = 288;
-	public int c = 90;
-	public int d = 360;
+	public int b = 0;
+	public int c = 58;
+	public int d = 73; //584에 8번
 
 	public BulletRed3(){
 	      super(40, 40, BufferedImage.TYPE_INT_ARGB);

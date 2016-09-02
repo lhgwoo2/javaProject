@@ -1,5 +1,7 @@
 package GamePanel;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -18,16 +20,16 @@ public class LoadingPanel extends JPanel{
 	Image sprite;
 	int sx1, sy1, sx2, sy2;
 	int row, col;
+	MainPanel mp;
 	
-	
-	public LoadingPanel(){
-		
+	public LoadingPanel(MainPanel mp){
+		this.mp = mp;
 		//loadingIcon = Toolkit.getDefaultToolkit().createImage("C:/Users/duniv026/Desktop/ball.gif");
-		InputStream in = getClass().getResourceAsStream("LoadingBG.png");
+		InputStream in = getClass().getResourceAsStream("/ImagePack/LoadingBG.jpg");
 		
-		InputStream ball = getClass().getResourceAsStream("ball_bounce.png");
+		InputStream ball = getClass().getResourceAsStream("/ImagePack/ball_bounce.png");
 		setLayout(null);
-		setBounds(500,500,0,0);
+		setBounds(0,50,1600,900);
 		
 		try {
 			bg = ImageIO.read(in);
@@ -38,6 +40,9 @@ public class LoadingPanel extends JPanel{
 		//ImageIcon imageIcon = new ImageIcon(ball);
 		JLabel label = new JLabel();
 		label.setText("Loading...");
+		label.setFont(new Font("πŸ≈¡",Font.ITALIC,50));
+		label.setBounds(700, 450, 300, 200);
+		label.setForeground(Color.white);
 		this.add(label);
 		
 	}
@@ -62,15 +67,8 @@ public class LoadingPanel extends JPanel{
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
-		g2d.drawImage(bg, 0, 0, 1600, 900, 50, 50, 1000, 500, null);
-		g2d.drawImage(sprite, 0, 0, 100, 100, sx1, sy1, sx2, sy2, null);
-
-		/*
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		if(loadingIcon!=null){
-			g.drawImage(loadingIcon, 700, 350, this);
-		}
-*/
+		g2d.drawImage(bg, 0, 0, 1600, 900, null);
+		g2d.drawImage(sprite, 750, 400, 850, 500, sx1, sy1, sx2, sy2, null);
 		
 	}
 

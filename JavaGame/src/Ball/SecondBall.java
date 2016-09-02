@@ -12,7 +12,9 @@ import GamePanel.MainPanel;
 import Network.ClientComThread;
 
 public class SecondBall extends BufferedImage {
-	Random rd = new Random();
+	
+	public static double sbx;
+	public static double sby;
 	public double x;
 	public double y;
 	public double xspeed;
@@ -38,12 +40,7 @@ public class SecondBall extends BufferedImage {
 	}
 
 	public void loop() {
-/*		if(!yh){
-			if(y<jp.getHeight()-660){
-				yspeed=-yspeed;
-				yh=true;
-			}	
-		}*/
+
 		x += xspeed;
 		y += yspeed;
 		yspeed+=1;
@@ -59,6 +56,7 @@ public class SecondBall extends BufferedImage {
 			x = 0;
 			xspeed = -xspeed;
 		}
+
 		//°ø¿Í ÃÑ¾Ë Ãæµ¹ Å½Áö
 		//ºí·çÆÀ ÃÑ¾Ë Å½Áö
 		if (MainPanel.GetDistance(ClientComThread.buxB, ClientComThread.buyB,x + 40, y + 40) <= 2756.25) { //2756.25 ´Â 52.5*52.5

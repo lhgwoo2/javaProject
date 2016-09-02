@@ -34,7 +34,7 @@ public class LoginPanel extends JPanel {
 	JButton entB;
 	static GameClient gClient;			// 게임 클라이언트 객체
 
-	public LoginPanel(MainPanel mp/* ,LoadingPanel ldp */) {
+	public LoginPanel(MainPanel mp) {
 		super();
 		this.setBounds(0, 0, 1600, 50);
 		this.setLayout(null);

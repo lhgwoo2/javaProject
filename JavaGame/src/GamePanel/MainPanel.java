@@ -30,6 +30,7 @@ public class MainPanel extends JPanel {
 	public BufferedImage bimg;
 	public Graphics2D g2d;
 	public JFrame f;
+	public GameDataPanel gdp ;  //게임정보패널
 	
 	//블루 캐릭터 x 좌표
 	public BlueCharacter1 bCharac1;		// 블루팀 1번 캐릭터 클래스
@@ -88,16 +89,21 @@ public class MainPanel extends JPanel {
 		this.setLayout(null);
 		this.setBackground(Color.BLUE);
 		this.f = f;
+		
+		gdp= new GameDataPanel(this);
+		this.add(gdp);
+		//gdp.setVisible(true);
 
 		this.setFocusable(true);
 		this.requestFocus();
 		drawingMainImage();
 		setFocusable(true);			// 메인패널의 포커스를 맟추어준다
 		requestFocus();				// 포커스를 요청한다.
-		gData= new GameData();
+		
 	}
 	
 	public void firstBall(){
+		
 		fb.add(new FirstBall(this,0,getHeight()-420,10,-26)); 
 		fb.add(new FirstBall(this,getWidth()-120,getHeight()-420,-10,-26)); 
 	}
@@ -119,7 +125,7 @@ public class MainPanel extends JPanel {
 		teamColor = LoginPanel.gClient.teamColor;
 		teamNumber = LoginPanel.gClient.clientNumber;
 		// 키보드 타이머를 줌으로써 중복된 키가 안눌리도록 한다.
-		timer = new Timer(50, new ActionListener() {
+		timer = new Timer(25, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
@@ -131,32 +137,32 @@ public class MainPanel extends JPanel {
 					case KeyEvent.VK_A:
 						//왼쪽 이동 캐릭터 그림파일 위치 이동
 						// 팀 색과 팀 순번 전송, 캐릭터의 좌표전송
+						gData= new GameData();
 						gData.setTeamColor(teamColor);
 						gData.setTeamNum(teamNumber);
 						gData.setChx(-10);
 						gData.setLeftMove(true);
 						LoginPanel.gClient.sendGameData(gData);
-						gData.setChx(0);
-						gData.setLeftMove(false);
+
 						break;
 					case KeyEvent.VK_D:
 						//오른쪽 이동 캐릭터 그림파일 위치 이동
 						// 팀 색과 팀 순번 전송, 캐릭터의 좌표전송
+						gData= new GameData();
 						gData.setTeamColor(teamColor);
 						gData.setTeamNum(teamNumber);
 						gData.setChx(+10);
 						gData.setRightMove(true);
 						LoginPanel.gClient.sendGameData(gData);
-						gData.setChx(0);
-						gData.setRightMove(false);
+		
 						break;
 					case KeyEvent.VK_N:// 가상키 n , n를 누른경우! bullet 메소드를 부름.
 						// 팀 색과 팀 순번 전송, 캐릭터의 좌표전송
+						gData= new GameData();
 						gData.setTeamColor(teamColor);
 						gData.setTeamNum(teamNumber);
 						gData.setBulletStart(true); // 총알이 출발했다.
 						LoginPanel.gClient.sendGameData(gData);
-						gData.setBulletStart(false); // 총알이 출발했다.
 
 						break;
 					}
@@ -288,7 +294,7 @@ public class MainPanel extends JPanel {
 	}
 
 	public void drawingPlayImage() {
-		InputStream is = getClass().getResourceAsStream("/imagePack/pangpangback1.jpg");
+		InputStream is = getClass().getResourceAsStream("/imagePack/pangpangback2.jpg");
 		try {
 			bimg = ImageIO.read(is);
 			System.out.println("게임화면 로드 성공");
