@@ -1,6 +1,7 @@
 package KSH;
 
 public class BoardVO {
+	private int numb;
 	private int boardNum;
 	private int boardReple;
 	private String boardTitle;
@@ -9,6 +10,14 @@ public class BoardVO {
 	private String boardTeam;
 	private int boardScore;
 	private java.sql.Date boardHiredate;
+
+	public int getNumb() {
+		return numb;
+	}
+
+	public void setNumb(int numb) {
+		this.numb = numb;
+	}
 
 	public int getBoardScore() {
 		return boardScore;

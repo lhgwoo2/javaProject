@@ -11,10 +11,10 @@ public class RankingTableModel extends AbstractTableModel{
 	String[] colName = { "순위", "아이디", "팀", "점수","날짜"};
 	Object[][] data ;
 	BoardDAO boardDao;
-		public RankingTableModel(int i){
+		public RankingTableModel(){
 			
 			boardDao = new BoardDAO();
-			list = boardDao.getList();
+			list = boardDao.rankingGetList();
 			setData(list);
 			
 		}
@@ -66,7 +66,7 @@ public class RankingTableModel extends AbstractTableModel{
 	/** 각 셀의 형태를 결정한다. 예)true/false를 체크박스로 표현함 */
 	@Override
 	public Class getColumnClass(int c) {
-		return /*String.class;*/getValueAt(0, c).getClass();
+		return String.class;/*getValueAt(0, c).getClass();*/
 	}
 
 	/** 각셀의 편집가능 여부를 결정한다 */

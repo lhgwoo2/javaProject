@@ -11,7 +11,9 @@ import javax.swing.table.*;
 public class GameBoard extends JFrame {
 
 	JTable table;
+	JTable rankingTable;
 	BoardTableModel btm;
+	RankingTableModel rtm;
 	JButton rankingButton;
 	JButton nextButton;
 	JButton previousButton;
@@ -33,10 +35,12 @@ public class GameBoard extends JFrame {
 	int startLink;
 	int pageTheNumber = 10;
 	int getBoardNum;
+	int tableNum;
 	int setPreferredWidth = 750;
 	int setRowHeight = 30;
 	int bodyFieldLimit = 500;
 	String repleText;
+	MyRenderer cellRenderer;
 	public GameBoard() {
 		
 		setTitle("게시판");
@@ -49,8 +53,14 @@ public class GameBoard extends JFrame {
 		panel.setBounds(0, 0, 1605, 978);
 		panel.setBackground(Color.white);
 		add(panel);
+		//buttonLine value
+		buttonLine = new LineBorder(Color.black,1);
+		//font value
+		Mainfont = new Font("나눔고딕", Font.BOLD, 70);
+		subfont = new Font("나눔고딕", Font.BOLD, 20);
+		subfont2 = new Font("나눔고딕", Font.PLAIN, 20);
 		//panelInput
-		//ranking();
+		ranking();
 		boardMainPanel();
 		update();
 		boardName();
@@ -80,26 +90,23 @@ public class GameBoard extends JFrame {
 		tableScroll.getViewport().setBackground(Color.white);
 		tableScroll.setBorder(buttonLine);
 		panel.add(tableScroll);
-		//buttonLine value
-		buttonLine = new LineBorder(Color.black,1);
-		//font value
-		Mainfont = new Font("나눔고딕", Font.BOLD, 70);
-		subfont = new Font("나눔고딕", Font.BOLD, 20);
-		subfont2 = new Font("나눔고딕", Font.PLAIN, 20);
+		
 		
 		table.addMouseListener(new MouseAdapter() {
+			
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
 				// table num value get
 				int row = table.getSelectedRow();
 				int col = table.getSelectedColumn();
-				getBoardNum = (Integer) table.getValueAt(row, 0);
+				tableNum = (Integer) table.getValueAt(row, 0);
 				if(col == 1)
 				{
 					detail();
 					//setVisible setting
 					panel.setVisible(false);
+					rankingPanel.setVisible(false);
 					updatePanel.setVisible(false);
 					detailPanel.setVisible(true);
 					repaint();
@@ -122,21 +129,46 @@ public class GameBoard extends JFrame {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		// table size seting
 		TableColumnModel columnModel = table.getColumnModel();
-		//header setting
+		//header back color
 		table.getTableHeader().setBackground(Color.DARK_GRAY);
+		//header text color
 		table.getTableHeader().setForeground(Color.white);
-		
-		columnModel.getColumn(1).setPreferredWidth(setPreferredWidth);// low 2 size seting
-		table.setRowHeight(setRowHeight);// AllHeight 30 setting
-		DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();//renderer create
-		dtcr.setHorizontalAlignment(SwingConstants.CENTER);//alignment center
-		
+		//focus delete
+		table.setCellSelectionEnabled(false);
+		// low 2 size seting
+		columnModel.getColumn(1).setPreferredWidth(setPreferredWidth);
+		// AllHeight 30 setting
+		table.setRowHeight(setRowHeight);
+		//renderer start//
+		//renderer create
+		DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
+		//alignment center
+		dtcr.setHorizontalAlignment(SwingConstants.CENTER);
+		//column Alignment
 		for (int i = 0; i < table.getColumnCount(); i++) {
 			table.getColumnModel().getColumn(i).setCellRenderer(dtcr);	
 		}
-		DefaultTableCellRenderer dtcr2 = new DefaultTableCellRenderer();//renderer create
-		dtcr2.setHorizontalAlignment(SwingConstants.LEFT);//alignment center
+		//renderer create
+		DefaultTableCellRenderer dtcr2 = new DefaultTableCellRenderer();
+		//alignment center
+		dtcr2.setHorizontalAlignment(SwingConstants.LEFT);
 		table.getColumnModel().getColumn(1).setCellRenderer(dtcr2);
+		//select Color
+		table.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				 int row = table.rowAtPoint(e.getPoint());
+			        if (row > -1)
+			         {
+			            cellRenderer.rowAtMouse = row;
+			            cellRenderer.color = Color.orange;
+			            table.repaint();
+			         }
+			}
+		});	
+		cellRenderer = new MyRenderer();
+		table.getColumnModel().getColumn(1).setCellRenderer(cellRenderer);
+	
 	}
 /*	public void resizeColumnWidth(JTable table) {
 	 //max size is over Auto size setting
@@ -152,30 +184,90 @@ public class GameBoard extends JFrame {
 	    }
 	}*/
 public void ranking(){
-	/*rankingButton = new JButton("랭킹");
+	rankingButton = new JButton("랭킹");
 	rankingButton.setBounds(1270, 120, 80, 40);
 	rankingButton.setBackground(Color.white);
 	rankingButton.setFont(subfont);
-	panel.add(rankingButton);*/
-	
-	//ranking panel create	
+	panel.add(rankingButton);
+	rankingButton.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			panel.setVisible(false);
+			rankingPanel.setVisible(true);
+		}
+	});
+	//ranking background 
 	rankingPanel = new JPanel();
 	rankingPanel.setLayout(null);
 	rankingPanel.setBounds(0, 0, 1605, 978);
 	rankingPanel.setBackground(Color.white);
 	add(rankingPanel);
-	
-	//ranking background 
-	JPanel rankingPanel2 = new JPanel();
-	rankingPanel2.setLayout(null);
-	rankingPanel2.setBounds((panel.getWidth()/2)-550, panel.getHeight()/2-320, 1100, 600);
-	rankingPanel2.setBackground(Color.red);
-	rankingPanel2.setBorder(buttonLine);
-	rankingPanel.add(rankingPanel2);
-	rankingPanel2.repaint();
-	
-	
+	//boardName
+	JLabel boardName = new JLabel("랭킹");
+	boardName.setFont(Mainfont);
+	boardName.setBounds(680, 20, 300, 100);
+	rankingPanel.add(boardName);
+	//table
+	rankingTable = new JTable();
+	rtm = new RankingTableModel();
+	rankingTable.setModel(rtm);
+	rankingTableSizeSeting();
+	//ScorllPane input table 
+	JScrollPane tableScroll = new JScrollPane(rankingTable);
+	tableScroll.setBounds((rankingPanel.getWidth()/2)-550, rankingPanel.getHeight()/2-320, 1100, 600);
+	tableScroll.getViewport().setBackground(Color.white);
+	tableScroll.setBorder(buttonLine);
+	rankingPanel.add(tableScroll);
+	//cancel
+	JButton calcelButton = new JButton("나가기");
+	calcelButton.setBounds(1250, 800, 100, 40);
+	calcelButton.setBackground(Color.white);
+	calcelButton.setBorder(buttonLine);
+	calcelButton.setFont(subfont);
+	rankingPanel.add(calcelButton);
+	calcelButton.addActionListener(new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int writingCancelSelect = JOptionPane.showConfirmDialog(null, "나가시겠습니까?", "예/아니오", JOptionPane.YES_NO_OPTION);
+			if (writingCancelSelect == JOptionPane.YES_OPTION) {
+				//setVisible setting
+				//writingPanel.setVisible(false);
+				panel.setVisible(true);
+				//writingButton.setVisible(true);
+			} else
+				return;
+
+		}
+	});
+
 }
+	public void rankingTableSizeSeting(){
+	
+		//table remodel
+		rankingTable.setOpaque(false);
+		//Header colum not mouse move
+		rankingTable.getTableHeader().setReorderingAllowed(false);
+		//Header colum not size change
+		rankingTable.getTableHeader().setResizingAllowed(false);
+		//header size
+		rankingTable.getTableHeader().setFont(new Font("나눔고딕", Font.BOLD, 17));
+		//colum one select
+		rankingTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		// table size seting
+		TableColumnModel columnModel = rankingTable.getColumnModel();
+		//header setting
+		rankingTable.getTableHeader().setBackground(Color.DARK_GRAY);
+		rankingTable.getTableHeader().setForeground(Color.white);
+		//columnModel.getColumn(1).setPreferredWidth(setPreferredWidth);// low 2 size seting
+		rankingTable.setRowHeight(setRowHeight);// AllHeight 30 setting
+		DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();//renderer create
+		dtcr.setHorizontalAlignment(SwingConstants.CENTER);//alignment center
+		for (int i = 0; i < rankingTable.getColumnCount(); i++) {
+			rankingTable.getColumnModel().getColumn(i).setCellRenderer(dtcr);	
+		}
+	}
 	// buttons
 	public void currPage() {
 		// <<버튼
@@ -266,6 +358,7 @@ public void ranking(){
 		writingButton = new JButton("글쓰기");
 		writingButton.setBounds(1250, 800, 100, 40);
 		writingButton.setBackground(Color.white);
+		writingButton.setBorder(BorderFactory.createLineBorder(Color.black));
 		writingButton.setFont(subfont);
 		panel.add(writingButton);
 		writingButton.addActionListener(new ActionListener() {
@@ -277,8 +370,88 @@ public void ranking(){
 				panel.setVisible(false);
 				writingButton.setVisible(false);
 				updatePanel.setVisible(false);
+				rankingPanel.setVisible(false);
 			}
 		});
+		search();
+	}
+	public void search(){
+		JComboBox combo = new JComboBox();
+		combo.setBounds(500, 850, 85, 25);
+		combo.setBackground(Color.white);
+		//combo.setBorder(BorderFactory.createLineBorder(Color.black));
+		combo.setOpaque(false);
+		combo.setEditable(false);
+	    combo.addItem("아이디");
+	    combo.addItem("제목");
+	    combo.addItem("번호");
+		panel.add(combo);
+		combo.getSelectedItem();
+		System.out.println(combo.getSelectedItem());
+		combo.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				combo.getSelectedItem();
+				System.out.println(combo.getSelectedItem());
+			}
+		});
+		JTextArea serchText = new JTextArea();
+		serchText.setBounds(600, 850,350, 25);
+		serchText.setBackground(Color.white);
+		serchText.setBorder(BorderFactory.createLineBorder(Color.black));
+		panel.add(serchText);
+		
+		JButton serchButton = new JButton("검색");
+		serchButton.setBounds(965, 850,65, 25);
+		serchButton.setBackground(Color.white);
+		serchButton.setBorder(BorderFactory.createLineBorder(Color.black));
+		panel.add(serchButton);
+	
+		serchButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String colName= "BOARDID";
+				String colName2= "BOARDTITLE";
+				String colName3= "rn";
+			if(serchText.getText().isEmpty()){
+				JOptionPane.showMessageDialog(null,"검색어를 입력 하세요");
+			}else if (combo.getSelectedItem().equals("아이디")) {
+				// data Change
+				btm = new BoardTableModel(colName,serchText.getText());
+				table.setModel(btm);
+				tableSizeSeting();
+			}else if (combo.getSelectedItem().equals("제목")) {
+				// data Change
+				btm = new BoardTableModel(colName2,serchText.getText());
+				table.setModel(btm);
+				tableSizeSeting();
+			}else if (combo.getSelectedItem().equals("번호")) {
+				// data Change
+				btm = new BoardTableModel(colName3,serchText.getText());
+				table.setModel(btm);
+				tableSizeSeting();
+			}
+			repaint();
+			}
+		});
+		JButton allViewButton = new JButton("전체보기");
+		allViewButton.setBounds(1045, 850,75, 25);
+		allViewButton.setBackground(Color.white);
+		allViewButton.setBorder(BorderFactory.createLineBorder(Color.black));
+		panel.add(allViewButton);
+		allViewButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// data Change
+				btm = new BoardTableModel(1);
+				table.setModel(btm);
+				tableSizeSeting();
+				resetNavLink();
+			}
+		});
+		
 	}
 
 	// NavLink
@@ -367,10 +540,13 @@ public void ranking(){
 		body.setLineWrap(true);
 		body.setDocument((new JTextFieldLimit(bodyFieldLimit)));
 		body.setFont(subfont);
-		JScrollPane ScrollBody = new JScrollPane(body);
+/*		JScrollPane ScrollBody = new JScrollPane(body);
 		ScrollBody.setBounds(250, 230, 1100, 550);
 		ScrollBody.setBorder(BorderFactory.createLineBorder(Color.black));
-		writingPanel.add(ScrollBody);
+		writingPanel.add(ScrollBody);*/
+		body.setBounds(250, 230, 1100, 550);
+		body.setBorder(BorderFactory.createLineBorder(Color.black));
+		writingPanel.add(body);
 
 		// save button
 		JButton saveButton = new JButton("저장");
@@ -395,9 +571,7 @@ public void ranking(){
 					content.setText(null);
 					body.setText(null);
 					//setVisible setting
-					writingPanel.setVisible(false);
-					panel.setVisible(true);
-					writingButton.setVisible(true);
+				
 					
 					// data Change
 					List<BoardVO> list = boardDao.getPage(page);
@@ -406,13 +580,16 @@ public void ranking(){
 					
 					// resetNavLink
 					resetNavLink();
+					//visible setting
+					panel.setVisible(true);
+					writingPanel.setVisible(false);
+					writingButton.setVisible(true);
 				} else return;
 
 			}
 		});
 		// cancel
 		JButton calcelButton = new JButton("취소");
-		
 		calcelButton.setBounds(1250, 800, 100, 40);
 		calcelButton.setBackground(Color.white);
 		calcelButton.setBorder(buttonLine);
@@ -440,7 +617,10 @@ public void ranking(){
 
 		// getDetail
 		BoardDAO detaildao = new BoardDAO();
-		BoardVO detailboardVO = detaildao.getDetail(getBoardNum);
+		BoardVO detailboardVO = detaildao.getDetail(tableNum);
+		System.out.println(getBoardNum);
+		getBoardNum = detailboardVO.getNumb();
+		System.out.println(getBoardNum);
 		//background 		
 		detailPanel = new JPanel();
 		detailPanel.setLayout(null);
@@ -461,7 +641,7 @@ public void ranking(){
 		replePanel.setBounds(50, 460, 1000, 190);
 		replePanel.setBackground(Color.white);
 		replePanel.setBorder(buttonLine);
-		detailPanel2.add(replePanel);
+		//detailPanel2.add(replePanel);
 		//detail name
 		JLabel name = new JLabel("게시판");
 		name.setFont(Mainfont);
@@ -495,15 +675,17 @@ public void ranking(){
 		detailScore.setBounds(detailTeam.getX() + 150, detailName.getHeight()+30, 300, 30);
 		detailPanel2.add(detailScore);
 		// bodyContent
-		JLabel detailContent = new JLabel(detailboardVO.getContent());
+		JTextArea detailContent = new JTextArea(detailboardVO.getContent());
 		detailContent.setFont(subfont);
-/*		JScrollPane bodyScroll = new JScrollPane(detailContent);
+		detailContent.setEditable(false);
+		detailContent.setLineWrap(true);
+		JScrollPane bodyScroll = new JScrollPane(detailContent);
 		bodyScroll.setBounds(50, 140, 1000, 300);
 		bodyScroll.setBorder(buttonLine);
-		detailPanel2.add(bodyScroll);*/
-		detailContent.setBounds(50, 140, 1000, 300);
+		detailPanel2.add(bodyScroll);
+	/*	detailContent.setBounds(50, 140, 1000, 300);
 		detailContent.setBorder(buttonLine);
-		detailPanel2.add(detailContent);
+		detailPanel2.add(detailContent);*/
 		// 1 line
 		JSeparator line1 = new JSeparator();
 		line1.setBounds(50, detailName.getY()+35, 1000, 10);
@@ -525,30 +707,29 @@ public void ranking(){
 		reple.setLineWrap(true);
 		reple.setDocument((new JTextFieldLimit(80)));
 		reple.setFont(new Font("나눔고딕", Font.PLAIN, 20));
-/*	    reple.setBounds(50, 690, 550, 40);
+	    reple.setBounds(50, 690, 550, 40);
 		reple.setBorder(buttonLine);
-		detailPanel2.add(reple);*/
-		JScrollPane repleScroll = new JScrollPane(reple);
-		repleScroll.setBounds(50, 690, 550, 40);
-		repleScroll.setBorder(buttonLine);
-		detailPanel2.add(repleScroll);
+		detailPanel2.add(reple);
 		
 		//reple box and reple value input
+		JTextArea repleBox = new JTextArea();
+		repleBox.setBounds(50, 460, 1000, 190);
+		repleBox.setEditable(false);
+		JScrollPane repleBoxScroll = new JScrollPane(repleBox);
+		repleBoxScroll.setBounds(50, 460, 1000, 190);
+		repleBoxScroll.setBackground(Color.white);
+		repleBoxScroll.setBorder(buttonLine);
+		detailPanel2.add(repleBoxScroll);
+		//value input
 		BoardDAO dao = new BoardDAO();
 		List<BoardVO> list =  dao.getHierarchy(getBoardNum);
-		JLabel[] repleBox = new JLabel[list.size()];
-		for (int i = 0, j = 10; i < list.size(); i++, j += 25) {
-			repleBox[i] = new JLabel();
-			repleBox[i].setBounds(10,0+j,1000,40);
-			repleBox[i].setFont(new Font("나눔고딕",Font.BOLD,16));
-			//repleBox[i].setOpaque(false);
-			replePanel.add(repleBox[i]);
-			//value
+		repleText ="";
+		for (int i = 0; i < list.size(); i++) {
 			BoardVO BoardVO = list.get(i);
-			repleText = String.format("%s    내용 : %s    날짜 : %s",
-					BoardVO.getBoardId(),BoardVO.getBoardTitle(),BoardVO.getBoardHiredate());	
-			repleBox[i].setText(repleText);
-		}	
+			repleText += String.format("%s    내용 : %s    날짜 : %s%n",
+					BoardVO.getBoardId(),BoardVO.getBoardTitle(),BoardVO.getBoardHiredate());
+			repleBox.setText(repleText);
+		}
 		//relple sign up button
 		JButton signUpButton =new JButton("등록");
 		signUpButton.setBackground(Color.white);
@@ -561,10 +742,8 @@ public void ranking(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(reple.getText().isEmpty()){
-					JOptionPane.showMessageDialog(null,"입력한 메세지가 없습니다");
-				}else
-				System.out.println(getBoardNum);
-				System.out.println(reple.getText());
+				JOptionPane.showMessageDialog(null,"입력한 메세지가 없습니다");
+				}else{
 				BoardVO boardVo = new BoardVO();
 				boardVo.setBoardNum(getBoardNum);
 				boardVo.setBoardTitle(reple.getText());
@@ -573,24 +752,17 @@ public void ranking(){
 				//data Change
 				BoardDAO dao = new BoardDAO();
 				List<BoardVO> list =  dao.getHierarchy(getBoardNum);
-				JLabel[] repleBox = new JLabel[list.size()];
-				for (int i = 0, j = 10; i < list.size(); i++, j += 25) {
-					repleBox[i] = new JLabel();
-					repleBox[i].setBounds(10,0+j,1000,40);
-					repleBox[i].setFont(new Font("나눔고딕",Font.BOLD,16));
-					replePanel.add(repleBox[i]);
-					//value input
+				repleText ="";
+				for (int i = 0; i < list.size(); i++) {
 					BoardVO BoardVO = list.get(i);
-					repleText = String.format("%s    내용 : %s    날짜 : %s",
-							BoardVO.getBoardId(),BoardVO.getBoardTitle(),BoardVO.getBoardHiredate());	
-					repleBox[i].setText(repleText);
-				}	
+					repleText += String.format("%s    내용 : %s    날짜 : %s%n",
+							BoardVO.getBoardId(),BoardVO.getBoardTitle(),BoardVO.getBoardHiredate());
+					repleBox.setText(repleText);
+				}
 				repaint();
-				
+				}
 			}
 		});
-	
-		
  		// updateButton
 		JButton updateButton = new JButton("수정");
 		updateButton.setBounds(770, 690, 80, 40);
@@ -651,6 +823,7 @@ public void ranking(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+			
 				int saveSelect = JOptionPane.showConfirmDialog(null, "나가시겠습니까?", "예/아니오", JOptionPane.YES_NO_OPTION);
 				if (saveSelect == JOptionPane.YES_OPTION) {
 					//setVisible setting
@@ -721,7 +894,6 @@ public void ranking(){
 				BoardVO boardVO = new BoardVO();
 				int saveSelect = JOptionPane.showConfirmDialog(null, "변경된 사항 저장 하시겠습니까?", "예/아니오", JOptionPane.YES_NO_OPTION);
 				if (saveSelect == JOptionPane.YES_OPTION && !content.getText().isEmpty()) {
-				
 					boardVO.setBoardTitle(content.getText());
 					boardVO.setContent(body.getText());
 					boardVO.setBoardNum(getBoardNum);
@@ -733,6 +905,8 @@ public void ranking(){
 					//reset
 					content.setText(null);
 					body.setText(null);
+					
+					detail();
 					//setVisible setting
 					panel.setVisible(false);
 					detailPanel.setVisible(true);

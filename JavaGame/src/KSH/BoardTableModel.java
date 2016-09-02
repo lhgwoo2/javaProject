@@ -19,6 +19,11 @@ public class BoardTableModel extends AbstractTableModel{
 			setData(list);
 			
 		}
+		public BoardTableModel(String boardId, String text){
+			boardDao = new BoardDAO();
+			list = boardDao.getSerch(boardId, text);
+			setData(list);
+		}
 		public void setData (List<BoardVO> list2){
 			data = new Object[list2.size()][colName.length];
 			for (int i = 0; i < list2.size(); i++) {
@@ -69,7 +74,7 @@ public class BoardTableModel extends AbstractTableModel{
 		/** 각 셀의 형태를 결정한다. 예)true/false를 체크박스로 표현함 */
 		@Override
 		public Class getColumnClass(int c) {
-			return /*String.class;*/getValueAt(0, c).getClass();
+			return String.class;/*getValueAt(0, c).getClass();*/
 		}
 
 		/** 각셀의 편집가능 여부를 결정한다 */
