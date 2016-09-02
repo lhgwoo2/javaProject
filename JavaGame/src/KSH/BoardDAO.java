@@ -39,7 +39,6 @@ public class BoardDAO {
 			rs = pstmt.executeQuery();
 			List<BoardVO> list = new ArrayList<>();
 			while (rs.next()) {
-				System.out.println("와일문들어옴");
 				BoardVO BoardVO = new BoardVO();
 				BoardVO.setBoardNum(rs.getInt("BOARDNUM"));
 				BoardVO.setBoardReple(rs.getInt("BOARDREPLE"));
@@ -118,8 +117,6 @@ public class BoardDAO {
 		
 	}
 	public List<BoardVO> getSerch(String boardId, String text){
-		System.out.println("아이디:"+boardId);
-		System.out.println("텍스트:"+text);
 		conn = getConn();
 		String sql ="SELECT * FROM (SELECT ROWNUM rn, BOARDNUM, BOARDREPLE, BOARDTITLE, BOARDID, BOARDTEAM, BOARDSCORE,BOARDHIREDATE FROM (SELECT BOARDNUM, BOARDREPLE, BOARDTITLE, BOARDID, BOARDTEAM, BOARDSCORE,BOARDHIREDATE FROM GAMEBOARD ORDER BY BOARDNUM DESC) where BOARDREPLE = 0) WHERE "+boardId+" = ?";
 	

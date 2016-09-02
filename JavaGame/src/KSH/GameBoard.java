@@ -387,13 +387,11 @@ public void ranking(){
 	    combo.addItem("번호");
 		panel.add(combo);
 		combo.getSelectedItem();
-		System.out.println(combo.getSelectedItem());
 		combo.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				combo.getSelectedItem();
-				System.out.println(combo.getSelectedItem());
 			}
 		});
 		JTextArea serchText = new JTextArea();
@@ -432,6 +430,7 @@ public void ranking(){
 				table.setModel(btm);
 				tableSizeSeting();
 			}
+			serchText.setText(null);
 			repaint();
 			}
 		});
@@ -445,6 +444,7 @@ public void ranking(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// data Change
+				serchText.setText(null);
 				btm = new BoardTableModel(1);
 				table.setModel(btm);
 				tableSizeSeting();
@@ -540,10 +540,6 @@ public void ranking(){
 		body.setLineWrap(true);
 		body.setDocument((new JTextFieldLimit(bodyFieldLimit)));
 		body.setFont(subfont);
-/*		JScrollPane ScrollBody = new JScrollPane(body);
-		ScrollBody.setBounds(250, 230, 1100, 550);
-		ScrollBody.setBorder(BorderFactory.createLineBorder(Color.black));
-		writingPanel.add(ScrollBody);*/
 		body.setBounds(250, 230, 1100, 550);
 		body.setBorder(BorderFactory.createLineBorder(Color.black));
 		writingPanel.add(body);
@@ -618,9 +614,7 @@ public void ranking(){
 		// getDetail
 		BoardDAO detaildao = new BoardDAO();
 		BoardVO detailboardVO = detaildao.getDetail(tableNum);
-		System.out.println(getBoardNum);
 		getBoardNum = detailboardVO.getNumb();
-		System.out.println(getBoardNum);
 		//background 		
 		detailPanel = new JPanel();
 		detailPanel.setLayout(null);
@@ -635,13 +629,6 @@ public void ranking(){
 		detailPanel2.setBackground(Color.white);
 		detailPanel2.setBorder(buttonLine);
 		detailPanel.add(detailPanel2);
-		// reple box panel creat
-		JPanel replePanel = new JPanel();
-		replePanel.setLayout(null);
-		replePanel.setBounds(50, 460, 1000, 190);
-		replePanel.setBackground(Color.white);
-		replePanel.setBorder(buttonLine);
-		//detailPanel2.add(replePanel);
 		//detail name
 		JLabel name = new JLabel("게시판");
 		name.setFont(Mainfont);
@@ -683,9 +670,6 @@ public void ranking(){
 		bodyScroll.setBounds(50, 140, 1000, 300);
 		bodyScroll.setBorder(buttonLine);
 		detailPanel2.add(bodyScroll);
-	/*	detailContent.setBounds(50, 140, 1000, 300);
-		detailContent.setBorder(buttonLine);
-		detailPanel2.add(detailContent);*/
 		// 1 line
 		JSeparator line1 = new JSeparator();
 		line1.setBounds(50, detailName.getY()+35, 1000, 10);
@@ -763,6 +747,13 @@ public void ranking(){
 				}
 			}
 		});
+/*		//reple delete
+		JButton repleDeleteButton =new JButton("댓글");
+		repleDeleteButton.setBackground(Color.white);
+		repleDeleteButton.setFont(subfont);
+		repleDeleteButton.setBounds(660, 690, 80, 40);
+		repleDeleteButton.setBorder(buttonLine);
+		detailPanel2.add(repleDeleteButton);*/
  		// updateButton
 		JButton updateButton = new JButton("수정");
 		updateButton.setBounds(770, 690, 80, 40);
@@ -846,12 +837,12 @@ public void ranking(){
 		JPanel updatePanel2 = new JPanel();
 		updatePanel2.setLayout(null);
 		updatePanel2.setBounds((panel.getWidth()/2)-550, panel.getHeight()/2-320, 1100, 600);
-		updatePanel2.setBackground(Color.ORANGE);
+		updatePanel2.setBackground(Color.cyan);
 		updatePanel.add(updatePanel2);
-		
-		JLabel updateName = new JLabel("게시판");
+			
+		JLabel updateName = new JLabel("수정");
 		updateName.setFont(Mainfont);
-		updateName.setBounds(680, 20, 300, 100);
+		updateName.setBounds(680, 20, 400, 100);
 		updatePanel.add(updateName);
 		// title
 		JLabel title = new JLabel("제목");
