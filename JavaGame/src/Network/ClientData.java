@@ -2,7 +2,7 @@ package Network;
 
 import java.io.Serializable;
 
-public class ClientData implements Serializable{
+public class ClientData extends GameData implements Serializable{
 
 	private String userId;
 	private String chatMsg;
@@ -13,6 +13,11 @@ public class ClientData implements Serializable{
 	private boolean allTeamOK;
 	private String teamColor;				// 현재들어온 이용자의 팀
 	private int teamNum;					// 현재들어온 이용자의 팀의 순번
+	
+	
+	public ClientData() {
+		super();
+	}
 	
 	public String getTeamColor() {
 		return teamColor;

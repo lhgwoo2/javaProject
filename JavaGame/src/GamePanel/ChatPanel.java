@@ -9,6 +9,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -18,6 +20,7 @@ import javax.swing.JTextField;
 
 import Network.ClientData;
 import Network.GameClient;
+import Network.GameData;
 
 public class ChatPanel extends JPanel {
 	JTextArea chatField;
@@ -27,17 +30,25 @@ public class ChatPanel extends JPanel {
 	MainPanel mp;
 	private Font font1 = new Font("Serif", Font.PLAIN, 15);
 
+	//채팅 데이터 풀
+	public List<GameData> chDataPool;
+	public int cDataPoolIndex=0;
+	
 	public ChatPanel(GameClient gc, MainPanel mp) {
 		super();
 		this.gc = gc;
 		this.mp = mp;
-		this.setBackground(new Color(0.5f, 0.3f, 0.1f, 0.5f));
+		this.setBackground(new Color(255,204,0));
 		this.setLayout(null);
-		this.setBounds(0, 700, 600, 200);
+		this.setBounds(0, 725, 600, 175);
 
 		chatShowText();
 		chatInputTextfield();
-
+		//채팅 데이터 풀 생성
+		chDataPool = new ArrayList<>();
+		for(int i=0; i<3;i++) chDataPool.add(new GameData());
+			
+		
 	}
 
 	// 채팅보여지는 창
@@ -51,7 +62,7 @@ public class ChatPanel extends JPanel {
 		chatField.setBackground(new Color(0.5f, 0.3f, 0.1f, 0.5f));
 		chatField.setColumns(30);		//출력되는 열 제한
 		chatField.setLineWrap(true);	//텍스트필드 자동 줄바꿈
-		sp.setBounds(0, 0, 600, 170);
+		sp.setBounds(0, 0, 600, 145);
 		sp.setBackground(new Color(0.5f, 0.3f, 0.1f, 0.5f));
 		sp.setBorder(BorderFactory.createEmptyBorder());
 
@@ -63,9 +74,9 @@ public class ChatPanel extends JPanel {
 	}
 
 	// 채팅창에 업로드
-	public void chatAppendMsg(ClientData cdata) {
+	public void chatAppendMsg(GameData gdata) {
 		
-		chatField.append(cdata.getUserId() + " : " + cdata.getChatMsg() + "\n");
+		chatField.append(gdata.getUserID() + " : " + gdata.getChMsg() + "\n");
 		chatField.setCaretPosition(chatField.getDocument().getLength()); // 스크롤
 																		// 자동이동
 
@@ -75,8 +86,8 @@ public class ChatPanel extends JPanel {
 	public void chatInputTextfield() {
 		ttf = new JTextField("");
 		// ttf = new TransparentTextField(" ");
-		ttf.setBounds(0, 170, 600, 30);
-		ttf.setForeground(Color.white); // 텍스트 필드 폰트 색상변경
+		ttf.setBounds(0, 145, 600, 30);
+		ttf.setForeground(Color.BLACK); // 텍스트 필드 폰트 색상변경
 		ttf.setOpaque(false);
 		ttf.setBackground(new Color(0.5f, 0.3f, 0.1f, 0.7f));
 		ttf.setColumns(50);
@@ -96,15 +107,19 @@ public class ChatPanel extends JPanel {
 				char keyCode = e.getKeyChar();
 				if (keyCode == KeyEvent.VK_ENTER) {
 					String sendM = ttf.getText();
-					gc.sendMessage(sendM);
+					
+					//채팅 데이터 풀의 인덱스를 처음으로 돌린다.
+					if(cDataPoolIndex==chDataPool.size()-1)cDataPoolIndex=0;
+					
+					chDataPool.get(cDataPoolIndex).setChMsg(sendM);
+					chDataPool.get(cDataPoolIndex).setTeamColor(LoginPanel.gClient.teamColor);
+					gc.sendMessage(chDataPool.get(cDataPoolIndex));
 					ttf.setText("");
 					ttf.setEnabled(false);
-					// ttf.requestFocus(); //
-					
-					//게임화면의 포커스를 맞추어준다.
-					mp.setFocusable(true);			// 메인패널의 포커스를 맟추어준다
+					mp.setFocusable(true);			//게임화면의 포커스를 맞추어준다. 메인패널의 포커스를 맟추어준다
 					mp.requestFocus();				// 포커스를 요청한다.
-					
+					mp.repaint();
+					cDataPoolIndex++;
 				}
 			}
 

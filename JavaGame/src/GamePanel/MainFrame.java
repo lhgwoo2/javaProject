@@ -2,7 +2,6 @@ package GamePanel;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JTextField;
 
 public class MainFrame extends JFrame {
 	public MainFrame() {
@@ -19,9 +18,6 @@ public class MainFrame extends JFrame {
 		LoginPanel lp = new LoginPanel(mp);
 		this.add(lp);
 		lp.requestFocusInWindow();
-		
-		//mp.gdp.setVisible(false)
-	
 	}
 
 	public static void main(String[] args) {

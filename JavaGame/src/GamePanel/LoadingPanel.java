@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -25,9 +24,9 @@ public class LoadingPanel extends JPanel{
 	public LoadingPanel(MainPanel mp){
 		this.mp = mp;
 		//loadingIcon = Toolkit.getDefaultToolkit().createImage("C:/Users/duniv026/Desktop/ball.gif");
-		InputStream in = getClass().getResourceAsStream("/ImagePack/LoadingBG.jpg");
+		InputStream in = getClass().getResourceAsStream("LoadingBG.png");
 		
-		InputStream ball = getClass().getResourceAsStream("/ImagePack/ball_bounce.png");
+		InputStream ball = getClass().getResourceAsStream("ball_bounce.png");
 		setLayout(null);
 		setBounds(0,50,1600,900);
 		

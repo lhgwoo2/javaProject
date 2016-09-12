@@ -24,7 +24,7 @@ public class LoadingThread extends Thread implements Runnable{
 			Thread.sleep(60);
 			
 			}
-
+			
 			} catch (InterruptedException e) {
 
 			// 예상된 예외이므로 무시

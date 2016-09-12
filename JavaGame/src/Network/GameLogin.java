@@ -8,6 +8,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.List;
+
+import DataBase.BoardDAO;
+import DataBase.BoardVO;
+import DataBase.LoginVO;
 
 public class GameLogin extends Thread {
 
@@ -16,12 +21,15 @@ public class GameLogin extends Thread {
 	ObjectInputStream fromClient;
 	ObjectOutputStream toClient;
 	Socket socket;
-	//플레이어들어온 수 확인
+
+	BoardDAO boardDao;
+	// 플레이어들어온 수 확인
 	public static int playerNumber;
 
 	public GameLogin(Socket socket) {
 		super();
 		this.socket = socket;
+		boardDao = new BoardDAO();
 		try {
 			fromClient = new ObjectInputStream(socket.getInputStream());
 			toClient = new ObjectOutputStream(socket.getOutputStream());
@@ -34,7 +42,7 @@ public class GameLogin extends Thread {
 	@Override
 	public void run() {
 		super.run();
-		ClientData cData;
+		ClientData cData = new ClientData();
 		while (true) {
 			try {
 				cData = (ClientData) fromClient.readObject();
@@ -45,20 +53,26 @@ public class GameLogin extends Thread {
 					cData.setLoginOK(true);
 					cData.setClientBlueNum(GameServer.blueTeam.size());
 					cData.setClientRedNum(GameServer.redTeam.size());
+					System.out.println("로그 클라로 보낸다");
+
 					toClient.writeObject(cData);
 					toClient.flush();
+					// toClient.reset();
+					System.out.println("로그 클라로 보내기 성공");
 					GameServer.userMap.put(cData.getUserId(), socket);
-					new GameServerThread(fromClient, socket,playerNumber).start();
+					new GameServerThread(fromClient, socket, playerNumber).start();
+					System.out.println("서버 통신 쓰레드 생성");
 					break;
 
 				} else {
 					System.out.println("로그인 실패");
-					// cData.setMsg("로그인 실패");
 					cData.setClientBlueNum(GameServer.blueTeam.size());
 					cData.setClientRedNum(GameServer.redTeam.size());
 					cData.setLoginOK(false);
+
 					toClient.writeObject(cData);
 					toClient.flush();
+					break;
 				}
 
 			} catch (ClassNotFoundException | IOException e) {
@@ -70,33 +84,27 @@ public class GameLogin extends Thread {
 	}
 
 	public boolean loginMatch(ClientData cData) {
-		FileReader fr;
-		String line;
-		PrintWriter pw;
 
-		try {
-			System.out.println("파일에서 로그인 매치하는 곳");
-			pw = new PrintWriter(new FileWriter("D:/test/test.txt", true));
-			fr = new FileReader("D:/test/test.txt");
-			br = new BufferedReader(fr);
+		System.out.println("파일에서 로그인 매치하는 곳");
+		List<LoginVO> check = boardDao.loginIdCheck();
+		for (int i = 0; i < check.size(); i++) {
 
-			while ((line = br.readLine()) != null) {
-				if (line.equals(cData.getUserId())) { // id비교
-					return false; // 등록된 아이디가 있으면 실패
-				}
+			if (cData.getUserId().equals(check.get(i).getUserId())) {
+				System.out.println(check.get(i).getUserId());
+				System.out.println(cData.getUserId());
+				System.out.println("로그인 매치 포인트 아이디 존재 상황");
+				return false; // 등록된 아이디가 있으면 실패
 			}
-			if (teamMatch(cData)) {
-				pw.println(cData.getUserId()); // userID input
-				cData.setTeamOK(true);
-			} else {
-				cData.setTeamOK(false);
-				return false;
-			}
-			pw.close();
-			br.close();
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
+		if (teamMatch(cData)) {
+			// pw.println(cData.getUserId()); // userID input
+			cData.setTeamOK(true);
+
+		} else {
+			cData.setTeamOK(false);
+			return false;
+		}
+
 		return true;
 
 	}
@@ -110,10 +118,16 @@ public class GameLogin extends Thread {
 				// 블루팀 들어온 상황 확인.
 				GameServer.blueTeam.put(cData.getUserId(), socket);
 				// 현재들어온 이용자 자신의 순번과 팀 파악을 위한 데이터 전송 - 캐릭터배정을 위한
-				cData.setTeamColor("Blue");
+				cData.setTeamColor("BLUE");
 				cData.setTeamNum(GameServer.blueTeam.size());
-				playerNumber+=1;		//입장한 플레이어 추가
+				playerNumber += 1; // 입장한 플레이어 추가
 				System.out.println(playerNumber);
+				// 로그인 color 전달
+				LoginVO loginVo = new LoginVO();
+				loginVo.setUserId(cData.getUserId());
+				loginVo.setTeamColor(cData.getTeamColor());
+				boardDao.loginInsert(loginVo);
+				System.out.println("로그인 블루팀 매치 상황");
 
 				return true;
 			} else {
@@ -125,17 +139,21 @@ public class GameLogin extends Thread {
 				// Red팀이 들어온 상황 확인.
 				GameServer.redTeam.put(cData.getUserId(), socket);
 				// 현재들어온 이용자 자신의 순번과 팀 파악을 위한 데이터 전송 - 캐릭터배정을 위한
-				cData.setTeamColor("Red");
+				cData.setTeamColor("RED");
 				cData.setTeamNum(GameServer.redTeam.size());
-				playerNumber+=1;		//입장한 플레이어 추가
+				playerNumber += 1; // 입장한 플레이어 추가
+				LoginVO loginVo = new LoginVO();
+				loginVo.setUserId(cData.getUserId());
+				loginVo.setTeamColor(cData.getTeamColor());
+				boardDao.loginInsert(loginVo);
+				System.out.println("로그인 레드팀 매치 상황");
 				return true;
 			} else {
 				return false;
 			}
 
-		} else {
+		} else
 			return false;
-		}
 	}
 
 }

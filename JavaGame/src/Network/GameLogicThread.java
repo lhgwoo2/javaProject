@@ -1,60 +1,84 @@
 package Network;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.util.Iterator;
 import java.util.Set;
 
 public class GameLogicThread extends Thread {
 	public static GameData gData;
 	
+	public double countdownS=0;				// 1초에 프레임 수 카운트다운
+	public double countdownM=0;					// 종료되는 시간 카운트 다운
+	
+	
+	String blueId;
+	String redId;
+
 	public GameLogicThread() {
 		super();
-/*		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}*/
+
 		gData = new GameData();
-		gData.setTeamColor("Blue");
+		gData.setTeamColor("BLUE");
 		gData.setTeamNum(1);
 	}
 
-	public static void serverSetData(GameData gData) {
-		GameLogicThread.gData=gData;
+	public static void serverSetData(GameData Data) {
+
+		GameLogicThread.gData = Data;
+
 	}
 
 	@Override
 	public void run() {
 		super.run();
-		while (true) {
+		
+		blueId = "";
+		redId = "";
+		Set<String> bluekeys = GameServer.blueTeam.keySet();
+		Iterator<String> it = bluekeys.iterator();
+		while (it.hasNext()) {
+			blueId += it.next()+"    ";
 
-			Set<String> keys = GameServer.userMap.keySet();
-			Iterator<String> it = keys.iterator();
-			while (it.hasNext()) {
-				String id = it.next();
-				Socket soc = GameServer.userMap.get(id);
-				ObjectOutputStream toClient;
-				try {
-					toClient = new ObjectOutputStream(soc.getOutputStream());
-					toClient.writeObject(gData);
-					toClient.flush();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
+		}
+		// 레드팀 아이디 결합
+		Set<String> redkeys = GameServer.redTeam.keySet();
+		Iterator<String> it2 = redkeys.iterator();
+		while (it2.hasNext()) {
+			redId += it2.next()+"    ";
+		}
+		gData.setId1(blueId);
+		gData.setId2(redId);
+
+		while (true) {
 			
-			if(gData!=null){
-				gData.setChx(0);
-				gData.setBulletStart(false);
-			}
+			
 			try {
+				synchronized (gData) {
+				
+					if(countdownM>=66 || gData.getCountdown()>=66){ 
+						break;
+					}
+					countdownS++;
+					if(countdownS==34){
+						countdownM++;
+						countdownS=0;
+					}
+					gData.setCountdown(countdownM);
+					for (int i = 0; i < GameServer.oosPool.size(); i++) {
+						GameServer.oosPool.get(i).reset();
+						GameServer.oosPool.get(i).writeObject(gData);
+						GameServer.oosPool.get(i).flush();
+					}
+					gData.setChx(0);
+					gData.setBulletStart(false);
+					gData.setChMsg(null);
+				}
+				//게임 종료 카운트
+				
+					
 				Thread.sleep(30);
-			} catch (InterruptedException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
-
 }
